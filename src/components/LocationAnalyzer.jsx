@@ -48,13 +48,13 @@ export function LocationAnalyzer() {
             </select>
           </label>
         </div>
-        <div className="product-frame mt-12 overflow-hidden">
+        <div className="mt-12 overflow-hidden border border-black/[0.08] bg-white">
           <div className="grid lg:grid-cols-[0.88fr_1.12fr]">
             <article className="border-b border-black/[0.08] bg-white p-6 sm:p-8 lg:border-b-0 lg:border-r">
               <div className="flex flex-col gap-8 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                   <RecommendationBadge value={selected.recommendation} />
-                  <h3 className="mt-5 text-4xl font-semibold tracking-tight text-ink">{selected.city}</h3>
+                  <h3 className="mt-4 text-4xl font-semibold tracking-tight text-ink">{selected.city}</h3>
                   <p className="mt-1 text-[#6b716d]">{selected.region}</p>
                 </div>
                 <ScoreRing score={selected.score} label="Readiness" />
@@ -62,11 +62,11 @@ export function LocationAnalyzer() {
               <p className="mt-8 text-lg leading-8 text-[#4e5752]">{selected.explanation}</p>
               <div className="mt-8 grid gap-4 sm:grid-cols-2">
                 <div className="border-t border-black/[0.08] pt-5">
-                  <p className="text-sm font-bold uppercase tracking-[0.16em] text-clay">Biggest constraint</p>
+                  <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#6b716d]">Biggest constraint</p>
                   <p className="mt-3 font-semibold text-ink">{selected.biggestRisk}</p>
                 </div>
                 <div className="border-t border-black/[0.08] pt-5">
-                  <p className="text-sm font-bold uppercase tracking-[0.16em] text-forest">Best opportunity</p>
+                  <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#6b716d]">Best opportunity</p>
                   <p className="mt-3 font-semibold text-ink">{selected.bestOpportunity}</p>
                 </div>
               </div>

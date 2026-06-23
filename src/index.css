@@ -34,11 +34,6 @@ select {
   margin: 0 auto;
 }
 
-.page-shell {
-  width: min(1180px, calc(100% - 32px));
-  margin: 0 auto;
-}
-
 .section-light {
   background: #fbfaf7;
 }
@@ -57,41 +52,6 @@ select {
   grid-template-columns: minmax(0, 0.9fr) minmax(320px, 1.1fr);
   gap: clamp(2rem, 5vw, 5rem);
   align-items: center;
-}
-
-.product-frame {
-  border: 1px solid rgba(20, 24, 22, 0.1);
-  background: rgba(255, 255, 255, 0.86);
-  box-shadow: 0 24px 70px rgba(20, 24, 22, 0.08);
-  border-radius: 28px;
-}
-
-.product-card {
-  border: 1px solid rgba(20, 24, 22, 0.1);
-  background: #ffffff;
-  border-radius: 20px;
-  box-shadow: 0 14px 38px rgba(20, 24, 22, 0.06);
-}
-
-.memo-card {
-  border: 1px solid rgba(20, 24, 22, 0.1);
-  background: #fbfaf7;
-  border-radius: 18px;
-}
-
-.soft-badge {
-  display: inline-flex;
-  align-items: center;
-  width: fit-content;
-  border-radius: 999px;
-  border: 1px solid rgba(20, 24, 22, 0.12);
-  background: rgba(255, 255, 255, 0.68);
-  padding: 0.35rem 0.7rem;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #4e5752;
 }
 
 .metric-row {
@@ -128,7 +88,7 @@ select {
 }
 
 .clean-button-primary:hover {
-  background: #1f6f4a;
+  background: #101312;
   transform: translateY(-1px);
 }
 
@@ -139,7 +99,7 @@ select {
 }
 
 .clean-button-secondary:hover {
-  border-color: rgba(31, 111, 74, 0.35);
+  border-color: rgba(20, 24, 22, 0.28);
   background: #ffffff;
 }
 

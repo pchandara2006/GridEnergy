@@ -31,7 +31,7 @@ export function WhyNow() {
             title="Power is now a site-selection constraint."
             body="Data centers, factories, EV charging networks, and clean-energy projects can secure land faster than they can secure reliable capacity. GridReady AI turns scattered energy, grid, water, and climate signals into a practical readiness view before teams spend millions on due diligence."
           />
-          <div className="product-card px-6 py-2">
+          <div className="border-y border-black/[0.08] px-0 py-2">
             {stats.map((stat) => (
               <div key={stat.title} className="metric-row">
                 <div>
@@ -41,7 +41,7 @@ export function WhyNow() {
                 </div>
                 <div className="text-right">
                   <p className="text-4xl font-semibold text-ink">{stat.value}</p>
-                  <p className="mt-1 text-xs font-bold uppercase tracking-[0.14em] text-forest">Demo value</p>
+                  <p className="mt-1 text-xs font-bold uppercase tracking-[0.14em] text-[#6b716d]">Demo value</p>
                 </div>
               </div>
             ))}

@@ -9,7 +9,7 @@ export function Hero() {
     <section id="top" className="section-light relative overflow-hidden pt-28">
       <div className="section-shell editorial-grid min-h-[calc(100vh-7rem)] py-16 lg:py-24">
         <div className="max-w-3xl">
-          <p className="soft-badge mb-7">Demo dataset for MVP validation</p>
+          <p className="mb-7 text-xs font-bold uppercase tracking-[0.22em] text-[#6b716d]">Demo dataset for MVP validation</p>
           <h1 className="text-5xl font-semibold tracking-tight text-ink sm:text-6xl lg:text-7xl">
             Know where power is ready before capital is committed.
           </h1>
@@ -29,8 +29,8 @@ export function Hero() {
           </p>
         </div>
 
-        <div className="product-frame p-3 sm:p-4">
-          <div className="rounded-[22px] border border-black/[0.08] bg-white">
+        <div className="border border-black/[0.08] bg-white">
+          <div>
             <div className="flex items-center justify-between border-b border-black/[0.08] px-5 py-4">
               <div>
                 <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#6b716d]">Site readiness memo</p>
@@ -52,7 +52,7 @@ export function Hero() {
                         <span className="font-semibold text-ink">{row.score}</span>
                       </div>
                       <div className="score-line">
-                        <div className="h-full rounded-full bg-forest" style={{ width: `${row.score}%` }} />
+                        <div className="h-full rounded-full bg-graphite" style={{ width: `${row.score}%` }} />
                       </div>
                     </div>
                     <p className="text-sm leading-5 text-[#4e5752]">{row.step}</p>

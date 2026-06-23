@@ -49,7 +49,7 @@ export function ScenarioSimulator() {
           body="Use a guided workflow to see how project type and market selection change readiness, exposure, and the next diligence step."
         />
         <div className="mt-12 grid gap-5 lg:grid-cols-[0.78fr_1.22fr]">
-          <aside className="product-card p-6">
+          <aside className="border border-black/[0.08] bg-white p-6">
             <div className="mb-8">
               <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#6b716d]">Step 1</p>
               <h3 className="mt-2 text-2xl font-semibold text-ink">Project type</h3>
@@ -92,7 +92,7 @@ export function ScenarioSimulator() {
               <p className="mt-1 text-[#5f6863]">{location.city} market simulation</p>
             </div>
           </aside>
-          <article className="product-frame bg-white p-6 sm:p-8">
+          <article className="border border-black/[0.08] bg-white p-6 sm:p-8">
             <div className="mb-8">
               <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#6b716d]">Step 3</p>
               <h3 className="mt-2 text-3xl font-semibold tracking-tight text-ink">Decision memo</h3>
@@ -101,7 +101,7 @@ export function ScenarioSimulator() {
               <div className="flex flex-col items-start gap-6">
                 <ScoreRing score={fitScore} label="Project fit" />
                 <div>
-                  <p className="text-sm font-bold uppercase tracking-[0.16em] text-forest">Project fit rating</p>
+                  <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#6b716d]">Project fit rating</p>
                   <h4 className="mt-3 text-3xl font-semibold text-ink">{ratingFor(fitScore)}</h4>
                 </div>
               </div>
@@ -127,7 +127,7 @@ export function ScenarioSimulator() {
                 <p className="mt-3 font-semibold text-ink">{project.nextStep}</p>
               </div>
             </div>
-            <a href="#intelligence" className="mt-8 inline-flex text-sm font-bold text-forest hover:text-ink">
+            <a href="#intelligence" className="mt-8 inline-flex text-sm font-bold text-[#4e5752] hover:text-ink">
               Review document signals
             </a>
           </article>

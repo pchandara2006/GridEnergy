@@ -22,7 +22,7 @@ export function DocumentIntelligence() {
           title="Turn utility and permitting documents into infrastructure signals."
           body="The MVP mockup shows how GridReady AI can organize unstructured planning files into risks that site selection teams can actually use."
         />
-        <div className="product-frame mt-12 overflow-hidden">
+        <div className="mt-12 overflow-hidden border border-black/[0.08]">
           <div className="grid gap-0 lg:grid-cols-[0.84fr_1.16fr]">
             <div className="border-b border-black/[0.08] bg-white p-6 lg:border-b-0 lg:border-r">
               <p className="mb-6 text-sm font-bold uppercase tracking-[0.18em] text-[#6b716d]">Document list</p>

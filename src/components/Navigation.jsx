@@ -26,7 +26,7 @@ export function Navigation() {
         <div className="flex items-center gap-3">
           <a
             href="#analyzer"
-            className="rounded-full bg-graphite px-4 py-2 text-sm font-semibold text-white transition hover:bg-forest"
+            className="rounded-full bg-graphite px-4 py-2 text-sm font-semibold text-white transition hover:bg-ink"
           >
             Analyze a Site
           </a>

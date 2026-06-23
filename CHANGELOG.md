@@ -1,6 +1,8 @@
 # Changelog
 
 ## 2026-06-23
+- Ran a second strict cleanup pass to further reduce template-like UI treatments.
+- Replaced circular score visuals with plain numeric score treatments, muted status styling, removed unused card/badge/frame CSS primitives, and reduced remaining accent-color usage.
 - Completed final strict visual cleanup for the premium GridReady interface.
 - Removed remaining AI-generated cues including decorative hero sketching, arrow icons, fake chart blocks, excess badges, repeated mini-cards, confidence chips, and the nonfunctional mobile menu icon.
 - Simplified key sections around typography, dividers, restrained tables, and memo-style hierarchy without adding features or sections.

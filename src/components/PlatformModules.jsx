@@ -20,7 +20,7 @@ export function PlatformModules() {
         <div className="mt-12 divide-y divide-black/[0.08] border-y border-black/[0.08]">
           {platformModules.map((module, index) => (
             <article key={module.title} className="grid gap-8 py-10 lg:grid-cols-[8rem_1fr_12rem] lg:items-start">
-              <p className="text-sm font-bold uppercase tracking-[0.18em] text-forest">Module 0{index + 1}</p>
+              <p className="text-sm font-bold uppercase tracking-[0.18em] text-[#6b716d]">Module 0{index + 1}</p>
               <div>
                 <p className="mb-3 text-sm font-semibold text-[#6b716d]">{outcomes[index]}</p>
                 <h3 className="text-3xl font-semibold tracking-tight text-ink">{module.title}</h3>

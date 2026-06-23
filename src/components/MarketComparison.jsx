@@ -38,7 +38,7 @@ export function MarketComparison() {
                 key={location.id}
                 onClick={() => toggleLocation(location.id)}
                 className={`rounded-lg border px-4 py-2 text-sm font-semibold transition ${
-                  active ? 'border-forest/30 bg-forest/10 text-forest' : 'border-black/[0.1] bg-white/60 text-[#4e5752] hover:border-forest/30'
+                  active ? 'border-black/30 bg-white text-ink' : 'border-black/[0.1] bg-white/60 text-[#4e5752] hover:border-black/25'
                 }`}
               >
                 {location.city}
@@ -47,7 +47,7 @@ export function MarketComparison() {
           })}
         </div>
         <div className="mt-10 grid gap-5 lg:grid-cols-[0.72fr_1.28fr]">
-          <article className="product-card p-6">
+          <article className="border border-black/[0.08] bg-white p-6">
             <div className="space-y-8">
               <div>
                 <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#6b716d]">Strongest market</p>
@@ -61,7 +61,7 @@ export function MarketComparison() {
               </div>
             </div>
           </article>
-          <article className="product-card overflow-hidden">
+          <article className="overflow-hidden border border-black/[0.08] bg-white">
             <div className="border-b border-black/[0.08] p-6">
               <h3 className="text-2xl font-semibold text-ink">Investment committee view</h3>
               <p className="mt-2 text-sm text-[#6b716d]">Demo values for MVP validation.</p>
@@ -90,7 +90,7 @@ export function MarketComparison() {
                         <div className="flex items-center gap-3">
                           <span className="font-semibold text-ink">{location.score}</span>
                           <div className="score-line w-24">
-                            <div className="h-full rounded-full bg-forest" style={{ width: `${location.score}%` }} />
+                            <div className="h-full rounded-full bg-graphite" style={{ width: `${location.score}%` }} />
                           </div>
                         </div>
                       </td>
