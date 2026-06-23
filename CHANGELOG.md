@@ -1,6 +1,9 @@
 # Changelog
 
 ## 2026-06-23
+- Added FEMA National Risk Index cache/sample integration foundation for Climate Risk Score.
+- Added `src/services/external/femaRiskAdapter.js`, `public/data/fema-risk.sample.json`, and `docs/FEMA_INTEGRATION.md`.
+- Added climate-risk scoring helpers and connected FEMA sample/cache data to existing analyzer, comparison, and scenario flows with demo fallback.
 - Added EIA retail price cache/sample integration foundation for Power Cost Score.
 - Added `src/services/external/eiaAdapter.js`, `scripts/fetchEiaRetailPrices.js`, `.env.example`, and EIA sample cache data.
 - Added `docs/DATA_SOURCES.md` and `docs/EIA_INTEGRATION.md`.

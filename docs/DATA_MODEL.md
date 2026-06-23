@@ -33,6 +33,8 @@ Scores are normalized from 0 to 100, where higher is better for readiness and lo
 
 Power Cost Score can be replaced at runtime by EIA cache/sample data. When a normalized EIA retail price record is available, `calculatePowerCostScoreFromPrice()` maps the latest cents/kWh value to a 0-100 score. If no EIA cache/sample record is available, the app keeps the local demo Power Cost Score.
 
+Climate Risk Score can be replaced at runtime by FEMA cache/sample data. When a normalized FEMA National Risk Index record is available, `calculateClimateRiskScore()` maps the risk index to a 0-100 readiness score. If no FEMA cache/sample record is available, the app keeps the local demo Climate Risk Score.
+
 ## Project Scenario Data
 Each project type includes:
 - `id`
@@ -58,6 +60,23 @@ Record fields:
 - `stateName`
 - `sector`
 - `latestPriceCentsPerKwh`
+- `period`
+- `source`
+- `isSample`
+
+## FEMA National Risk Index Cache
+
+Normalized records live in `public/data/fema-risk.json` when generated. The sample fallback lives in `public/data/fema-risk.sample.json`.
+
+Record fields:
+- `stateId`
+- `stateName`
+- `geographyType`
+- `riskIndexScore`
+- `expectedAnnualLossRating`
+- `socialVulnerabilityRating`
+- `communityResilienceRating`
+- `dominantHazards`
 - `period`
 - `source`
 - `isSample`

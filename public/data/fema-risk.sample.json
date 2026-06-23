@@ -1,0 +1,112 @@
+{
+  "generatedAt": "2026-06-23T00:00:00.000Z",
+  "source": "FEMA National Risk Index",
+  "isSample": true,
+  "note": "Sample normalized FEMA National Risk Index cache for MVP validation. Not live FEMA data.",
+  "records": [
+    {
+      "stateId": "NM",
+      "stateName": "New Mexico",
+      "geographyType": "state",
+      "riskIndexScore": 34,
+      "expectedAnnualLossRating": "Relatively Moderate",
+      "socialVulnerabilityRating": "Relatively High",
+      "communityResilienceRating": "Relatively Moderate",
+      "dominantHazards": ["Drought", "Wildfire", "Heat"],
+      "period": "sample",
+      "source": "FEMA National Risk Index",
+      "isSample": true
+    },
+    {
+      "stateId": "AZ",
+      "stateName": "Arizona",
+      "geographyType": "state",
+      "riskIndexScore": 58,
+      "expectedAnnualLossRating": "Relatively High",
+      "socialVulnerabilityRating": "Relatively Moderate",
+      "communityResilienceRating": "Relatively Moderate",
+      "dominantHazards": ["Heat", "Drought", "Wildfire"],
+      "period": "sample",
+      "source": "FEMA National Risk Index",
+      "isSample": true
+    },
+    {
+      "stateId": "TX",
+      "stateName": "Texas",
+      "geographyType": "state",
+      "riskIndexScore": 38,
+      "expectedAnnualLossRating": "Relatively High",
+      "socialVulnerabilityRating": "Relatively Moderate",
+      "communityResilienceRating": "Relatively Moderate",
+      "dominantHazards": ["Hurricane", "Flood", "Heat"],
+      "period": "sample",
+      "source": "FEMA National Risk Index",
+      "isSample": true
+    },
+    {
+      "stateId": "CO",
+      "stateName": "Colorado",
+      "geographyType": "state",
+      "riskIndexScore": 32,
+      "expectedAnnualLossRating": "Relatively Moderate",
+      "socialVulnerabilityRating": "Relatively Low",
+      "communityResilienceRating": "Relatively High",
+      "dominantHazards": ["Wildfire", "Hail", "Winter weather"],
+      "period": "sample",
+      "source": "FEMA National Risk Index",
+      "isSample": true
+    },
+    {
+      "stateId": "GA",
+      "stateName": "Georgia",
+      "geographyType": "state",
+      "riskIndexScore": 39,
+      "expectedAnnualLossRating": "Relatively Moderate",
+      "socialVulnerabilityRating": "Relatively Moderate",
+      "communityResilienceRating": "Relatively Moderate",
+      "dominantHazards": ["Tornado", "Flood", "Heat"],
+      "period": "sample",
+      "source": "FEMA National Risk Index",
+      "isSample": true
+    },
+    {
+      "stateId": "OH",
+      "stateName": "Ohio",
+      "geographyType": "state",
+      "riskIndexScore": 28,
+      "expectedAnnualLossRating": "Relatively Moderate",
+      "socialVulnerabilityRating": "Relatively Low",
+      "communityResilienceRating": "Relatively Moderate",
+      "dominantHazards": ["Severe storm", "Flood", "Winter weather"],
+      "period": "sample",
+      "source": "FEMA National Risk Index",
+      "isSample": true
+    },
+    {
+      "stateId": "VA",
+      "stateName": "Virginia",
+      "geographyType": "state",
+      "riskIndexScore": 30,
+      "expectedAnnualLossRating": "Relatively Moderate",
+      "socialVulnerabilityRating": "Relatively Low",
+      "communityResilienceRating": "Relatively High",
+      "dominantHazards": ["Coastal flooding", "Hurricane", "Severe storm"],
+      "period": "sample",
+      "source": "FEMA National Risk Index",
+      "isSample": true
+    },
+    {
+      "stateId": "NV",
+      "stateName": "Nevada",
+      "geographyType": "state",
+      "riskIndexScore": 55,
+      "expectedAnnualLossRating": "Relatively High",
+      "socialVulnerabilityRating": "Relatively Moderate",
+      "communityResilienceRating": "Relatively Moderate",
+      "dominantHazards": ["Heat", "Drought", "Wildfire"],
+      "period": "sample",
+      "source": "FEMA National Risk Index",
+      "isSample": true
+    }
+  ]
+}

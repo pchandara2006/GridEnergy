@@ -3,6 +3,7 @@ import { locations, projectTypes } from '../data/gridreadyData.js';
 import { RiskBar, ScoreRing, SectionHeader } from './ui.jsx';
 import { calculateProjectFit, getProjectFitRating, getWeakestCategory } from '../lib/scoring.js';
 import { applyEiaPowerCostToLocation, loadEiaRetailPriceCache } from '../services/external/eiaAdapter.js';
+import { applyFemaClimateRiskToLocation, loadFemaRiskCache } from '../services/external/femaRiskAdapter.js';
 
 const categoryLabels = {
   powerCost: 'Power cost',
@@ -18,12 +19,13 @@ export function ScenarioSimulator() {
   const [projectId, setProjectId] = useState(projectTypes[0].id);
   const [locationId, setLocationId] = useState('dallas');
   const [eiaCache, setEiaCache] = useState({ records: [], sourceType: 'none' });
+  const [femaCache, setFemaCache] = useState({ records: [], sourceType: 'none' });
 
   const project = useMemo(() => projectTypes.find((item) => item.id === projectId) ?? projectTypes[0], [projectId]);
   const location = useMemo(() => {
     const selectedLocation = locations.find((item) => item.id === locationId) ?? locations[0];
-    return applyEiaPowerCostToLocation(selectedLocation, eiaCache);
-  }, [eiaCache, locationId]);
+    return applyFemaClimateRiskToLocation(applyEiaPowerCostToLocation(selectedLocation, eiaCache), femaCache);
+  }, [eiaCache, femaCache, locationId]);
   const fitScore = calculateProjectFit(location, project);
   const weakestCategory = getWeakestCategory(location.categories);
 
@@ -31,6 +33,9 @@ export function ScenarioSimulator() {
     let isMounted = true;
     loadEiaRetailPriceCache().then((cache) => {
       if (isMounted) setEiaCache(cache);
+    });
+    loadFemaRiskCache().then((cache) => {
+      if (isMounted) setFemaCache(cache);
     });
     return () => {
       isMounted = false;
@@ -89,6 +94,8 @@ export function ScenarioSimulator() {
               <p className="mt-1 text-[#5f6863]">{location.city} market simulation</p>
               <p className="mt-3 text-xs leading-5 text-[#6b716d]">Power cost score uses demo data unless EIA cache is generated.</p>
               <p className="mt-1 text-xs leading-5 text-[#6b716d]">{location.powerCostSource}</p>
+              <p className="mt-3 text-xs leading-5 text-[#6b716d]">Climate risk uses demo data unless FEMA cache is generated.</p>
+              <p className="mt-1 text-xs leading-5 text-[#6b716d]">{location.climateRiskSource}</p>
             </div>
           </aside>
           <article className="border border-black/[0.08] bg-white p-6 sm:p-8">

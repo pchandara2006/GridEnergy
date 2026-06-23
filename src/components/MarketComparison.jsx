@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { demoDataNotice, locations } from '../data/gridreadyData.js';
 import { applyEiaPowerCostToLocation, loadEiaRetailPriceCache } from '../services/external/eiaAdapter.js';
+import { applyFemaClimateRiskToLocation, loadFemaRiskCache } from '../services/external/femaRiskAdapter.js';
 import { RecommendationBadge, SectionHeader } from './ui.jsx';
 
 const defaultSelected = ['dallas', 'albuquerque', 'atlanta', 'columbus'];
@@ -8,13 +9,14 @@ const defaultSelected = ['dallas', 'albuquerque', 'atlanta', 'columbus'];
 export function MarketComparison() {
   const [selectedIds, setSelectedIds] = useState(defaultSelected);
   const [eiaCache, setEiaCache] = useState({ records: [], sourceType: 'none' });
+  const [femaCache, setFemaCache] = useState({ records: [], sourceType: 'none' });
   const selectedLocations = useMemo(
     () =>
       locations
         .filter((location) => selectedIds.includes(location.id))
-        .map((location) => applyEiaPowerCostToLocation(location, eiaCache))
+        .map((location) => applyFemaClimateRiskToLocation(applyEiaPowerCostToLocation(location, eiaCache), femaCache))
         .sort((a, b) => b.score - a.score),
-    [eiaCache, selectedIds],
+    [eiaCache, femaCache, selectedIds],
   );
   const strongest = [...selectedLocations].sort((a, b) => b.score - a.score)[0];
   const riskiest = [...selectedLocations].sort((a, b) => a.score - b.score)[0];
@@ -32,6 +34,9 @@ export function MarketComparison() {
     let isMounted = true;
     loadEiaRetailPriceCache().then((cache) => {
       if (isMounted) setEiaCache(cache);
+    });
+    loadFemaRiskCache().then((cache) => {
+      if (isMounted) setFemaCache(cache);
     });
     return () => {
       isMounted = false;

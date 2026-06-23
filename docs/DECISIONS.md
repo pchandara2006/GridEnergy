@@ -10,6 +10,7 @@
 ## Product Decisions
 - Clearly label the dataset as a demo dataset for MVP validation.
 - Use EIA retail electricity price data as the first external-data foundation because it is public, state-level, and relevant to Power Cost Score.
+- Use FEMA National Risk Index as the second external-data foundation because it is a public, infrastructure-relevant baseline for natural hazard exposure and resilience.
 - Focus the primary workflow on location analysis, market comparison, project fit simulation, and document signal extraction.
 - Keep business language direct and decision-oriented for infrastructure teams and investors.
 - Include "best opportunity" and "biggest risk" outputs because users need directional diligence guidance, not just scores.
@@ -20,6 +21,8 @@
 - Keep reusable scoring logic in `src/lib/scoring.js` instead of embedding it in React components.
 - Keep EIA API access out of browser code. Fetch scripts read `EIA_API_KEY` from the environment and write normalized public cache JSON.
 - Use sample EIA cache data for MVP validation and fallback, while clearly marking it as sample data.
+- Use FEMA cache/sample JSON in the browser rather than calling external geospatial APIs directly from the UI.
+- Start with state-level FEMA sample data, then move to county or tract-level matching when real site geographies are introduced.
 - Remove unused charting and icon dependencies after the final visual cleanup removed active charts and icons.
 - Keep the app frontend-only until data provenance, API shape, and scoring requirements are clearer.
 

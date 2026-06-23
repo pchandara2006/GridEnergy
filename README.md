@@ -27,6 +27,7 @@ GridReady AI packages those signals into a practical readiness workflow for earl
 - Document intelligence mock workflow
 - Use case summaries for power-heavy infrastructure teams
 - EIA retail price cache foundation for Power Cost Score, with demo fallback
+- FEMA National Risk Index cache foundation for Climate Risk Score, with demo fallback
 
 ## Tech Stack
 - React 18
@@ -80,6 +81,15 @@ public/data/eia-retail-prices.json
 ```
 
 If no key or generated cache is available, the app falls back to `public/data/eia-retail-prices.sample.json`, then to local demo Power Cost Score values.
+
+## FEMA Climate Risk Data
+The frontend reads normalized FEMA National Risk Index cache data from public JSON. The repository currently includes sample state-level data:
+
+```text
+public/data/fema-risk.sample.json
+```
+
+If a generated FEMA cache is later added at `public/data/fema-risk.json`, the app will use it first. If not, the app falls back to the sample file, then to local demo Climate Risk Score values.
 
 ## Future Data Integrations
 - Utility integrated resource plans and capacity maps

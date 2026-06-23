@@ -45,3 +45,19 @@ export function explainPowerCostScore(priceCentsPerKwh, sector = 'industrial') {
 
   return `Power cost score maps ${sector} electricity price (${priceCentsPerKwh} cents/kWh) to a 0-100 score, where lower prices score higher.`;
 }
+
+export function calculateClimateRiskScore(riskIndexScore) {
+  const risk = Number.parseFloat(riskIndexScore);
+  if (!Number.isFinite(risk)) return null;
+
+  return clampScore(100 - risk);
+}
+
+export function explainClimateRiskScore(riskIndexScore) {
+  const score = calculateClimateRiskScore(riskIndexScore);
+  if (score === null) {
+    return 'Climate Risk Score uses the local demo estimate because no valid FEMA National Risk Index record is available.';
+  }
+
+  return `Climate Risk Score maps FEMA National Risk Index risk (${riskIndexScore}) to a 0-100 readiness score, where lower risk scores higher.`;
+}

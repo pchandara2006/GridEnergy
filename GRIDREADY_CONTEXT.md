@@ -19,6 +19,7 @@ Core tagline: "Power readiness intelligence for the next generation of infrastru
 - Local mock/demo data in `src/data/gridreadyData.js`
 - Reusable scoring helpers in `src/lib/scoring.js`
 - EIA retail price cache adapter in `src/services/external/eiaAdapter.js`
+- FEMA National Risk Index cache adapter in `src/services/external/femaRiskAdapter.js`
 
 ## Architecture
 - Frontend-first single-page app.
@@ -26,6 +27,7 @@ Core tagline: "Power readiness intelligence for the next generation of infrastru
 - Demo domain data is centralized in `src/data/gridreadyData.js`.
 - Scenario scoring logic is isolated in `src/lib/scoring.js`.
 - Power Cost Score can use normalized EIA retail-price cache data from `public/data/eia-retail-prices.json`, with sample/demo fallback.
+- Climate Risk Score can use normalized FEMA National Risk Index cache data from `public/data/fema-risk.json`, with sample/demo fallback.
 - Backend/API integration can later replace local arrays without rewriting the UI sections.
 
 ## Completed Features
@@ -41,6 +43,7 @@ Core tagline: "Power readiness intelligence for the next generation of infrastru
 - Minimal use case section and clean graphite footer.
 - Documentation memory files for future sessions.
 - EIA retail price cache foundation for Power Cost Score.
+- FEMA National Risk Index cache foundation for Climate Risk Score.
 
 ## Current Visual Language
 The frontend was redesigned from a neon/dark dashboard to a clean premium infrastructure SaaS style inspired by Apple/Robinhood/Snowflake-style clarity and editorial Awwwards-level spacing. The interface now uses off-white surfaces, graphite text, restrained borders, tables, and memo-style hierarchy.
@@ -51,4 +54,4 @@ The frontend was redesigned from a neon/dark dashboard to a clean premium infras
 3. Build production bundle: `npm run build`
 4. Run lint checks: `npm run lint`
 
-All market scores and document outputs are demo values for MVP validation unless a local EIA cache is generated. EIA sample cache data is also sample data, not official live data.
+All market scores and document outputs are demo values for MVP validation unless local EIA/FEMA caches are generated. Sample cache data is also sample data, not official live data.

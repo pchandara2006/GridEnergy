@@ -1,6 +1,6 @@
 # Data Sources
 
-GridReady AI currently uses local demo data plus a first external data foundation for electricity retail prices.
+GridReady AI currently uses local demo data plus external data foundations for electricity prices and climate risk.
 
 ## Current Sources
 
@@ -8,6 +8,7 @@ GridReady AI currently uses local demo data plus a first external data foundatio
 | --- | --- | --- | --- |
 | Local demo data | Active fallback | Site readiness, risk categories, use cases, document signals | `src/data/gridreadyData.js` |
 | EIA retail sales electricity prices | Cache/sample foundation | Power Cost Score | `public/data/eia-retail-prices.json` or `public/data/eia-retail-prices.sample.json` |
+| FEMA National Risk Index | Cache/sample foundation | Climate Risk Score | `public/data/fema-risk.json` or `public/data/fema-risk.sample.json` |
 
 ## Data Policy
 
