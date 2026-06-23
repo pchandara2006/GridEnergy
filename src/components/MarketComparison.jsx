@@ -1,5 +1,4 @@
 import { useMemo, useState } from 'react';
-import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { locations } from '../data/gridreadyData.js';
 import { RecommendationBadge, SectionHeader } from './ui.jsx';
 
@@ -47,30 +46,19 @@ export function MarketComparison() {
             );
           })}
         </div>
-        <div className="mt-10 grid gap-5 lg:grid-cols-[0.82fr_1.18fr]">
+        <div className="mt-10 grid gap-5 lg:grid-cols-[0.72fr_1.28fr]">
           <article className="product-card p-6">
-            <div className="mb-6 grid gap-4 sm:grid-cols-2">
-              <div className="memo-card p-5">
-                <p className="text-sm font-bold uppercase tracking-[0.16em] text-forest">Strongest market</p>
+            <div className="space-y-8">
+              <div>
+                <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#6b716d]">Strongest market</p>
                 <p className="mt-3 text-3xl font-semibold text-ink">{strongest?.city}</p>
                 <p className="mt-1 text-[#5f6863]">{strongest?.score} readiness score</p>
               </div>
-              <div className="memo-card p-5">
-                <p className="text-sm font-bold uppercase tracking-[0.16em] text-amber">Highest diligence need</p>
+              <div className="border-t border-black/[0.08] pt-6">
+                <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#6b716d]">Highest diligence need</p>
                 <p className="mt-3 text-3xl font-semibold text-ink">{riskiest?.city}</p>
-                <p className="mt-1 text-[#5f6863]">{riskiest?.biggestRisk}</p>
+                <p className="mt-1 leading-7 text-[#5f6863]">{riskiest?.biggestRisk}</p>
               </div>
-            </div>
-            <div className="h-80">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={selectedLocations} layout="vertical" margin={{ left: 18, right: 18 }}>
-                  <CartesianGrid stroke="rgba(20,24,22,0.08)" horizontal={false} />
-                  <XAxis type="number" domain={[0, 100]} tick={{ fill: '#6b716d' }} />
-                  <YAxis dataKey="city" type="category" width={110} tick={{ fill: '#4e5752', fontSize: 12 }} />
-                  <Tooltip contentStyle={{ background: '#ffffff', color: '#101312', border: '1px solid rgba(20,24,22,0.12)', borderRadius: 12 }} />
-                  <Bar dataKey="score" fill="#1f6f4a" radius={[0, 6, 6, 0]} />
-                </BarChart>
-              </ResponsiveContainer>
             </div>
           </article>
           <article className="product-card overflow-hidden">
@@ -109,10 +97,7 @@ export function MarketComparison() {
                       <td className="px-5 py-4 text-[#4e5752]">{location.bestUseCase}</td>
                       <td className="px-5 py-4 text-[#4e5752]">{location.biggestRisk}</td>
                       <td className="px-5 py-4">
-                        <div className="flex flex-col gap-2">
-                          <RecommendationBadge value={location.recommendation} />
-                          <span className="text-xs text-[#6b716d]">Prioritize {location.bestUseCase.toLowerCase()} diligence.</span>
-                        </div>
+                        <RecommendationBadge value={location.recommendation} />
                       </td>
                     </tr>
                   ))}

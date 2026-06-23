@@ -61,11 +61,11 @@ export function LocationAnalyzer() {
               </div>
               <p className="mt-8 text-lg leading-8 text-[#4e5752]">{selected.explanation}</p>
               <div className="mt-8 grid gap-4 sm:grid-cols-2">
-                <div className="memo-card p-5">
+                <div className="border-t border-black/[0.08] pt-5">
                   <p className="text-sm font-bold uppercase tracking-[0.16em] text-clay">Biggest constraint</p>
                   <p className="mt-3 font-semibold text-ink">{selected.biggestRisk}</p>
                 </div>
-                <div className="memo-card p-5">
+                <div className="border-t border-black/[0.08] pt-5">
                   <p className="text-sm font-bold uppercase tracking-[0.16em] text-forest">Best opportunity</p>
                   <p className="mt-3 font-semibold text-ink">{selected.bestOpportunity}</p>
                 </div>
@@ -77,7 +77,7 @@ export function LocationAnalyzer() {
                   <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#6b716d]">Score breakdown</p>
                   <h3 className="mt-2 text-2xl font-semibold text-ink">Readiness by category</h3>
                 </div>
-                <p className="soft-badge">Best fit: {selected.bestUseCase}</p>
+                <p className="text-sm text-[#6b716d]">Best fit: {selected.bestUseCase}</p>
               </div>
               <div className="grid gap-8 xl:grid-cols-[1fr_0.8fr]">
                 <div className="space-y-5">
@@ -86,12 +86,12 @@ export function LocationAnalyzer() {
                   ))}
                 </div>
                 <div className="space-y-4">
-                  <div className="memo-card p-5">
+                  <div className="border-t border-black/[0.08] pt-5">
                     <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#6b716d]">Lowest score</p>
                     <p className="mt-3 text-2xl font-semibold text-ink">{categoryLabels[weakestCategory[0]]}</p>
                     <p className="mt-1 text-[#5f6863]">{weakestCategory[1]} / 100</p>
                   </div>
-                  <div className="memo-card p-5">
+                  <div className="border-t border-black/[0.08] pt-5">
                     <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#6b716d]">Next diligence step</p>
                     <p className="mt-3 leading-7 text-[#4e5752]">{diligenceStep[selected.recommendation]}</p>
                   </div>

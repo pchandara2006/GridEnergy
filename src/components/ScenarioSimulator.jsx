@@ -1,5 +1,4 @@
 import { useMemo, useState } from 'react';
-import { ArrowRight } from 'lucide-react';
 import { locations, projectTypes } from '../data/gridreadyData.js';
 import { RiskBar, ScoreRing, SectionHeader } from './ui.jsx';
 
@@ -52,8 +51,8 @@ export function ScenarioSimulator() {
         <div className="mt-12 grid gap-5 lg:grid-cols-[0.78fr_1.22fr]">
           <aside className="product-card p-6">
             <div className="mb-8">
-              <p className="text-xs font-bold uppercase tracking-[0.18em] text-forest">Step 1</p>
-              <h3 className="mt-2 text-2xl font-semibold text-ink">Select project type</h3>
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#6b716d]">Step 1</p>
+              <h3 className="mt-2 text-2xl font-semibold text-ink">Project type</h3>
             </div>
             <label className="block">
               <span className="mb-3 block text-sm font-semibold uppercase tracking-[0.14em] text-[#6b716d]">Project type</span>
@@ -70,8 +69,8 @@ export function ScenarioSimulator() {
               </select>
             </label>
             <div className="mb-6 mt-8 border-t border-black/[0.08] pt-8">
-              <p className="text-xs font-bold uppercase tracking-[0.18em] text-forest">Step 2</p>
-              <h3 className="mt-2 text-2xl font-semibold text-ink">Select market</h3>
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#6b716d]">Step 2</p>
+              <h3 className="mt-2 text-2xl font-semibold text-ink">Market</h3>
             </div>
             <label className="block">
               <span className="mb-3 block text-sm font-semibold uppercase tracking-[0.14em] text-[#6b716d]">Location</span>
@@ -87,7 +86,7 @@ export function ScenarioSimulator() {
                 ))}
               </select>
             </label>
-            <div className="memo-card mt-8 p-5">
+            <div className="mt-8 border-t border-black/[0.08] pt-6">
               <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#6b716d]">Selected case</p>
               <p className="mt-3 text-lg font-semibold text-ink">{project.name}</p>
               <p className="mt-1 text-[#5f6863]">{location.city} market simulation</p>
@@ -95,7 +94,7 @@ export function ScenarioSimulator() {
           </aside>
           <article className="product-frame bg-white p-6 sm:p-8">
             <div className="mb-8">
-              <p className="text-xs font-bold uppercase tracking-[0.18em] text-forest">Step 3</p>
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#6b716d]">Step 3</p>
               <h3 className="mt-2 text-3xl font-semibold tracking-tight text-ink">Decision memo</h3>
             </div>
             <div className="grid gap-8 xl:grid-cols-[0.68fr_1fr]">
@@ -114,23 +113,22 @@ export function ScenarioSimulator() {
               </div>
             </div>
             <div className="mt-8 grid gap-4 md:grid-cols-3">
-              <div className="memo-card p-5">
-                <p className="text-sm font-bold uppercase tracking-[0.16em] text-clay">Main constraint</p>
+              <div className="border-t border-black/[0.08] pt-5">
+                <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#6b716d]">Main constraint</p>
                 <p className="mt-3 font-semibold text-ink">{location.biggestRisk}</p>
                 <p className="mt-2 text-xs text-[#6b716d]">Weakest demo category: {categoryLabels[weakestCategory[0]]}</p>
               </div>
-              <div className="memo-card p-5">
-                <p className="text-sm font-bold uppercase tracking-[0.16em] text-amber">Financial exposure</p>
+              <div className="border-t border-black/[0.08] pt-5">
+                <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#6b716d]">Financial exposure</p>
                 <p className="mt-3 font-semibold text-ink">{project.warning}</p>
               </div>
-              <div className="memo-card p-5">
-                <p className="text-sm font-bold uppercase tracking-[0.16em] text-steel">Suggested next diligence step</p>
+              <div className="border-t border-black/[0.08] pt-5">
+                <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#6b716d]">Suggested next diligence step</p>
                 <p className="mt-3 font-semibold text-ink">{project.nextStep}</p>
               </div>
             </div>
-            <a href="#intelligence" className="mt-8 inline-flex items-center gap-2 text-sm font-bold text-forest hover:text-ink">
+            <a href="#intelligence" className="mt-8 inline-flex text-sm font-bold text-forest hover:text-ink">
               Review document signals
-              <ArrowRight size={16} />
             </a>
           </article>
         </div>

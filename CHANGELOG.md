@@ -1,6 +1,9 @@
 # Changelog
 
 ## 2026-06-23
+- Completed final strict visual cleanup for the premium GridReady interface.
+- Removed remaining AI-generated cues including decorative hero sketching, arrow icons, fake chart blocks, excess badges, repeated mini-cards, confidence chips, and the nonfunctional mobile menu icon.
+- Simplified key sections around typography, dividers, restrained tables, and memo-style hierarchy without adding features or sections.
 - Redesigned visual language from neon/dark dashboard to clean premium infrastructure SaaS inspired by Apple/Robinhood/Snowflake-style clarity and editorial Awwwards-level spacing.
 - Replaced glowing grid hero with a light editorial hero and calm site-readiness product preview.
 - Reworked navigation, why-now metrics, platform modules, analyzer, comparison view, simulator, document review workspace, use cases, and footer with off-white surfaces, graphite text, muted green/blue accents, and memo-style layouts.

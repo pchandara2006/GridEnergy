@@ -1,5 +1,3 @@
-import { Menu } from 'lucide-react';
-
 const links = [
   { label: 'Platform', href: '#platform' },
   { label: 'Intelligence', href: '#intelligence' },
@@ -13,12 +11,8 @@ export function Navigation() {
     <header className="fixed inset-x-0 top-0 z-50 border-b border-black/[0.08] bg-[#fbfaf7]/88 backdrop-blur-xl">
       <nav className="section-shell flex items-center justify-between py-4">
         <a href="#top" className="flex items-center gap-3" aria-label="GridReady AI home">
-          <span className="relative grid h-9 w-9 place-items-center rounded-xl border border-black/10 bg-white shadow-sm">
-            <span className="absolute left-2 top-2 h-2 w-2 rounded-full bg-forest" />
-            <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-steel" />
-            <span className="absolute bottom-2 left-1/2 h-2 w-2 -translate-x-1/2 rounded-full bg-graphite" />
-            <span className="h-px w-5 rotate-45 bg-black/20" />
-            <span className="absolute h-px w-5 -rotate-45 bg-black/20" />
+          <span className="grid h-8 w-8 place-items-center rounded-lg border border-black/10 bg-white shadow-sm">
+            <span className="h-3 w-3 rounded-sm bg-graphite" />
           </span>
           <span className="text-lg font-semibold tracking-tight text-ink">GridReady AI</span>
         </a>
@@ -32,13 +26,10 @@ export function Navigation() {
         <div className="flex items-center gap-3">
           <a
             href="#analyzer"
-            className="hidden rounded-full bg-graphite px-4 py-2 text-sm font-semibold text-white transition hover:bg-forest sm:inline-flex"
+            className="rounded-full bg-graphite px-4 py-2 text-sm font-semibold text-white transition hover:bg-forest"
           >
             Analyze a Site
           </a>
-          <button className="grid h-10 w-10 place-items-center rounded-full border border-black/10 text-ink lg:hidden" aria-label="Open navigation">
-            <Menu size={20} />
-          </button>
         </div>
       </nav>
     </header>
