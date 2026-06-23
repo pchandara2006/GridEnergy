@@ -28,15 +28,19 @@ Core tagline: "Power readiness intelligence for the next generation of infrastru
 
 ## Completed Features
 - Premium navigation with section links and "Analyze a Site" CTA.
-- Cinematic hero with original CSS/SVG power-grid visual.
-- Why Now section with clearly labeled demo stat cards.
-- Platform modules with data visuals.
-- Interactive location risk analyzer for eight demo markets.
-- Market comparison dashboard for three to five cities.
-- Project scenario simulator for five project archetypes.
-- AI document intelligence workflow mock demo.
-- Use case cards and footer.
+- Clean light navigation with a custom minimal GridReady mark.
+- Editorial hero with a calm product-preview memo instead of a neon grid visual.
+- Why Now section with clean metric rows.
+- Horizontal platform modules with restrained product visuals.
+- Interactive light-mode location risk analyzer for eight demo markets.
+- Market comparison dashboard in investment-committee memo style.
+- Guided project scenario simulator for five project archetypes.
+- AI document intelligence review workspace with confidence chips and snippets.
+- Minimal use case section and clean graphite footer.
 - Documentation memory files for future sessions.
+
+## Current Visual Language
+The frontend was redesigned from a neon/dark dashboard to a clean premium infrastructure SaaS style inspired by Apple/Robinhood/Snowflake-style clarity and editorial Awwwards-level spacing. The interface now uses off-white surfaces, graphite text, deep forest green, muted blue, soft silver, restrained borders, and memo-style product frames.
 
 ## How To Run Locally
 1. Install dependencies: `npm install`

@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: #05070b;
+  background: #f7f5ef;
 }
 
 * {
@@ -19,10 +19,8 @@ html {
 body {
   margin: 0;
   min-width: 320px;
-  background:
-    radial-gradient(circle at 20% 10%, rgba(53, 167, 255, 0.16), transparent 28rem),
-    radial-gradient(circle at 85% 20%, rgba(142, 230, 181, 0.12), transparent 26rem),
-    linear-gradient(135deg, #05070b 0%, #0a101a 45%, #05070b 100%);
+  background: #f7f5ef;
+  color: #101312;
 }
 
 button,
@@ -36,64 +34,122 @@ select {
   margin: 0 auto;
 }
 
-.glass-panel {
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background:
-    linear-gradient(145deg, rgba(17, 27, 43, 0.92), rgba(9, 13, 20, 0.88)),
-    radial-gradient(circle at top left, rgba(77, 231, 255, 0.1), transparent 20rem);
-  box-shadow: 0 24px 90px rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(18px);
+.page-shell {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
 }
 
-.fine-grid {
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
-  background-size: 42px 42px;
+.section-light {
+  background: #fbfaf7;
 }
 
-.energy-line {
-  stroke-dasharray: 12 12;
-  animation: dash 8s linear infinite;
+.section-muted {
+  background: #eef1ed;
 }
 
-.pulse-node {
-  animation: pulseNode 2.8s ease-in-out infinite;
+.section-dark-clean {
+  background: #151817;
+  color: #f7f5ef;
 }
 
-@keyframes dash {
-  to {
-    stroke-dashoffset: -180;
-  }
+.editorial-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(320px, 1.1fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
 }
 
-@keyframes pulseNode {
-  0%,
-  100% {
-    opacity: 0.52;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.08);
-  }
+.product-frame {
+  border: 1px solid rgba(20, 24, 22, 0.1);
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 24px 70px rgba(20, 24, 22, 0.08);
+  border-radius: 28px;
 }
 
-.scan-band {
-  animation: scan 5s ease-in-out infinite;
+.product-card {
+  border: 1px solid rgba(20, 24, 22, 0.1);
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 14px 38px rgba(20, 24, 22, 0.06);
 }
 
-@keyframes scan {
-  0% {
-    transform: translateX(-20%);
-    opacity: 0;
-  }
-  35%,
-  65% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateX(110%);
-    opacity: 0;
+.memo-card {
+  border: 1px solid rgba(20, 24, 22, 0.1);
+  background: #fbfaf7;
+  border-radius: 18px;
+}
+
+.soft-badge {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  border-radius: 999px;
+  border: 1px solid rgba(20, 24, 22, 0.12);
+  background: rgba(255, 255, 255, 0.68);
+  padding: 0.35rem 0.7rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #4e5752;
+}
+
+.metric-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: center;
+  border-top: 1px solid rgba(20, 24, 22, 0.1);
+  padding: 1.15rem 0;
+}
+
+.score-line {
+  height: 0.45rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(20, 24, 22, 0.08);
+}
+
+.clean-button-primary,
+.clean-button-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.85rem;
+  border-radius: 999px;
+  padding: 0 1.2rem;
+  font-weight: 700;
+  transition: border-color 160ms ease, background 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.clean-button-primary {
+  background: #151817;
+  color: #fbfaf7;
+}
+
+.clean-button-primary:hover {
+  background: #1f6f4a;
+  transform: translateY(-1px);
+}
+
+.clean-button-secondary {
+  border: 1px solid rgba(20, 24, 22, 0.14);
+  color: #151817;
+  background: rgba(255, 255, 255, 0.56);
+}
+
+.clean-button-secondary:hover {
+  border-color: rgba(31, 111, 74, 0.35);
+  background: #ffffff;
+}
+
+select {
+  color: #101312;
+  background-color: #ffffff;
+}
+
+@media (max-width: 960px) {
+  .editorial-grid {
+    grid-template-columns: 1fr;
   }
 }

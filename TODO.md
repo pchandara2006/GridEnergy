@@ -1,6 +1,8 @@
 # GridReady AI TODO
 
 ## Next Development Tasks
+- Add visual QA screenshots for desktop, tablet, and mobile after the clean premium redesign.
+- Add a reusable design token reference for the light editorial system.
 - Add URL state for selected location, comparison set, and project scenario.
 - Add exportable investor memo or PDF summary for a selected market.
 - Add authentication-ready app shell when backend scope begins.
@@ -9,6 +11,7 @@
 
 ## Bugs / Follow-Up QA
 - Validate the responsive layout manually across common tablet and mobile viewport sizes.
+- Review mobile table behavior for the investment committee comparison view after real device testing.
 - Add unit tests for project scenario scoring once a test runner is introduced.
 - Confirm all chart labels remain readable on narrow mobile screens.
 

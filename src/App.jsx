@@ -11,7 +11,7 @@ import { Footer } from './components/Footer.jsx';
 
 export default function App() {
   return (
-    <div className="min-h-screen overflow-hidden bg-graphite text-white">
+    <div className="min-h-screen overflow-hidden bg-parchment text-ink">
       <Navigation />
       <main>
         <Hero />

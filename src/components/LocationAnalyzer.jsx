@@ -1,6 +1,4 @@
 import { useMemo, useState } from 'react';
-import { Radar, RadarChart, PolarAngleAxis, PolarGrid, ResponsiveContainer, Tooltip } from 'recharts';
-import { AlertTriangle, BadgeCheck, Lightbulb } from 'lucide-react';
 import { locations } from '../data/gridreadyData.js';
 import { RecommendationBadge, RiskBar, ScoreRing, SectionHeader } from './ui.jsx';
 
@@ -14,13 +12,20 @@ const categoryLabels = {
   financeRoi: 'Finance/ROI Risk',
 };
 
+const diligenceStep = {
+  Recommended: 'Advance to utility capacity confirmation and incentive review.',
+  'Needs Review': 'Run focused diligence on the main constraint before land control.',
+  'High Risk': 'Require executive review before committing additional diligence budget.',
+};
+
 export function LocationAnalyzer() {
   const [selectedId, setSelectedId] = useState(locations[2].id);
   const selected = useMemo(() => locations.find((location) => location.id === selectedId) ?? locations[0], [selectedId]);
   const categoryEntries = Object.entries(selected.categories);
+  const weakestCategory = [...categoryEntries].sort((a, b) => a[1] - b[1])[0];
 
   return (
-    <section id="analyzer" className="border-y border-white/8 bg-ink/70 py-24">
+    <section id="analyzer" className="section-muted border-y border-black/[0.08] py-24">
       <div className="section-shell">
         <div className="grid gap-8 lg:grid-cols-[1fr_22rem] lg:items-end">
           <SectionHeader
@@ -29,11 +34,11 @@ export function LocationAnalyzer() {
             body="Select a demo market to see readiness, risk categories, recommendation logic, and the business explanation a development team would need."
           />
           <label className="block">
-            <span className="mb-3 block text-sm font-semibold uppercase tracking-[0.18em] text-slate-400">Demo location</span>
+            <span className="mb-3 block text-sm font-semibold uppercase tracking-[0.18em] text-[#6b716d]">Demo location</span>
             <select
               value={selectedId}
               onChange={(event) => setSelectedId(event.target.value)}
-              className="w-full rounded-lg border border-white/12 bg-graphite px-4 py-3 text-white outline-none transition focus:border-cyanline"
+              className="w-full rounded-xl border border-black/[0.12] bg-white px-4 py-3 text-ink outline-none transition focus:border-forest"
             >
               {locations.map((location) => (
                 <option key={location.id} value={location.id}>
@@ -43,57 +48,57 @@ export function LocationAnalyzer() {
             </select>
           </label>
         </div>
-        <div className="mt-12 grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
-          <article className="glass-panel rounded-2xl p-6">
-            <div className="flex flex-col gap-8 sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <RecommendationBadge value={selected.recommendation} />
-                <h3 className="mt-5 text-3xl font-semibold">{selected.city}</h3>
-                <p className="mt-1 text-slate-400">{selected.region}</p>
-              </div>
-              <ScoreRing score={selected.score} label="Grid readiness" />
-            </div>
-            <p className="mt-8 text-lg leading-8 text-slate-300">{selected.explanation}</p>
-            <div className="mt-8 grid gap-4 sm:grid-cols-2">
-              <div className="rounded-xl border border-risk/25 bg-risk/8 p-5">
-                <div className="mb-3 flex items-center gap-2 text-risk">
-                  <AlertTriangle size={18} />
-                  <span className="text-sm font-semibold uppercase tracking-[0.18em]">Biggest risk</span>
+        <div className="product-frame mt-12 overflow-hidden">
+          <div className="grid lg:grid-cols-[0.88fr_1.12fr]">
+            <article className="border-b border-black/[0.08] bg-white p-6 sm:p-8 lg:border-b-0 lg:border-r">
+              <div className="flex flex-col gap-8 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <RecommendationBadge value={selected.recommendation} />
+                  <h3 className="mt-5 text-4xl font-semibold tracking-tight text-ink">{selected.city}</h3>
+                  <p className="mt-1 text-[#6b716d]">{selected.region}</p>
                 </div>
-                <p className="font-medium text-white">{selected.biggestRisk}</p>
+                <ScoreRing score={selected.score} label="Readiness" />
               </div>
-              <div className="rounded-xl border border-gridgreen/25 bg-gridgreen/8 p-5">
-                <div className="mb-3 flex items-center gap-2 text-gridgreen">
-                  <Lightbulb size={18} />
-                  <span className="text-sm font-semibold uppercase tracking-[0.18em]">Best opportunity</span>
+              <p className="mt-8 text-lg leading-8 text-[#4e5752]">{selected.explanation}</p>
+              <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                <div className="memo-card p-5">
+                  <p className="text-sm font-bold uppercase tracking-[0.16em] text-clay">Biggest constraint</p>
+                  <p className="mt-3 font-semibold text-ink">{selected.biggestRisk}</p>
                 </div>
-                <p className="font-medium text-white">{selected.bestOpportunity}</p>
-              </div>
-            </div>
-          </article>
-          <article className="glass-panel rounded-2xl p-6">
-            <div className="grid gap-8 xl:grid-cols-[1fr_0.9fr]">
-              <div className="space-y-5">
-                {categoryEntries.map(([key, value]) => (
-                  <RiskBar key={key} label={categoryLabels[key]} value={value} />
-                ))}
-              </div>
-              <div className="min-h-80 rounded-xl border border-white/10 bg-white/[0.035] p-4">
-                <ResponsiveContainer width="100%" height={300}>
-                  <RadarChart data={selected.riskTrend}>
-                    <PolarGrid stroke="rgba(255,255,255,0.15)" />
-                    <PolarAngleAxis dataKey="name" tick={{ fill: '#cbd5e1', fontSize: 12 }} />
-                    <Radar dataKey="value" stroke="#4de7ff" fill="#4de7ff" fillOpacity={0.22} />
-                    <Tooltip contentStyle={{ background: '#090d14', border: '1px solid rgba(255,255,255,0.14)', borderRadius: 8 }} />
-                  </RadarChart>
-                </ResponsiveContainer>
-                <div className="mt-2 flex items-center gap-2 text-sm text-slate-300">
-                  <BadgeCheck size={16} className="text-gridgreen" />
-                  Best fit: {selected.bestUseCase}
+                <div className="memo-card p-5">
+                  <p className="text-sm font-bold uppercase tracking-[0.16em] text-forest">Best opportunity</p>
+                  <p className="mt-3 font-semibold text-ink">{selected.bestOpportunity}</p>
                 </div>
               </div>
-            </div>
-          </article>
+            </article>
+            <article className="bg-[#fbfaf7] p-6 sm:p-8">
+              <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#6b716d]">Score breakdown</p>
+                  <h3 className="mt-2 text-2xl font-semibold text-ink">Readiness by category</h3>
+                </div>
+                <p className="soft-badge">Best fit: {selected.bestUseCase}</p>
+              </div>
+              <div className="grid gap-8 xl:grid-cols-[1fr_0.8fr]">
+                <div className="space-y-5">
+                  {categoryEntries.map(([key, value]) => (
+                    <RiskBar key={key} label={categoryLabels[key]} value={value} />
+                  ))}
+                </div>
+                <div className="space-y-4">
+                  <div className="memo-card p-5">
+                    <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#6b716d]">Lowest score</p>
+                    <p className="mt-3 text-2xl font-semibold text-ink">{categoryLabels[weakestCategory[0]]}</p>
+                    <p className="mt-1 text-[#5f6863]">{weakestCategory[1]} / 100</p>
+                  </div>
+                  <div className="memo-card p-5">
+                    <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#6b716d]">Next diligence step</p>
+                    <p className="mt-3 leading-7 text-[#4e5752]">{diligenceStep[selected.recommendation]}</p>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
         </div>
       </div>
     </section>

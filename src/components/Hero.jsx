@@ -1,97 +1,84 @@
-import { ArrowRight, BarChart3, Gauge, MapPinned, Zap } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+
+const previewRows = [
+  { city: 'Dallas', score: 81, constraint: 'Reliability planning', step: 'Validate backup and tariff exposure', color: 'bg-forest' },
+  { city: 'Phoenix', score: 64, constraint: 'Cooling and water', step: 'Stress-test thermal load assumptions', color: 'bg-amber' },
+  { city: 'Albuquerque', score: 78, constraint: 'Queue timing', step: 'Review transmission upgrade schedule', color: 'bg-steel' },
+];
 
 export function Hero() {
   return (
-    <section id="top" className="relative min-h-screen overflow-hidden pt-28">
-      <div className="absolute inset-0 fine-grid opacity-70" />
-      <div className="absolute inset-x-0 top-0 h-96 bg-gradient-to-b from-electric/15 to-transparent" />
-      <div className="section-shell relative grid min-h-[calc(100vh-7rem)] items-center gap-12 py-12 lg:grid-cols-[1fr_0.95fr]">
-        <div className="max-w-4xl">
-          <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-cyanline">
-            <Zap size={15} />
-            Demo dataset for MVP validation
-          </div>
-          <h1 className="text-5xl font-semibold tracking-tight text-white sm:text-6xl lg:text-7xl">
-            Power readiness intelligence for the next generation of infrastructure.
+    <section id="top" className="section-light relative overflow-hidden pt-28">
+      <div className="section-shell editorial-grid min-h-[calc(100vh-7rem)] py-16 lg:py-24">
+        <div className="max-w-3xl">
+          <p className="soft-badge mb-7">Demo dataset for MVP validation</p>
+          <h1 className="text-5xl font-semibold tracking-tight text-ink sm:text-6xl lg:text-7xl">
+            Know where power is ready before capital is committed.
           </h1>
-          <p className="mt-7 max-w-3xl text-lg leading-8 text-slate-300 md:text-xl">
-            GridReady AI helps data centers, manufacturers, utilities, and infrastructure investors identify where power is available, where grid delays are risky, and where energy costs could destroy project ROI.
+          <p className="mt-7 max-w-2xl text-lg leading-8 text-[#5f6863] md:text-xl">
+            GridReady AI helps infrastructure teams compare power availability, grid timing, water constraints, climate exposure, and project economics before selecting a site.
           </p>
           <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-            <a href="#analyzer" className="inline-flex items-center justify-center gap-2 rounded-lg bg-cyanline px-5 py-3 font-semibold text-graphite transition hover:bg-white">
-              Analyze a Location
+            <a href="#analyzer" className="clean-button-primary gap-2">
+              Analyze a Site
               <ArrowRight size={18} />
             </a>
-            <a href="#comparison" className="inline-flex items-center justify-center rounded-lg border border-white/15 px-5 py-3 font-semibold text-white transition hover:border-cyanline/50 hover:bg-white/8">
-              Compare Markets
+            <a href="#platform" className="clean-button-secondary">
+              View Platform
             </a>
           </div>
+          <p className="mt-8 max-w-lg text-sm leading-6 text-[#6b716d]">
+            Financial-grade site intelligence for power-heavy infrastructure, built for market comparison, project diligence, and investment risk review.
+          </p>
         </div>
-        <div className="relative min-h-[520px]">
-          <div className="glass-panel relative h-full min-h-[520px] overflow-hidden rounded-2xl p-5">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(77,231,255,0.22),transparent_18rem)]" />
-            <div className="scan-band absolute top-0 h-full w-24 bg-gradient-to-r from-transparent via-cyanline/10 to-transparent" />
-            <svg className="absolute inset-0 h-full w-full" viewBox="0 0 720 620" role="img" aria-label="Abstract power grid map">
-              <defs>
-                <filter id="glow">
-                  <feGaussianBlur stdDeviation="4" result="coloredBlur" />
-                  <feMerge>
-                    <feMergeNode in="coloredBlur" />
-                    <feMergeNode in="SourceGraphic" />
-                  </feMerge>
-                </filter>
-              </defs>
-              <path className="energy-line" d="M72 410 C180 320 238 350 330 235 S514 142 645 210" fill="none" stroke="#4de7ff" strokeWidth="3" filter="url(#glow)" />
-              <path className="energy-line" d="M92 210 C205 245 255 155 360 185 S535 345 650 330" fill="none" stroke="#8ee6b5" strokeWidth="2" filter="url(#glow)" />
-              <path d="M118 485 L245 372 L355 410 L490 300 L612 410" fill="none" stroke="rgba(255,255,255,0.18)" strokeWidth="1.5" />
-              {[
-                [72, 410, '#4de7ff'],
-                [202, 335, '#8ee6b5'],
-                [330, 235, '#4de7ff'],
-                [470, 160, '#35a7ff'],
-                [645, 210, '#8ee6b5'],
-                [360, 185, '#4de7ff'],
-                [650, 330, '#35a7ff'],
-              ].map(([cx, cy, fill]) => (
-                <g key={`${cx}-${cy}`} className="pulse-node" style={{ transformOrigin: `${cx}px ${cy}px` }}>
-                  <circle cx={cx} cy={cy} r="16" fill={fill} opacity="0.12" />
-                  <circle cx={cx} cy={cy} r="5" fill={fill} filter="url(#glow)" />
-                </g>
-              ))}
-            </svg>
-            <div className="relative z-10 flex h-full flex-col justify-between">
-              <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">
-                <span>Grid signal map</span>
-                <span>Live UI mock</span>
+
+        <div className="product-frame p-3 sm:p-4">
+          <div className="rounded-[22px] border border-black/[0.08] bg-white">
+            <div className="flex items-center justify-between border-b border-black/[0.08] px-5 py-4">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#6b716d]">Site readiness memo</p>
+                <h2 className="mt-1 text-lg font-semibold text-ink">Southwest power corridor</h2>
               </div>
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="rounded-xl border border-white/12 bg-graphite/78 p-5">
-                  <div className="mb-4 flex items-center gap-3 text-cyanline">
-                    <Gauge size={20} />
-                    <span className="text-sm font-semibold uppercase tracking-[0.18em]">Readiness</span>
-                  </div>
-                  <div className="text-6xl font-semibold">81</div>
-                  <p className="mt-3 text-sm leading-6 text-slate-300">Dallas demo market shows strong power economics with reliability diligence required.</p>
+              <span className="rounded-full bg-forest/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.12em] text-forest">Draft</span>
+            </div>
+            <div className="grid gap-0 lg:grid-cols-[1fr_0.78fr]">
+              <div className="p-5 sm:p-6">
+                <div className="space-y-3">
+                  {previewRows.map((row) => (
+                    <div key={row.city} className="rounded-2xl border border-black/[0.08] bg-[#fbfaf7] p-4">
+                      <div className="grid gap-4 sm:grid-cols-[7rem_1fr_auto] sm:items-center">
+                        <div>
+                          <p className="font-semibold text-ink">{row.city}</p>
+                          <p className="text-xs text-[#6b716d]">Demo market</p>
+                        </div>
+                        <div>
+                          <div className="mb-2 flex items-center justify-between text-xs text-[#6b716d]">
+                            <span>{row.constraint}</span>
+                            <span className="font-semibold text-ink">{row.score}</span>
+                          </div>
+                          <div className="score-line">
+                            <div className={`h-full rounded-full ${row.color}`} style={{ width: `${row.score}%` }} />
+                          </div>
+                        </div>
+                        <p className="text-sm leading-5 text-[#4e5752]">{row.step}</p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-                <div className="space-y-4">
-                  <div className="rounded-xl border border-white/12 bg-graphite/70 p-4">
-                    <div className="flex items-center justify-between gap-3">
-                      <span className="flex items-center gap-2 text-sm text-slate-300"><MapPinned size={16} /> Capacity node</span>
-                      <span className="text-gridgreen">Strong</span>
-                    </div>
-                  </div>
-                  <div className="rounded-xl border border-white/12 bg-graphite/70 p-4">
-                    <div className="flex items-center justify-between gap-3">
-                      <span className="flex items-center gap-2 text-sm text-slate-300"><BarChart3 size={16} /> Demand signal</span>
-                      <span className="text-warning">Rising</span>
-                    </div>
-                  </div>
-                  <div className="rounded-xl border border-white/12 bg-graphite/70 p-4">
-                    <div className="h-2 rounded-full bg-white/10">
-                      <div className="h-full w-[74%] rounded-full bg-gradient-to-r from-cyanline to-gridgreen" />
-                    </div>
-                    <p className="mt-3 text-xs uppercase tracking-[0.18em] text-slate-400">Queue confidence</p>
-                  </div>
+              </div>
+              <div className="border-t border-black/[0.08] bg-[#eef1ed] p-6 lg:border-l lg:border-t-0">
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#6b716d]">Constraint sketch</p>
+                <svg className="mt-6 h-48 w-full" viewBox="0 0 320 210" role="img" aria-label="Minimal terrain and site node diagram">
+                  <path d="M12 152 C54 122 76 133 112 103 C145 75 180 92 211 67 C246 38 279 54 308 31" fill="none" stroke="#3c6f8f" strokeWidth="2" />
+                  <path d="M12 178 C70 149 105 160 151 133 C205 102 247 113 308 82" fill="none" stroke="#1f6f4a" strokeWidth="2" opacity="0.75" />
+                  <circle cx="112" cy="103" r="7" fill="#1f6f4a" />
+                  <circle cx="211" cy="67" r="7" fill="#3c6f8f" />
+                  <circle cx="151" cy="133" r="7" fill="#a96f2d" />
+                  <path d="M34 193 H286" stroke="rgba(20,24,22,0.16)" />
+                </svg>
+                <div className="memo-card mt-4 p-4">
+                  <p className="text-sm font-semibold text-ink">Recommended next step</p>
+                  <p className="mt-2 text-sm leading-6 text-[#5f6863]">Prioritize capacity confirmation and cooling assumptions before site control.</p>
                 </div>
               </div>
             </div>

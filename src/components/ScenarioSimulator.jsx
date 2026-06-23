@@ -1,7 +1,17 @@
 import { useMemo, useState } from 'react';
-import { ArrowRight, ServerCog } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { locations, projectTypes } from '../data/gridreadyData.js';
 import { RiskBar, ScoreRing, SectionHeader } from './ui.jsx';
+
+const categoryLabels = {
+  powerCost: 'Power cost',
+  gridAccess: 'Grid access',
+  timeToPower: 'Time-to-power',
+  waterCooling: 'Water/cooling',
+  climate: 'Climate exposure',
+  carbonCompliance: 'Carbon/compliance',
+  financeRoi: 'Finance/ROI',
+};
 
 function calculateProjectFit(location, project) {
   const weighted = Object.entries(project.weights).reduce(
@@ -32,21 +42,25 @@ export function ScenarioSimulator() {
   const weakestCategory = Object.entries(location.categories).sort((a, b) => a[1] - b[1])[0];
 
   return (
-    <section id="simulator" className="border-y border-white/8 bg-ink/70 py-24">
+    <section id="simulator" className="section-muted border-y border-black/[0.08] py-24">
       <div className="section-shell">
         <SectionHeader
           eyebrow="Scenario simulator"
           title="Stress-test project fit before committing diligence budget."
-          body="Change the infrastructure type and market to see how readiness, risk warnings, and recommended next steps shift."
+          body="Use a guided workflow to see how project type and market selection change readiness, exposure, and the next diligence step."
         />
-        <div className="mt-12 grid gap-5 lg:grid-cols-[0.8fr_1.2fr]">
-          <aside className="glass-panel rounded-2xl p-6">
+        <div className="mt-12 grid gap-5 lg:grid-cols-[0.78fr_1.22fr]">
+          <aside className="product-card p-6">
+            <div className="mb-8">
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-forest">Step 1</p>
+              <h3 className="mt-2 text-2xl font-semibold text-ink">Select project type</h3>
+            </div>
             <label className="block">
-              <span className="mb-3 block text-sm font-semibold uppercase tracking-[0.18em] text-slate-400">Project type</span>
+              <span className="mb-3 block text-sm font-semibold uppercase tracking-[0.14em] text-[#6b716d]">Project type</span>
               <select
                 value={projectId}
                 onChange={(event) => setProjectId(event.target.value)}
-                className="w-full rounded-lg border border-white/12 bg-graphite px-4 py-3 text-white outline-none focus:border-cyanline"
+                className="w-full rounded-xl border border-black/[0.12] bg-white px-4 py-3 text-ink outline-none focus:border-forest"
               >
                 {projectTypes.map((item) => (
                   <option key={item.id} value={item.id}>
@@ -55,12 +69,16 @@ export function ScenarioSimulator() {
                 ))}
               </select>
             </label>
-            <label className="mt-6 block">
-              <span className="mb-3 block text-sm font-semibold uppercase tracking-[0.18em] text-slate-400">Location</span>
+            <div className="mb-6 mt-8 border-t border-black/[0.08] pt-8">
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-forest">Step 2</p>
+              <h3 className="mt-2 text-2xl font-semibold text-ink">Select market</h3>
+            </div>
+            <label className="block">
+              <span className="mb-3 block text-sm font-semibold uppercase tracking-[0.14em] text-[#6b716d]">Location</span>
               <select
                 value={locationId}
                 onChange={(event) => setLocationId(event.target.value)}
-                className="w-full rounded-lg border border-white/12 bg-graphite px-4 py-3 text-white outline-none focus:border-cyanline"
+                className="w-full rounded-xl border border-black/[0.12] bg-white px-4 py-3 text-ink outline-none focus:border-forest"
               >
                 {locations.map((item) => (
                   <option key={item.id} value={item.id}>
@@ -69,22 +87,23 @@ export function ScenarioSimulator() {
                 ))}
               </select>
             </label>
-            <div className="mt-8 rounded-xl border border-white/10 bg-white/[0.035] p-5">
-              <div className="flex items-center gap-3 text-cyanline">
-                <ServerCog size={20} />
-                <span className="text-sm font-semibold uppercase tracking-[0.18em]">Selected case</span>
-              </div>
-              <p className="mt-4 text-lg font-semibold text-white">{project.name}</p>
-              <p className="mt-2 text-slate-300">{location.city} market simulation</p>
+            <div className="memo-card mt-8 p-5">
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#6b716d]">Selected case</p>
+              <p className="mt-3 text-lg font-semibold text-ink">{project.name}</p>
+              <p className="mt-1 text-[#5f6863]">{location.city} market simulation</p>
             </div>
           </aside>
-          <article className="glass-panel rounded-2xl p-6">
-            <div className="grid gap-8 xl:grid-cols-[0.7fr_1fr]">
+          <article className="product-frame bg-white p-6 sm:p-8">
+            <div className="mb-8">
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-forest">Step 3</p>
+              <h3 className="mt-2 text-3xl font-semibold tracking-tight text-ink">Decision memo</h3>
+            </div>
+            <div className="grid gap-8 xl:grid-cols-[0.68fr_1fr]">
               <div className="flex flex-col items-start gap-6">
                 <ScoreRing score={fitScore} label="Project fit" />
                 <div>
-                  <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gridgreen">Project fit rating</p>
-                  <h3 className="mt-3 text-3xl font-semibold">{ratingFor(fitScore)}</h3>
+                  <p className="text-sm font-bold uppercase tracking-[0.16em] text-forest">Project fit rating</p>
+                  <h4 className="mt-3 text-3xl font-semibold text-ink">{ratingFor(fitScore)}</h4>
                 </div>
               </div>
               <div className="space-y-5">
@@ -95,21 +114,21 @@ export function ScenarioSimulator() {
               </div>
             </div>
             <div className="mt-8 grid gap-4 md:grid-cols-3">
-              <div className="rounded-xl border border-white/10 bg-white/[0.035] p-5">
-                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-risk">Biggest risk</p>
-                <p className="mt-3 font-medium text-white">{location.biggestRisk}</p>
-                <p className="mt-2 text-xs text-slate-400">Weakest demo category: {weakestCategory[0]}</p>
+              <div className="memo-card p-5">
+                <p className="text-sm font-bold uppercase tracking-[0.16em] text-clay">Main constraint</p>
+                <p className="mt-3 font-semibold text-ink">{location.biggestRisk}</p>
+                <p className="mt-2 text-xs text-[#6b716d]">Weakest demo category: {categoryLabels[weakestCategory[0]]}</p>
               </div>
-              <div className="rounded-xl border border-white/10 bg-white/[0.035] p-5">
-                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-warning">Financial warning</p>
-                <p className="mt-3 font-medium text-white">{project.warning}</p>
+              <div className="memo-card p-5">
+                <p className="text-sm font-bold uppercase tracking-[0.16em] text-amber">Financial exposure</p>
+                <p className="mt-3 font-semibold text-ink">{project.warning}</p>
               </div>
-              <div className="rounded-xl border border-white/10 bg-white/[0.035] p-5">
-                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-cyanline">Suggested next step</p>
-                <p className="mt-3 font-medium text-white">{project.nextStep}</p>
+              <div className="memo-card p-5">
+                <p className="text-sm font-bold uppercase tracking-[0.16em] text-steel">Suggested next diligence step</p>
+                <p className="mt-3 font-semibold text-ink">{project.nextStep}</p>
               </div>
             </div>
-            <a href="#intelligence" className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-gridgreen hover:text-white">
+            <a href="#intelligence" className="mt-8 inline-flex items-center gap-2 text-sm font-bold text-forest hover:text-ink">
               Review document signals
               <ArrowRight size={16} />
             </a>

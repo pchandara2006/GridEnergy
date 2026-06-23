@@ -326,26 +326,26 @@ export const projectTypes = [
 
 export const platformModules = [
   {
-    title: 'Site Power Readiness Score',
-    body: 'A board-ready score that combines power cost, capacity access, time-to-power, climate exposure, water constraints, and finance risk.',
+    title: 'Site Readiness Intelligence',
+    body: 'Convert capacity access, power cost, cooling exposure, climate risk, and project economics into a readiness view for site diligence.',
     metric: '0-100',
-    label: 'Composite readiness',
+    label: 'Readiness score',
   },
   {
-    title: 'Market Comparison Intelligence',
-    body: 'Compare cities and utility territories side by side to identify where power availability supports project timelines.',
+    title: 'Market Comparison Engine',
+    body: 'Rank cities and utility territories with a consistent view of constraints, best-fit project types, and decision notes.',
     metric: '8',
     label: 'Demo markets',
   },
   {
-    title: 'Project Scenario Simulator',
-    body: 'Model how different infrastructure profiles shift the risk picture for the same location.',
+    title: 'Scenario Risk Simulator',
+    body: 'Test how a data center, factory, battery project, solar farm, or charging network changes the same market risk profile.',
     metric: '5',
     label: 'Project archetypes',
   },
   {
-    title: 'AI Document Intelligence',
-    body: 'Extract decision signals from utility plans, interconnection reports, and permitting filings.',
+    title: 'Document Signal Extraction',
+    body: 'Review planning PDFs, interconnection studies, and zoning notes for capacity, policy, water, and community signals.',
     metric: '6',
     label: 'Signal classes',
   },

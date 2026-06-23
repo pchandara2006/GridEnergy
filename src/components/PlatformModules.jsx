@@ -1,55 +1,51 @@
 import { ArrowUpRight } from 'lucide-react';
-import { Area, AreaChart, ResponsiveContainer } from 'recharts';
 import { platformModules } from '../data/gridreadyData.js';
 import { SectionHeader } from './ui.jsx';
 
-const moduleChart = [
-  { name: 'Q1', value: 38 },
-  { name: 'Q2', value: 52 },
-  { name: 'Q3', value: 61 },
-  { name: 'Q4', value: 74 },
-  { name: 'Q5', value: 82 },
+const outcomes = [
+  'Faster site triage',
+  'Cleaner market shortlist',
+  'Earlier risk visibility',
+  'Traceable diligence record',
 ];
 
 export function PlatformModules() {
   return (
-    <section id="platform" className="py-24">
+    <section id="platform" className="section-light py-24">
       <div className="section-shell">
         <SectionHeader
           eyebrow="Platform"
           title="A decision layer for power-sensitive infrastructure."
           body="GridReady AI turns scattered grid, power, water, climate, compliance, and financial signals into a practical site-selection workflow."
         />
-        <div className="mt-12 grid gap-5 lg:grid-cols-2">
+        <div className="mt-12 divide-y divide-black/[0.08] border-y border-black/[0.08]">
           {platformModules.map((module, index) => (
-            <article key={module.title} className="glass-panel overflow-hidden rounded-2xl p-6">
-              <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
-                <div className="max-w-xl">
-                  <p className="mb-4 text-sm font-semibold uppercase tracking-[0.22em] text-cyanline">Module 0{index + 1}</p>
-                  <h3 className="text-2xl font-semibold">{module.title}</h3>
-                  <p className="mt-4 leading-7 text-slate-300">{module.body}</p>
-                  <a href="#analyzer" className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-gridgreen hover:text-white">
-                    Explore module
-                    <ArrowUpRight size={16} />
-                  </a>
-                </div>
-                <div className="min-w-36 rounded-xl border border-white/10 bg-white/[0.04] p-4 text-right">
-                  <div className="text-4xl font-semibold text-white">{module.metric}</div>
-                  <div className="mt-2 text-xs uppercase tracking-[0.18em] text-slate-400">{module.label}</div>
-                </div>
+            <article key={module.title} className="grid gap-8 py-8 lg:grid-cols-[8rem_1fr_16rem] lg:items-center">
+              <p className="text-sm font-bold uppercase tracking-[0.18em] text-forest">Module 0{index + 1}</p>
+              <div>
+                <p className="mb-3 text-sm font-semibold text-[#6b716d]">{outcomes[index]}</p>
+                <h3 className="text-3xl font-semibold tracking-tight text-ink">{module.title}</h3>
+                <p className="mt-4 max-w-3xl leading-7 text-[#5f6863]">{module.body}</p>
+                <a href="#analyzer" className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-forest hover:text-ink">
+                  Explore module
+                  <ArrowUpRight size={16} />
+                </a>
               </div>
-              <div className="mt-8 h-24">
-                <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={moduleChart.map((point) => ({ ...point, value: point.value + index * 5 }))}>
-                    <defs>
-                      <linearGradient id={`moduleGradient${index}`} x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#4de7ff" stopOpacity={0.45} />
-                        <stop offset="95%" stopColor="#4de7ff" stopOpacity={0} />
-                      </linearGradient>
-                    </defs>
-                    <Area type="monotone" dataKey="value" stroke="#4de7ff" strokeWidth={2} fill={`url(#moduleGradient${index})`} />
-                  </AreaChart>
-                </ResponsiveContainer>
+              <div className="product-card p-4">
+                <div className="mb-5 flex items-end justify-between">
+                  <div>
+                    <div className="text-4xl font-semibold text-ink">{module.metric}</div>
+                    <div className="mt-1 text-xs uppercase tracking-[0.16em] text-[#6b716d]">{module.label}</div>
+                  </div>
+                  <span className="h-3 w-3 rounded-full bg-forest" />
+                </div>
+                <div className="space-y-2">
+                  {[72, 58, 83].map((value) => (
+                    <div key={value} className="score-line">
+                      <div className="h-full rounded-full bg-steel" style={{ width: `${value}%` }} />
+                    </div>
+                  ))}
+                </div>
               </div>
             </article>
           ))}

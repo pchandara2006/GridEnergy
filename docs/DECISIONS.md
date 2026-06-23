@@ -1,10 +1,11 @@
 # Decisions
 
 ## Design Decisions
-- Use a deep graphite and black base with electric blue, cyan, and soft green accents to match the requested enterprise energy innovation direction.
-- Use original CSS/SVG grid visuals instead of external imagery to avoid copied brand assets and keep the MVP self-contained.
-- Use dense, polished product sections rather than a generic marketing landing page, because the product needs to feel investor-ready and operational.
-- Use consistent panel styling, score rings, risk bars, and chart treatments to create a unified intelligence-platform feel.
+- Redesigned visual language from neon/dark dashboard to clean premium infrastructure SaaS inspired by Apple/Robinhood/Snowflake-style clarity and editorial Awwwards-level spacing.
+- Use mostly light and off-white surfaces with graphite text, deep forest green, muted blue, soft silver, and restrained earth-tone risk states.
+- Removed the glowing grid hero, glassmorphism panels, scan-band effect, pulsing nodes, and neon energy lines because they made the product feel robotic and dashboard-heavy.
+- Use editorial spacing, memo-style product frames, clean tables, and restrained score lines to make the product feel more like financial-grade site intelligence.
+- Keep a custom minimal logo mark made from simple node/line geometry rather than a lightning or generic AI icon.
 
 ## Product Decisions
 - Clearly label the dataset as a demo dataset for MVP validation.
