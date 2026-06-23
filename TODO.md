@@ -1,6 +1,8 @@
 # GridReady AI TODO
 
 ## Next Development Tasks
+- Add a lightweight test runner and unit tests for `src/lib/scoring.js`.
+- Add source-provenance fields to demo data before connecting real datasets.
 - Add visual QA screenshots for desktop, tablet, and mobile after the clean premium redesign.
 - Add a reusable design token reference for the light editorial system.
 - Add URL state for selected location, comparison set, and project scenario.
@@ -12,8 +14,7 @@
 ## Bugs / Follow-Up QA
 - Validate the responsive layout manually across common tablet and mobile viewport sizes.
 - Review mobile table behavior for the investment committee comparison view after real device testing.
-- Add unit tests for project scenario scoring once a test runner is introduced.
-- Confirm all chart labels remain readable on narrow mobile screens.
+- Confirm any future chart labels remain readable on narrow mobile screens if charting is reintroduced.
 
 ## Future Backend / API Ideas
 - API endpoint for market search and saved site shortlists.

@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { locations, projectTypes } from '../data/gridreadyData.js';
 import { RiskBar, ScoreRing, SectionHeader } from './ui.jsx';
+import { calculateProjectFit, getProjectFitRating, getWeakestCategory } from '../lib/scoring.js';
 
 const categoryLabels = {
   powerCost: 'Power cost',
@@ -12,25 +13,6 @@ const categoryLabels = {
   financeRoi: 'Finance/ROI',
 };
 
-function calculateProjectFit(location, project) {
-  const weighted = Object.entries(project.weights).reduce(
-    (acc, [key, weight]) => {
-      acc.total += location.categories[key] * weight;
-      acc.weight += weight;
-      return acc;
-    },
-    { total: 0, weight: 0 },
-  );
-
-  return Math.round(weighted.total / weighted.weight);
-}
-
-function ratingFor(score) {
-  if (score >= 78) return 'Strong fit';
-  if (score >= 65) return 'Conditional fit';
-  return 'High diligence required';
-}
-
 export function ScenarioSimulator() {
   const [projectId, setProjectId] = useState(projectTypes[0].id);
   const [locationId, setLocationId] = useState('dallas');
@@ -38,7 +20,7 @@ export function ScenarioSimulator() {
   const project = useMemo(() => projectTypes.find((item) => item.id === projectId) ?? projectTypes[0], [projectId]);
   const location = useMemo(() => locations.find((item) => item.id === locationId) ?? locations[0], [locationId]);
   const fitScore = calculateProjectFit(location, project);
-  const weakestCategory = Object.entries(location.categories).sort((a, b) => a[1] - b[1])[0];
+  const weakestCategory = getWeakestCategory(location.categories);
 
   return (
     <section id="simulator" className="section-muted border-y border-black/[0.08] py-24">
@@ -102,7 +84,7 @@ export function ScenarioSimulator() {
                 <ScoreRing score={fitScore} label="Project fit" />
                 <div>
                   <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#6b716d]">Project fit rating</p>
-                  <h4 className="mt-3 text-3xl font-semibold text-ink">{ratingFor(fitScore)}</h4>
+                  <h4 className="mt-3 text-3xl font-semibold text-ink">{getProjectFitRating(fitScore)}</h4>
                 </div>
               </div>
               <div className="space-y-5">

@@ -1,6 +1,11 @@
 # Changelog
 
 ## 2026-06-23
+- Added `README.md` with product summary, problem, target users, features, tech stack, local run instructions, and future data integrations.
+- Moved project scenario scoring helpers into `src/lib/scoring.js`.
+- Added reusable demo-data notice metadata in `src/data/gridreadyData.js`.
+- Removed unused Recharts and Lucide React dependencies after the visual cleanup removed active charts and icons.
+- Moved build and styling packages to `devDependencies`, leaving React packages as runtime dependencies.
 - Ran a second strict cleanup pass to further reduce template-like UI treatments.
 - Replaced circular score visuals with plain numeric score treatments, muted status styling, removed unused card/badge/frame CSS primitives, and reduced remaining accent-color usage.
 - Completed final strict visual cleanup for the premium GridReady interface.

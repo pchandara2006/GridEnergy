@@ -1,3 +1,5 @@
+import { demoDataNotice } from '../data/gridreadyData.js';
+
 const previewRows = [
   { city: 'Dallas', score: 81, constraint: 'Reliability planning', step: 'Validate backup and tariff exposure' },
   { city: 'Phoenix', score: 64, constraint: 'Cooling and water', step: 'Stress-test thermal load assumptions' },
@@ -9,7 +11,7 @@ export function Hero() {
     <section id="top" className="section-light relative overflow-hidden pt-28">
       <div className="section-shell editorial-grid min-h-[calc(100vh-7rem)] py-16 lg:py-24">
         <div className="max-w-3xl">
-          <p className="mb-7 text-xs font-bold uppercase tracking-[0.22em] text-[#6b716d]">Demo dataset for MVP validation</p>
+          <p className="mb-7 text-xs font-bold uppercase tracking-[0.22em] text-[#6b716d]">{demoDataNotice}</p>
           <h1 className="text-5xl font-semibold tracking-tight text-ink sm:text-6xl lg:text-7xl">
             Know where power is ready before capital is committed.
           </h1>

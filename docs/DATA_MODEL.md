@@ -12,8 +12,10 @@ Each city record in `src/data/gridreadyData.js` includes:
 - `bestOpportunity`: concise upside signal.
 - `explanation`: business-style market summary.
 - `categories`: score categories used by the analyzer and simulator.
-- `riskTrend`: chart-ready radar data.
-- `costCurve`: chart-ready cost trend data for future modules.
+- `riskTrend`: optional visualization-ready risk data for future modules.
+- `costCurve`: optional visualization-ready cost trend data for future modules.
+
+The file also exports `demoDataNotice`, a shared UI/documentation reminder that all current data is for MVP validation and is not official or live.
 
 ## Score Categories
 Current category keys:
@@ -36,7 +38,7 @@ Each project type includes:
 - `nextStep`
 - `warning`
 
-The simulator calculates project fit by applying project-specific weights to the selected city's category scores.
+The simulator calculates project fit by applying project-specific weights to the selected city's category scores. The reusable scoring helpers live in `src/lib/scoring.js`.
 
 ## Demo Scoring
 The current dataset is intentionally mocked for MVP validation. It is not official, live, or source-backed. The demo scoring model is designed to show product behavior and investor-facing UX, not to make real site-selection claims.

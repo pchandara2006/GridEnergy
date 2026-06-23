@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { locations } from '../data/gridreadyData.js';
+import { getWeakestCategory } from '../lib/scoring.js';
 import { RecommendationBadge, RiskBar, ScoreRing, SectionHeader } from './ui.jsx';
 
 const categoryLabels = {
@@ -22,7 +23,7 @@ export function LocationAnalyzer() {
   const [selectedId, setSelectedId] = useState(locations[2].id);
   const selected = useMemo(() => locations.find((location) => location.id === selectedId) ?? locations[0], [selectedId]);
   const categoryEntries = Object.entries(selected.categories);
-  const weakestCategory = [...categoryEntries].sort((a, b) => a[1] - b[1])[0];
+  const weakestCategory = getWeakestCategory(selected.categories);
 
   return (
     <section id="analyzer" className="section-muted border-y border-black/[0.08] py-24">

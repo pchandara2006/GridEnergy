@@ -24,7 +24,7 @@ git add src docs GRIDREADY_CONTEXT.md TODO.md CHANGELOG.md package.json
 Commit with a clear product-focused message:
 
 ```bash
-git commit -m "Build GridReady AI MVP frontend"
+git commit -m "Describe the product or technical change"
 ```
 
 ## Git Push

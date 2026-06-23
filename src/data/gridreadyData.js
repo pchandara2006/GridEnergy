@@ -1,3 +1,5 @@
+export const demoDataNotice = 'Demo dataset for MVP validation. Not official, live, or source-backed site-selection data.';
+
 export const locations = [
   {
     id: 'albuquerque',
