@@ -1,6 +1,10 @@
 # Changelog
 
 ## 2026-06-23
+- Added EIA retail price cache/sample integration foundation for Power Cost Score.
+- Added `src/services/external/eiaAdapter.js`, `scripts/fetchEiaRetailPrices.js`, `.env.example`, and EIA sample cache data.
+- Added `docs/DATA_SOURCES.md` and `docs/EIA_INTEGRATION.md`.
+- Added `npm run fetch:eia`.
 - Added `README.md` with product summary, problem, target users, features, tech stack, local run instructions, and future data integrations.
 - Moved project scenario scoring helpers into `src/lib/scoring.js`.
 - Added reusable demo-data notice metadata in `src/data/gridreadyData.js`.

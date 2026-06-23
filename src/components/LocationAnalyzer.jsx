@@ -1,6 +1,7 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { locations } from '../data/gridreadyData.js';
 import { getWeakestCategory } from '../lib/scoring.js';
+import { applyEiaPowerCostToLocation, loadEiaRetailPriceCache } from '../services/external/eiaAdapter.js';
 import { RecommendationBadge, RiskBar, ScoreRing, SectionHeader } from './ui.jsx';
 
 const categoryLabels = {
@@ -21,9 +22,23 @@ const diligenceStep = {
 
 export function LocationAnalyzer() {
   const [selectedId, setSelectedId] = useState(locations[2].id);
-  const selected = useMemo(() => locations.find((location) => location.id === selectedId) ?? locations[0], [selectedId]);
+  const [eiaCache, setEiaCache] = useState({ records: [], sourceType: 'none' });
+  const selected = useMemo(() => {
+    const location = locations.find((item) => item.id === selectedId) ?? locations[0];
+    return applyEiaPowerCostToLocation(location, eiaCache);
+  }, [eiaCache, selectedId]);
   const categoryEntries = Object.entries(selected.categories);
   const weakestCategory = getWeakestCategory(selected.categories);
+
+  useEffect(() => {
+    let isMounted = true;
+    loadEiaRetailPriceCache().then((cache) => {
+      if (isMounted) setEiaCache(cache);
+    });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   return (
     <section id="analyzer" className="section-muted border-y border-black/[0.08] py-24">
@@ -77,8 +92,18 @@ export function LocationAnalyzer() {
                 <div>
                   <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#6b716d]">Score breakdown</p>
                   <h3 className="mt-2 text-2xl font-semibold text-ink">Readiness by category</h3>
+                  <p className="mt-2 text-xs leading-5 text-[#6b716d]">Power cost score uses demo data unless EIA cache is generated.</p>
                 </div>
-                <p className="text-sm text-[#6b716d]">Best fit: {selected.bestUseCase}</p>
+                <div className="text-sm text-[#6b716d]">
+                  <p>Best fit: {selected.bestUseCase}</p>
+                  <p>{selected.powerCostSource}</p>
+                  {selected.powerCostPriceRecord ? (
+                    <p>
+                      {selected.powerCostPriceRecord.stateId} {selected.powerCostPriceRecord.sector},{' '}
+                      {selected.powerCostPriceRecord.latestPriceCentsPerKwh} cents/kWh
+                    </p>
+                  ) : null}
+                </div>
               </div>
               <div className="grid gap-8 xl:grid-cols-[1fr_0.8fr]">
                 <div className="space-y-5">

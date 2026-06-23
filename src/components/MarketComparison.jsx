@@ -1,14 +1,20 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { demoDataNotice, locations } from '../data/gridreadyData.js';
+import { applyEiaPowerCostToLocation, loadEiaRetailPriceCache } from '../services/external/eiaAdapter.js';
 import { RecommendationBadge, SectionHeader } from './ui.jsx';
 
 const defaultSelected = ['dallas', 'albuquerque', 'atlanta', 'columbus'];
 
 export function MarketComparison() {
   const [selectedIds, setSelectedIds] = useState(defaultSelected);
+  const [eiaCache, setEiaCache] = useState({ records: [], sourceType: 'none' });
   const selectedLocations = useMemo(
-    () => locations.filter((location) => selectedIds.includes(location.id)).sort((a, b) => b.score - a.score),
-    [selectedIds],
+    () =>
+      locations
+        .filter((location) => selectedIds.includes(location.id))
+        .map((location) => applyEiaPowerCostToLocation(location, eiaCache))
+        .sort((a, b) => b.score - a.score),
+    [eiaCache, selectedIds],
   );
   const strongest = [...selectedLocations].sort((a, b) => b.score - a.score)[0];
   const riskiest = [...selectedLocations].sort((a, b) => a.score - b.score)[0];
@@ -21,6 +27,16 @@ export function MarketComparison() {
       return current.length < 5 ? [...current, id] : current;
     });
   };
+
+  useEffect(() => {
+    let isMounted = true;
+    loadEiaRetailPriceCache().then((cache) => {
+      if (isMounted) setEiaCache(cache);
+    });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   return (
     <section id="comparison" className="section-light py-24">

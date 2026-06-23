@@ -1,7 +1,8 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { locations, projectTypes } from '../data/gridreadyData.js';
 import { RiskBar, ScoreRing, SectionHeader } from './ui.jsx';
 import { calculateProjectFit, getProjectFitRating, getWeakestCategory } from '../lib/scoring.js';
+import { applyEiaPowerCostToLocation, loadEiaRetailPriceCache } from '../services/external/eiaAdapter.js';
 
 const categoryLabels = {
   powerCost: 'Power cost',
@@ -16,11 +17,25 @@ const categoryLabels = {
 export function ScenarioSimulator() {
   const [projectId, setProjectId] = useState(projectTypes[0].id);
   const [locationId, setLocationId] = useState('dallas');
+  const [eiaCache, setEiaCache] = useState({ records: [], sourceType: 'none' });
 
   const project = useMemo(() => projectTypes.find((item) => item.id === projectId) ?? projectTypes[0], [projectId]);
-  const location = useMemo(() => locations.find((item) => item.id === locationId) ?? locations[0], [locationId]);
+  const location = useMemo(() => {
+    const selectedLocation = locations.find((item) => item.id === locationId) ?? locations[0];
+    return applyEiaPowerCostToLocation(selectedLocation, eiaCache);
+  }, [eiaCache, locationId]);
   const fitScore = calculateProjectFit(location, project);
   const weakestCategory = getWeakestCategory(location.categories);
+
+  useEffect(() => {
+    let isMounted = true;
+    loadEiaRetailPriceCache().then((cache) => {
+      if (isMounted) setEiaCache(cache);
+    });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   return (
     <section id="simulator" className="section-muted border-y border-black/[0.08] py-24">
@@ -72,6 +87,8 @@ export function ScenarioSimulator() {
               <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#6b716d]">Selected case</p>
               <p className="mt-3 text-lg font-semibold text-ink">{project.name}</p>
               <p className="mt-1 text-[#5f6863]">{location.city} market simulation</p>
+              <p className="mt-3 text-xs leading-5 text-[#6b716d]">Power cost score uses demo data unless EIA cache is generated.</p>
+              <p className="mt-1 text-xs leading-5 text-[#6b716d]">{location.powerCostSource}</p>
             </div>
           </aside>
           <article className="border border-black/[0.08] bg-white p-6 sm:p-8">

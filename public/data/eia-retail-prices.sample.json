@@ -1,0 +1,24 @@
+{
+  "generatedAt": "2026-06-23T00:00:00.000Z",
+  "source": "EIA retail sales",
+  "isSample": true,
+  "note": "Sample normalized EIA retail price cache for MVP validation. Not live data.",
+  "records": [
+    { "stateId": "NM", "stateName": "New Mexico", "sector": "commercial", "latestPriceCentsPerKwh": 10.8, "period": "2025-12", "source": "EIA retail sales", "isSample": true },
+    { "stateId": "NM", "stateName": "New Mexico", "sector": "industrial", "latestPriceCentsPerKwh": 7.1, "period": "2025-12", "source": "EIA retail sales", "isSample": true },
+    { "stateId": "AZ", "stateName": "Arizona", "sector": "commercial", "latestPriceCentsPerKwh": 13.2, "period": "2025-12", "source": "EIA retail sales", "isSample": true },
+    { "stateId": "AZ", "stateName": "Arizona", "sector": "industrial", "latestPriceCentsPerKwh": 8.6, "period": "2025-12", "source": "EIA retail sales", "isSample": true },
+    { "stateId": "TX", "stateName": "Texas", "sector": "commercial", "latestPriceCentsPerKwh": 10.9, "period": "2025-12", "source": "EIA retail sales", "isSample": true },
+    { "stateId": "TX", "stateName": "Texas", "sector": "industrial", "latestPriceCentsPerKwh": 7.6, "period": "2025-12", "source": "EIA retail sales", "isSample": true },
+    { "stateId": "CO", "stateName": "Colorado", "sector": "commercial", "latestPriceCentsPerKwh": 12.5, "period": "2025-12", "source": "EIA retail sales", "isSample": true },
+    { "stateId": "CO", "stateName": "Colorado", "sector": "industrial", "latestPriceCentsPerKwh": 8.4, "period": "2025-12", "source": "EIA retail sales", "isSample": true },
+    { "stateId": "GA", "stateName": "Georgia", "sector": "commercial", "latestPriceCentsPerKwh": 11.7, "period": "2025-12", "source": "EIA retail sales", "isSample": true },
+    { "stateId": "GA", "stateName": "Georgia", "sector": "industrial", "latestPriceCentsPerKwh": 7.8, "period": "2025-12", "source": "EIA retail sales", "isSample": true },
+    { "stateId": "OH", "stateName": "Ohio", "sector": "commercial", "latestPriceCentsPerKwh": 11.4, "period": "2025-12", "source": "EIA retail sales", "isSample": true },
+    { "stateId": "OH", "stateName": "Ohio", "sector": "industrial", "latestPriceCentsPerKwh": 7.3, "period": "2025-12", "source": "EIA retail sales", "isSample": true },
+    { "stateId": "VA", "stateName": "Virginia", "sector": "commercial", "latestPriceCentsPerKwh": 10.6, "period": "2025-12", "source": "EIA retail sales", "isSample": true },
+    { "stateId": "VA", "stateName": "Virginia", "sector": "industrial", "latestPriceCentsPerKwh": 7.2, "period": "2025-12", "source": "EIA retail sales", "isSample": true },
+    { "stateId": "NV", "stateName": "Nevada", "sector": "commercial", "latestPriceCentsPerKwh": 10.5, "period": "2025-12", "source": "EIA retail sales", "isSample": true },
+    { "stateId": "NV", "stateName": "Nevada", "sector": "industrial", "latestPriceCentsPerKwh": 8.1, "period": "2025-12", "source": "EIA retail sales", "isSample": true }
+  ]
+}

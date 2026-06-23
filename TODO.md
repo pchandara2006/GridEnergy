@@ -2,6 +2,8 @@
 
 ## Next Development Tasks
 - Add a lightweight test runner and unit tests for `src/lib/scoring.js`.
+- Add tests for `src/services/external/eiaAdapter.js`.
+- Replace EIA sample cache with generated cache during real data validation.
 - Add source-provenance fields to demo data before connecting real datasets.
 - Add visual QA screenshots for desktop, tablet, and mobile after the clean premium redesign.
 - Add a reusable design token reference for the light editorial system.
@@ -18,6 +20,7 @@
 
 ## Future Backend / API Ideas
 - API endpoint for market search and saved site shortlists.
+- Backend job for scheduled EIA cache refreshes and provenance tracking.
 - Scenario scoring service with versioned scoring models.
 - Document ingestion pipeline for utility reports, interconnection filings, and zoning packets.
 - User accounts, team workspaces, and shared diligence projects.
