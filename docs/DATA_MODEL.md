@@ -17,7 +17,7 @@ Each city record in `src/data/gridreadyData.js` includes:
 
 The file also exports `demoDataNotice`, a shared UI/documentation reminder that all current data is for MVP validation and is not official or live.
 
-Each demo location now includes `stateId` so external state-level data, including EIA retail electricity prices, can map cleanly into the app.
+Each demo location now includes `stateId` so external state-level data, including EIA retail electricity prices, FEMA risk records, and Drought Monitor records, can map cleanly into the app.
 
 ## Score Categories
 Current category keys:
@@ -34,6 +34,8 @@ Scores are normalized from 0 to 100, where higher is better for readiness and lo
 Power Cost Score can be replaced at runtime by EIA cache/sample data. When a normalized EIA retail price record is available, `calculatePowerCostScoreFromPrice()` maps the latest cents/kWh value to a 0-100 score. If no EIA cache/sample record is available, the app keeps the local demo Power Cost Score.
 
 Climate Risk Score can be replaced at runtime by FEMA cache/sample data. When a normalized FEMA National Risk Index record is available, `calculateClimateRiskScore()` maps the risk index to a 0-100 readiness score. If no FEMA cache/sample record is available, the app keeps the local demo Climate Risk Score.
+
+Water/Cooling Risk can be replaced at runtime by U.S. Drought Monitor cache/sample data. When a normalized drought record is available, `calculateWaterCoolingRiskScore()` maps drought severity to a 0-100 readiness score. If no drought cache/sample record is available, the app keeps the local demo Water/Cooling Risk value.
 
 ## Project Scenario Data
 Each project type includes:
@@ -78,5 +80,33 @@ Record fields:
 - `communityResilienceRating`
 - `dominantHazards`
 - `period`
+- `source`
+- `isSample`
+
+## U.S. Drought Monitor Cache
+
+Normalized records live in `public/data/drought-risk.json` when generated. The sample fallback lives in `public/data/drought-risk.sample.json`.
+
+Record fields:
+- `stateId`
+- `stateName`
+- `droughtCategory`
+- `droughtCategoryLabel`
+- `droughtSeverityScore`
+- `latestPeriod`
+- `source`
+- `isSample`
+
+## USGS Water Data Placeholder
+
+`src/services/external/usgsWaterAdapter.js` documents the future normalized cache shape for USGS Water Data. No live USGS calls are made by the frontend.
+
+Future record fields:
+- `stateId`
+- `stateName`
+- `streamflowPercentile`
+- `groundwaterTrend`
+- `waterStressNote`
+- `monitoringSiteCount`
 - `source`
 - `isSample`

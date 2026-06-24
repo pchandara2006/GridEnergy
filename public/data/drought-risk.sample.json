@@ -1,0 +1,88 @@
+{
+  "generatedAt": "2026-06-24T00:00:00.000Z",
+  "source": "U.S. Drought Monitor",
+  "isSample": true,
+  "note": "Sample normalized U.S. Drought Monitor cache for MVP validation. Not live drought data.",
+  "records": [
+    {
+      "stateId": "NM",
+      "stateName": "New Mexico",
+      "droughtCategory": "D1",
+      "droughtCategoryLabel": "Moderate Drought",
+      "droughtSeverityScore": 2,
+      "latestPeriod": "sample",
+      "source": "U.S. Drought Monitor",
+      "isSample": true
+    },
+    {
+      "stateId": "AZ",
+      "stateName": "Arizona",
+      "droughtCategory": "D3",
+      "droughtCategoryLabel": "Extreme Drought",
+      "droughtSeverityScore": 4,
+      "latestPeriod": "sample",
+      "source": "U.S. Drought Monitor",
+      "isSample": true
+    },
+    {
+      "stateId": "TX",
+      "stateName": "Texas",
+      "droughtCategory": "D1",
+      "droughtCategoryLabel": "Moderate Drought",
+      "droughtSeverityScore": 2,
+      "latestPeriod": "sample",
+      "source": "U.S. Drought Monitor",
+      "isSample": true
+    },
+    {
+      "stateId": "CO",
+      "stateName": "Colorado",
+      "droughtCategory": "D1",
+      "droughtCategoryLabel": "Moderate Drought",
+      "droughtSeverityScore": 2,
+      "latestPeriod": "sample",
+      "source": "U.S. Drought Monitor",
+      "isSample": true
+    },
+    {
+      "stateId": "GA",
+      "stateName": "Georgia",
+      "droughtCategory": "D0",
+      "droughtCategoryLabel": "Abnormally Dry",
+      "droughtSeverityScore": 1,
+      "latestPeriod": "sample",
+      "source": "U.S. Drought Monitor",
+      "isSample": true
+    },
+    {
+      "stateId": "OH",
+      "stateName": "Ohio",
+      "droughtCategory": "none",
+      "droughtCategoryLabel": "No drought",
+      "droughtSeverityScore": 0,
+      "latestPeriod": "sample",
+      "source": "U.S. Drought Monitor",
+      "isSample": true
+    },
+    {
+      "stateId": "VA",
+      "stateName": "Virginia",
+      "droughtCategory": "D0",
+      "droughtCategoryLabel": "Abnormally Dry",
+      "droughtSeverityScore": 1,
+      "latestPeriod": "sample",
+      "source": "U.S. Drought Monitor",
+      "isSample": true
+    },
+    {
+      "stateId": "NV",
+      "stateName": "Nevada",
+      "droughtCategory": "D3",
+      "droughtCategoryLabel": "Extreme Drought",
+      "droughtSeverityScore": 4,
+      "latestPeriod": "sample",
+      "source": "U.S. Drought Monitor",
+      "isSample": true
+    }
+  ]
+}

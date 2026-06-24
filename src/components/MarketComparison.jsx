@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { demoDataNotice, locations } from '../data/gridreadyData.js';
+import { applyDroughtWaterCoolingToLocation, loadDroughtRiskCache } from '../services/external/droughtMonitorAdapter.js';
 import { applyEiaPowerCostToLocation, loadEiaRetailPriceCache } from '../services/external/eiaAdapter.js';
 import { applyFemaClimateRiskToLocation, loadFemaRiskCache } from '../services/external/femaRiskAdapter.js';
 import { RecommendationBadge, SectionHeader } from './ui.jsx';
@@ -10,13 +11,19 @@ export function MarketComparison() {
   const [selectedIds, setSelectedIds] = useState(defaultSelected);
   const [eiaCache, setEiaCache] = useState({ records: [], sourceType: 'none' });
   const [femaCache, setFemaCache] = useState({ records: [], sourceType: 'none' });
+  const [droughtCache, setDroughtCache] = useState({ records: [], sourceType: 'none' });
   const selectedLocations = useMemo(
     () =>
       locations
         .filter((location) => selectedIds.includes(location.id))
-        .map((location) => applyFemaClimateRiskToLocation(applyEiaPowerCostToLocation(location, eiaCache), femaCache))
+        .map((location) =>
+          applyDroughtWaterCoolingToLocation(
+            applyFemaClimateRiskToLocation(applyEiaPowerCostToLocation(location, eiaCache), femaCache),
+            droughtCache,
+          ),
+        )
         .sort((a, b) => b.score - a.score),
-    [eiaCache, femaCache, selectedIds],
+    [droughtCache, eiaCache, femaCache, selectedIds],
   );
   const strongest = [...selectedLocations].sort((a, b) => b.score - a.score)[0];
   const riskiest = [...selectedLocations].sort((a, b) => a.score - b.score)[0];
@@ -37,6 +44,9 @@ export function MarketComparison() {
     });
     loadFemaRiskCache().then((cache) => {
       if (isMounted) setFemaCache(cache);
+    });
+    loadDroughtRiskCache().then((cache) => {
+      if (isMounted) setDroughtCache(cache);
     });
     return () => {
       isMounted = false;

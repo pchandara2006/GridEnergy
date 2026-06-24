@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-06-24
+- Added U.S. Drought Monitor cache/sample integration foundation for Water/Cooling Risk.
+- Added `src/services/external/droughtMonitorAdapter.js`, `src/services/external/usgsWaterAdapter.js`, `public/data/drought-risk.sample.json`, and `docs/WATER_COOLING_INTEGRATION.md`.
+- Added water/cooling scoring helpers and connected Drought Monitor sample/cache data to existing analyzer, comparison, and scenario flows with demo fallback.
+- Added subtle Water/Cooling Risk source notes without changing the current visual design or adding sections.
+- Documented USGS Water Data as a future normalized cache source for streamflow, groundwater, and monitoring-site signals.
+
 ## 2026-06-23
 - Added FEMA National Risk Index cache/sample integration foundation for Climate Risk Score.
 - Added `src/services/external/femaRiskAdapter.js`, `public/data/fema-risk.sample.json`, and `docs/FEMA_INTEGRATION.md`.

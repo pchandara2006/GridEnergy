@@ -28,6 +28,7 @@ GridReady AI packages those signals into a practical readiness workflow for earl
 - Use case summaries for power-heavy infrastructure teams
 - EIA retail price cache foundation for Power Cost Score, with demo fallback
 - FEMA National Risk Index cache foundation for Climate Risk Score, with demo fallback
+- U.S. Drought Monitor cache foundation for Water/Cooling Risk, with demo fallback
 
 ## Tech Stack
 - React 18
@@ -91,12 +92,23 @@ public/data/fema-risk.sample.json
 
 If a generated FEMA cache is later added at `public/data/fema-risk.json`, the app will use it first. If not, the app falls back to the sample file, then to local demo Climate Risk Score values.
 
+## Water/Cooling Risk Data
+The frontend reads normalized U.S. Drought Monitor cache data from public JSON. The repository currently includes sample state-level data:
+
+```text
+public/data/drought-risk.sample.json
+```
+
+If a generated drought cache is later added at `public/data/drought-risk.json`, the app will use it first. If not, the app falls back to the sample file, then to local demo Water/Cooling Risk values.
+
+USGS Water Data support is currently a documented adapter placeholder for future streamflow, groundwater, and monitoring-site signals. The app does not call live USGS APIs yet.
+
 ## Future Data Integrations
 - Utility integrated resource plans and capacity maps
 - ISO/RTO interconnection queues
 - EIA electricity price, demand, and generation datasets
 - NOAA climate and heat-risk datasets
-- Water stress and cooling-risk datasets
+- U.S. Drought Monitor and USGS water datasets
 - Local permitting, zoning, and public hearing records
 - Incentive, carbon compliance, and energy policy databases
 

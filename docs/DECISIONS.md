@@ -11,6 +11,8 @@
 - Clearly label the dataset as a demo dataset for MVP validation.
 - Use EIA retail electricity price data as the first external-data foundation because it is public, state-level, and relevant to Power Cost Score.
 - Use FEMA National Risk Index as the second external-data foundation because it is a public, infrastructure-relevant baseline for natural hazard exposure and resilience.
+- Use U.S. Drought Monitor data as the third external-data foundation because drought severity is a clear public baseline for water/cooling readiness.
+- Treat USGS Water Data as a planned enrichment source for streamflow, groundwater, and monitoring-site evidence once site-level geography matching is available.
 - Focus the primary workflow on location analysis, market comparison, project fit simulation, and document signal extraction.
 - Keep business language direct and decision-oriented for infrastructure teams and investors.
 - Include "best opportunity" and "biggest risk" outputs because users need directional diligence guidance, not just scores.
@@ -23,6 +25,9 @@
 - Use sample EIA cache data for MVP validation and fallback, while clearly marking it as sample data.
 - Use FEMA cache/sample JSON in the browser rather than calling external geospatial APIs directly from the UI.
 - Start with state-level FEMA sample data, then move to county or tract-level matching when real site geographies are introduced.
+- Use Drought Monitor cache/sample JSON in the browser rather than live frontend API calls.
+- Start with state-level drought sample data, then move to county, ZIP, watershed, or site-buffer matching when real site geographies are introduced.
+- Keep USGS Water Data as a normalized adapter placeholder until a backend cache job and scoring role are defined.
 - Remove unused charting and icon dependencies after the final visual cleanup removed active charts and icons.
 - Keep the app frontend-only until data provenance, API shape, and scoring requirements are clearer.
 

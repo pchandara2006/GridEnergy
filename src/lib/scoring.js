@@ -61,3 +61,19 @@ export function explainClimateRiskScore(riskIndexScore) {
 
   return `Climate Risk Score maps FEMA National Risk Index risk (${riskIndexScore}) to a 0-100 readiness score, where lower risk scores higher.`;
 }
+
+export function calculateWaterCoolingRiskScore(droughtSeverityScore) {
+  const severity = Number.parseFloat(droughtSeverityScore);
+  if (!Number.isFinite(severity)) return null;
+
+  return clampScore(100 - severity * 17);
+}
+
+export function explainWaterCoolingRiskScore(droughtCategory, droughtSeverityScore) {
+  const score = calculateWaterCoolingRiskScore(droughtSeverityScore);
+  if (score === null) {
+    return 'Water/Cooling Risk Score uses the local demo estimate because no valid drought-risk record is available.';
+  }
+
+  return `Water/Cooling Risk Score maps U.S. Drought Monitor category ${droughtCategory} to a 0-100 readiness score, where lower drought severity scores higher.`;
+}

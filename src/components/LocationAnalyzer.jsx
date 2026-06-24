@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { locations } from '../data/gridreadyData.js';
 import { getWeakestCategory } from '../lib/scoring.js';
+import { applyDroughtWaterCoolingToLocation, loadDroughtRiskCache } from '../services/external/droughtMonitorAdapter.js';
 import { applyEiaPowerCostToLocation, loadEiaRetailPriceCache } from '../services/external/eiaAdapter.js';
 import { applyFemaClimateRiskToLocation, loadFemaRiskCache } from '../services/external/femaRiskAdapter.js';
 import { RecommendationBadge, RiskBar, ScoreRing, SectionHeader } from './ui.jsx';
@@ -25,10 +26,14 @@ export function LocationAnalyzer() {
   const [selectedId, setSelectedId] = useState(locations[2].id);
   const [eiaCache, setEiaCache] = useState({ records: [], sourceType: 'none' });
   const [femaCache, setFemaCache] = useState({ records: [], sourceType: 'none' });
+  const [droughtCache, setDroughtCache] = useState({ records: [], sourceType: 'none' });
   const selected = useMemo(() => {
     const location = locations.find((item) => item.id === selectedId) ?? locations[0];
-    return applyFemaClimateRiskToLocation(applyEiaPowerCostToLocation(location, eiaCache), femaCache);
-  }, [eiaCache, femaCache, selectedId]);
+    return applyDroughtWaterCoolingToLocation(
+      applyFemaClimateRiskToLocation(applyEiaPowerCostToLocation(location, eiaCache), femaCache),
+      droughtCache,
+    );
+  }, [droughtCache, eiaCache, femaCache, selectedId]);
   const categoryEntries = Object.entries(selected.categories);
   const weakestCategory = getWeakestCategory(selected.categories);
 
@@ -39,6 +44,9 @@ export function LocationAnalyzer() {
     });
     loadFemaRiskCache().then((cache) => {
       if (isMounted) setFemaCache(cache);
+    });
+    loadDroughtRiskCache().then((cache) => {
+      if (isMounted) setDroughtCache(cache);
     });
     return () => {
       isMounted = false;
@@ -122,6 +130,17 @@ export function LocationAnalyzer() {
                           {selected.climateRiskRecord ? (
                             <p>
                               {selected.climateRiskRecord.stateId} risk index {selected.climateRiskRecord.riskIndexScore}
+                            </p>
+                          ) : null}
+                        </div>
+                      ) : null}
+                      {key === 'waterCooling' ? (
+                        <div className="mt-2 text-xs leading-5 text-[#6b716d]">
+                          <p>Water/cooling risk uses demo data unless Drought Monitor cache is generated.</p>
+                          <p>{selected.waterCoolingSource}</p>
+                          {selected.waterCoolingRecord ? (
+                            <p>
+                              {selected.waterCoolingRecord.stateId} {selected.waterCoolingRecord.droughtCategoryLabel}
                             </p>
                           ) : null}
                         </div>
