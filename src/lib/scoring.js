@@ -12,17 +12,154 @@ export function calculateProjectFit(location, project) {
 }
 
 export function getProjectFitRating(score) {
-  if (score >= 78) return 'Strong fit';
-  if (score >= 65) return 'Conditional fit';
-  return 'High diligence required';
+  if (score >= 80) return 'Strong fit';
+  if (score >= 65) return 'Proceed with review';
+  if (score >= 50) return 'Requires deeper diligence';
+  return 'High risk';
 }
 
 export function getWeakestCategory(categories) {
   return Object.entries(categories).sort((a, b) => a[1] - b[1])[0];
 }
 
+export function getStrongestCategories(categories, count = 2) {
+  return Object.entries(categories)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, count);
+}
+
+export function getWeakestCategories(categories, count = 2) {
+  return Object.entries(categories)
+    .sort((a, b) => a[1] - b[1])
+    .slice(0, count);
+}
+
 function clampScore(score) {
   return Math.max(0, Math.min(100, Math.round(score)));
+}
+
+export const GRID_READINESS_WEIGHTS = {
+  gridAccess: 0.2,
+  timeToPower: 0.2,
+  powerCost: 0.15,
+  waterCooling: 0.15,
+  climate: 0.1,
+  carbonCompliance: 0.1,
+  financeRoi: 0.1,
+};
+
+export function calculateGridReadinessScore({
+  powerCost,
+  gridAccess,
+  timeToPower,
+  waterCooling,
+  climate,
+  carbonCompliance,
+  finance,
+  financeRoi,
+}) {
+  const scores = {
+    gridAccess,
+    timeToPower,
+    powerCost,
+    waterCooling,
+    climate,
+    carbonCompliance,
+    financeRoi: financeRoi ?? finance,
+  };
+
+  const weighted = Object.entries(GRID_READINESS_WEIGHTS).reduce(
+    (acc, [key, weight]) => {
+      const value = Number.parseFloat(scores[key]);
+      if (!Number.isFinite(value)) return acc;
+      acc.total += value * weight;
+      acc.weight += weight;
+      return acc;
+    },
+    { total: 0, weight: 0 },
+  );
+
+  if (weighted.weight === 0) return null;
+  return clampScore(weighted.total / weighted.weight);
+}
+
+export function getScoreBand(score) {
+  const value = Number.parseFloat(score);
+  if (!Number.isFinite(value)) return 'Unscored';
+  if (value >= 80) return 'Strong readiness';
+  if (value >= 65) return 'Viable with review';
+  if (value >= 50) return 'Constrained';
+  return 'High risk';
+}
+
+export function getRecommendationFromScore(score) {
+  const value = Number.parseFloat(score);
+  if (!Number.isFinite(value)) return 'Requires deeper diligence';
+  if (value >= 80) return 'Recommended';
+  if (value >= 65) return 'Proceed with review';
+  if (value >= 50) return 'Requires deeper diligence';
+  return 'High risk';
+}
+
+export function getScoreColorTone(score) {
+  const value = Number.parseFloat(score);
+  if (!Number.isFinite(value)) return 'neutral';
+  if (value >= 80) return 'strong';
+  if (value >= 65) return 'review';
+  if (value >= 50) return 'constrained';
+  return 'high-risk';
+}
+
+export function explainGridReadinessScore(score, strongestFactors = [], weakestFactors = []) {
+  const band = getScoreBand(score);
+  const strongest = strongestFactors.map(([label]) => label).join(', ') || 'no clear strongest factor';
+  const weakest = weakestFactors.map(([label]) => label).join(', ') || 'no clear weakest factor';
+
+  return `Grid Readiness is ${band.toLowerCase()}. Strongest readiness signals: ${strongest}. Diligence priority: ${weakest}.`;
+}
+
+export function getSourceConfidence(sourceStatus) {
+  const status = String(sourceStatus ?? '').toLowerCase();
+  if (status === 'cache' || status === 'live' || status === 'verified') {
+    return { label: 'Verified cache', level: 'higher', sourceStatus: status || 'cache' };
+  }
+  if (status === 'sample' || status === 'external sample' || status.includes('sample')) {
+    return { label: 'External sample', level: 'medium', sourceStatus: status || 'sample' };
+  }
+  return { label: 'Demo fallback', level: 'low', sourceStatus: status || 'demo' };
+}
+
+const categoryExplanationLabels = {
+  powerCost: 'Power cost',
+  gridAccess: 'Grid access',
+  timeToPower: 'Time-to-power',
+  waterCooling: 'Water/cooling',
+  climate: 'Climate',
+  carbonCompliance: 'Carbon/compliance',
+  financeRoi: 'Finance/ROI',
+};
+
+function labelFactor([key, value]) {
+  return [categoryExplanationLabels[key] ?? key, value];
+}
+
+export function enrichLocationScoring(location) {
+  const score = calculateGridReadinessScore(location.categories);
+  const strongestFactors = getStrongestCategories(location.categories, 2).map(labelFactor);
+  const weakestFactors = getWeakestCategories(location.categories, 2).map(labelFactor);
+
+  return {
+    ...location,
+    score,
+    recommendation: getRecommendationFromScore(score),
+    scoreBand: getScoreBand(score),
+    scoreTone: getScoreColorTone(score),
+    strongestFactors,
+    weakestFactors,
+    financeRoiSource: location.financeRoiSource ?? 'Finance/ROI: demo estimate',
+    financeRoiConfidence: location.financeRoiConfidence ?? getSourceConfidence('demo'),
+    gridReadinessExplanation: explainGridReadinessScore(score, strongestFactors, weakestFactors),
+  };
 }
 
 export function calculatePowerCostScoreFromPrice(priceCentsPerKwh, sector = 'industrial') {

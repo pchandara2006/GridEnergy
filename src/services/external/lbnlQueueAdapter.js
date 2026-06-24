@@ -3,6 +3,7 @@ import {
   calculateTimeToPowerScore,
   explainGridAccessRisk,
   explainTimeToPowerRisk,
+  getSourceConfidence,
 } from '../../lib/scoring.js';
 import { mapStateToEiaStateId } from './eiaAdapter.js';
 
@@ -96,6 +97,7 @@ export function getQueueRiskFromCache(cache, stateId) {
 export function getQueueScoresForLocation(location, cache) {
   const stateId = location.stateId ?? mapStateToEiaStateId(location.region);
   const queueRecord = getQueueRiskFromCache(cache, stateId);
+  const sourceStatus = queueRecord ? cache?.sourceType : 'demo';
 
   if (!queueRecord) {
     return {
@@ -103,6 +105,7 @@ export function getQueueScoresForLocation(location, cache) {
       timeToPowerScore: location.categories.timeToPower,
       gridAccessSource: 'Grid access: demo estimate',
       timeToPowerSource: 'Time-to-power: demo estimate',
+      sourceConfidence: getSourceConfidence(sourceStatus),
       queueRecord: null,
       gridAccessExplanation: explainGridAccessRisk(null),
       timeToPowerExplanation: explainTimeToPowerRisk(null),
@@ -114,6 +117,7 @@ export function getQueueScoresForLocation(location, cache) {
     timeToPowerScore: calculateTimeToPowerScore(queueRecord),
     gridAccessSource: 'Grid access: LBNL queue sample/cache',
     timeToPowerSource: 'Time-to-power: LBNL queue sample/cache',
+    sourceConfidence: getSourceConfidence(sourceStatus),
     queueRecord,
     gridAccessExplanation: explainGridAccessRisk(queueRecord),
     timeToPowerExplanation: explainTimeToPowerRisk(queueRecord),
@@ -132,6 +136,8 @@ export function applyLbnlQueueRiskToLocation(location, cache) {
     },
     gridAccessSource: queueRisk.gridAccessSource,
     timeToPowerSource: queueRisk.timeToPowerSource,
+    gridAccessConfidence: queueRisk.sourceConfidence,
+    timeToPowerConfidence: queueRisk.sourceConfidence,
     queueRiskRecord: queueRisk.queueRecord,
     gridAccessExplanation: queueRisk.gridAccessExplanation,
     timeToPowerExplanation: queueRisk.timeToPowerExplanation,

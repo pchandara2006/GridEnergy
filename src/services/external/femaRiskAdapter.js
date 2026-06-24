@@ -1,4 +1,4 @@
-import { calculateClimateRiskScore, explainClimateRiskScore } from '../../lib/scoring.js';
+import { calculateClimateRiskScore, explainClimateRiskScore, getSourceConfidence } from '../../lib/scoring.js';
 import { mapStateToEiaStateId } from './eiaAdapter.js';
 
 export const FEMA_RISK_CACHE_PATH = '/data/fema-risk.json';
@@ -69,11 +69,13 @@ export function getClimateRiskFromCache(cache, stateId) {
 export function getClimateRiskScoreForLocation(location, cache) {
   const stateId = location.stateId ?? mapStateToEiaStateId(location.region);
   const riskRecord = getClimateRiskFromCache(cache, stateId);
+  const sourceStatus = riskRecord ? cache?.sourceType : 'demo';
 
   if (!riskRecord) {
     return {
       score: location.categories.climate,
-      sourceLabel: 'Climate risk: demo estimate',
+      sourceLabel: 'Climate: demo estimate',
+      sourceConfidence: getSourceConfidence(sourceStatus),
       riskRecord: null,
       explanation: explainClimateRiskScore(null),
     };
@@ -81,7 +83,8 @@ export function getClimateRiskScoreForLocation(location, cache) {
 
   return {
     score: calculateClimateRiskScore(riskRecord.riskIndexScore),
-    sourceLabel: 'Climate risk: FEMA sample/cache',
+    sourceLabel: 'Climate: FEMA sample/cache',
+    sourceConfidence: getSourceConfidence(sourceStatus),
     riskRecord,
     explanation: explainClimateRiskScore(riskRecord.riskIndexScore),
   };
@@ -97,6 +100,7 @@ export function applyFemaClimateRiskToLocation(location, cache) {
       climate: climateRisk.score,
     },
     climateRiskSource: climateRisk.sourceLabel,
+    climateRiskConfidence: climateRisk.sourceConfidence,
     climateRiskRecord: climateRisk.riskRecord,
     climateRiskExplanation: climateRisk.explanation,
   };

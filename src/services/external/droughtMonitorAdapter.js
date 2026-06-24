@@ -1,4 +1,4 @@
-import { calculateWaterCoolingRiskScore, explainWaterCoolingRiskScore } from '../../lib/scoring.js';
+import { calculateWaterCoolingRiskScore, explainWaterCoolingRiskScore, getSourceConfidence } from '../../lib/scoring.js';
 import { mapStateToEiaStateId } from './eiaAdapter.js';
 
 export const DROUGHT_RISK_CACHE_PATH = '/data/drought-risk.json';
@@ -94,11 +94,13 @@ export function getDroughtRiskFromCache(cache, stateId) {
 export function getWaterCoolingScoreForLocation(location, cache) {
   const stateId = location.stateId ?? mapStateToEiaStateId(location.region);
   const droughtRecord = getDroughtRiskFromCache(cache, stateId);
+  const sourceStatus = droughtRecord ? cache?.sourceType : 'demo';
 
   if (!droughtRecord) {
     return {
       score: location.categories.waterCooling,
       sourceLabel: 'Water/cooling: demo estimate',
+      sourceConfidence: getSourceConfidence(sourceStatus),
       droughtRecord: null,
       explanation: explainWaterCoolingRiskScore(null, null),
     };
@@ -107,6 +109,7 @@ export function getWaterCoolingScoreForLocation(location, cache) {
   return {
     score: calculateWaterCoolingRiskScore(droughtRecord.droughtSeverityScore),
     sourceLabel: 'Water/cooling: Drought Monitor sample/cache',
+    sourceConfidence: getSourceConfidence(sourceStatus),
     droughtRecord,
     explanation: explainWaterCoolingRiskScore(droughtRecord.droughtCategory, droughtRecord.droughtSeverityScore),
   };
@@ -122,6 +125,7 @@ export function applyDroughtWaterCoolingToLocation(location, cache) {
       waterCooling: waterCooling.score,
     },
     waterCoolingSource: waterCooling.sourceLabel,
+    waterCoolingConfidence: waterCooling.sourceConfidence,
     waterCoolingRecord: waterCooling.droughtRecord,
     waterCoolingExplanation: waterCooling.explanation,
   };

@@ -1,4 +1,4 @@
-import { calculatePowerCostScoreFromPrice } from '../../lib/scoring.js';
+import { calculatePowerCostScoreFromPrice, getSourceConfidence } from '../../lib/scoring.js';
 
 export const EIA_RETAIL_PRICE_CACHE_PATH = '/data/eia-retail-prices.json';
 export const EIA_RETAIL_PRICE_SAMPLE_PATH = '/data/eia-retail-prices.sample.json';
@@ -140,11 +140,13 @@ export async function loadEiaRetailPriceCache(fetcher = fetch) {
 export function getPowerCostScoreForLocation(location, cache, sector = 'industrial') {
   const stateId = location.stateId ?? mapStateToEiaStateId(location.region);
   const priceRecord = getStateElectricityPriceFromCache(cache, stateId, sector);
+  const sourceStatus = priceRecord ? cache?.sourceType : 'demo';
 
   if (!priceRecord) {
     return {
       score: location.categories.powerCost,
       sourceLabel: 'Power cost: demo estimate',
+      sourceConfidence: getSourceConfidence(sourceStatus),
       priceRecord: null,
     };
   }
@@ -152,6 +154,7 @@ export function getPowerCostScoreForLocation(location, cache, sector = 'industri
   return {
     score: calculatePowerCostScoreFromPrice(priceRecord.latestPriceCentsPerKwh, priceRecord.sector),
     sourceLabel: 'Power cost: EIA sample/cache',
+    sourceConfidence: getSourceConfidence(sourceStatus),
     priceRecord,
   };
 }
@@ -166,6 +169,7 @@ export function applyEiaPowerCostToLocation(location, cache, sector = 'industria
       powerCost: powerCost.score,
     },
     powerCostSource: powerCost.sourceLabel,
+    powerCostConfidence: powerCost.sourceConfidence,
     powerCostPriceRecord: powerCost.priceRecord,
   };
 }

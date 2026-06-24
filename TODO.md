@@ -2,6 +2,7 @@
 
 ## Next Development Tasks
 - Add a lightweight test runner and unit tests for `src/lib/scoring.js`.
+- Add tests for `calculateGridReadinessScore()`, score bands, recommendations, and source confidence labels.
 - Add tests for `src/services/external/eiaAdapter.js`.
 - Add tests for `src/services/external/femaRiskAdapter.js`.
 - Add tests for `src/services/external/droughtMonitorAdapter.js`.
@@ -15,6 +16,7 @@
 - Replace LBNL queue state-level sample cache with region, utility, and project-level generated cache during real data validation.
 - Decide how USGS streamflow, groundwater, and monitoring-site signals should influence Water/Cooling Risk.
 - Add source-provenance fields to demo data before connecting real datasets.
+- Add methodology version IDs to score outputs before backend scope begins.
 - Add visual QA screenshots for desktop, tablet, and mobile after the clean premium redesign.
 - Add a reusable design token reference for the light editorial system.
 - Add URL state for selected location, comparison set, and project scenario.

@@ -1,6 +1,9 @@
 # Changelog
 
 ## 2026-06-24
+- Added scoring methodology and trust layer for consistent score direction, weighted Grid Readiness, score bands, recommendations, source confidence labels, and fallback explanations.
+- Added `docs/SCORING_METHODOLOGY.md`.
+- Recalculated demo Grid Readiness scores with the official weighting and normalized source notes across analyzer, comparison, and scenario flows.
 - Added LBNL Interconnection Queue cache/sample integration foundation for Grid Access and Time-to-Power Scores.
 - Added `src/services/external/lbnlQueueAdapter.js`, `public/data/lbnl-queue-risk.sample.json`, and `docs/LBNL_QUEUE_INTEGRATION.md`.
 - Added queue-based scoring helpers and connected LBNL queue sample/cache data to existing analyzer, comparison, and scenario flows with demo fallback.

@@ -30,6 +30,8 @@ Core tagline: "Power readiness intelligence for the next generation of infrastru
 - Modular sections live in `src/components`.
 - Demo domain data is centralized in `src/data/gridreadyData.js`.
 - Scenario scoring logic is isolated in `src/lib/scoring.js`.
+- Grid Readiness uses one official weighted formula where Grid Access and Time-to-Power each carry 20% weight.
+- Source confidence is normalized as `Verified cache`, `External sample`, or `Demo fallback`.
 - Power Cost Score can use normalized EIA retail-price cache data from `public/data/eia-retail-prices.json`, with sample/demo fallback.
 - Climate Risk Score can use normalized FEMA National Risk Index cache data from `public/data/fema-risk.json`, with sample/demo fallback.
 - Water/Cooling Risk can use normalized U.S. Drought Monitor cache data from `public/data/drought-risk.json`, with sample/demo fallback.
@@ -55,6 +57,7 @@ Core tagline: "Power readiness intelligence for the next generation of infrastru
 - USGS Water Data placeholder shape for future streamflow, groundwater, and monitoring-site signals.
 - EPA eGRID cache/sample foundation for Carbon/Compliance Risk.
 - LBNL Interconnection Queue cache/sample foundation for Grid Access and Time-to-Power Scores.
+- Scoring methodology and trust layer for consistent score direction, recommendation bands, source labels, and fallback explanations.
 
 ## Current Visual Language
 The frontend was redesigned from a neon/dark dashboard to a clean premium infrastructure SaaS style inspired by Apple/Robinhood/Snowflake-style clarity and editorial Awwwards-level spacing. The interface now uses off-white surfaces, graphite text, restrained borders, tables, and memo-style hierarchy.
@@ -65,4 +68,4 @@ The frontend was redesigned from a neon/dark dashboard to a clean premium infras
 3. Build production bundle: `npm run build`
 4. Run lint checks: `npm run lint`
 
-All market scores and document outputs are demo values for MVP validation unless local EIA, FEMA, drought-risk, eGRID, or LBNL queue caches are generated. Sample cache data is also sample data, not official live data.
+All market scores and document outputs are demo values for MVP validation unless local EIA, FEMA, drought-risk, eGRID, or LBNL queue caches are generated. Sample cache data is also sample data, not official live data. Higher scores always mean stronger readiness or lower risk.

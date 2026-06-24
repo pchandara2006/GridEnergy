@@ -24,6 +24,7 @@ GridReady AI packages those signals into a practical readiness workflow for earl
 - Interactive location analyzer for demo markets
 - Market comparison table
 - Project scenario simulator with reusable scoring helpers
+- Weighted Grid Readiness methodology with score bands and source confidence labels
 - Document intelligence mock workflow
 - Use case summaries for power-heavy infrastructure teams
 - EIA retail price cache foundation for Power Cost Score, with demo fallback
@@ -67,6 +68,15 @@ http://127.0.0.1:5173/
 npm run lint
 npm run build
 ```
+
+## Scoring Methodology
+All scores use one direction: higher means stronger infrastructure readiness and lower risk. Grid Readiness is a weighted score:
+
+```text
+Grid Access 20% + Time-to-Power 20% + Power Cost 15% + Water/Cooling 15% + Climate 10% + Carbon/Compliance 10% + Finance/ROI 10%
+```
+
+Source confidence labels are `Verified cache`, `External sample`, and `Demo fallback`. Full methodology is documented in `docs/SCORING_METHODOLOGY.md`.
 
 ## EIA Power Cost Data
 The frontend does not call the EIA API directly and does not expose API keys. To generate a local EIA retail price cache:

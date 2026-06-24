@@ -1,4 +1,4 @@
-import { calculateCarbonComplianceScore, explainCarbonComplianceScore } from '../../lib/scoring.js';
+import { calculateCarbonComplianceScore, explainCarbonComplianceScore, getSourceConfidence } from '../../lib/scoring.js';
 import { mapStateToEiaStateId } from './eiaAdapter.js';
 
 export const EGRID_CARBON_CACHE_PATH = '/data/egrid-carbon.json';
@@ -76,11 +76,13 @@ export function getCarbonDataFromCache(cache, stateId) {
 export function getCarbonComplianceScoreForLocation(location, cache) {
   const stateId = location.stateId ?? mapStateToEiaStateId(location.region);
   const carbonRecord = getCarbonDataFromCache(cache, stateId);
+  const sourceStatus = carbonRecord ? cache?.sourceType : 'demo';
 
   if (!carbonRecord) {
     return {
       score: location.categories.carbonCompliance,
       sourceLabel: 'Carbon/compliance: demo estimate',
+      sourceConfidence: getSourceConfidence(sourceStatus),
       carbonRecord: null,
       explanation: explainCarbonComplianceScore(null),
     };
@@ -89,6 +91,7 @@ export function getCarbonComplianceScoreForLocation(location, cache) {
   return {
     score: calculateCarbonComplianceScore(carbonRecord),
     sourceLabel: 'Carbon/compliance: EPA eGRID sample/cache',
+    sourceConfidence: getSourceConfidence(sourceStatus),
     carbonRecord,
     explanation: explainCarbonComplianceScore(carbonRecord),
   };
@@ -104,6 +107,7 @@ export function applyEgridCarbonComplianceToLocation(location, cache) {
       carbonCompliance: carbonCompliance.score,
     },
     carbonComplianceSource: carbonCompliance.sourceLabel,
+    carbonComplianceConfidence: carbonCompliance.sourceConfidence,
     carbonComplianceRecord: carbonCompliance.carbonRecord,
     carbonComplianceExplanation: carbonCompliance.explanation,
   };

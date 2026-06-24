@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { demoDataNotice, locations } from '../data/gridreadyData.js';
+import { enrichLocationScoring } from '../lib/scoring.js';
 import { applyDroughtWaterCoolingToLocation, loadDroughtRiskCache } from '../services/external/droughtMonitorAdapter.js';
 import { applyEgridCarbonComplianceToLocation, loadEgridCarbonCache } from '../services/external/egridAdapter.js';
 import { applyEiaPowerCostToLocation, loadEiaRetailPriceCache } from '../services/external/eiaAdapter.js';
@@ -21,7 +22,7 @@ export function MarketComparison() {
       locations
         .filter((location) => selectedIds.includes(location.id))
         .map((location) =>
-          applyLbnlQueueRiskToLocation(
+          enrichLocationScoring(applyLbnlQueueRiskToLocation(
             applyEgridCarbonComplianceToLocation(
               applyDroughtWaterCoolingToLocation(
                 applyFemaClimateRiskToLocation(applyEiaPowerCostToLocation(location, eiaCache), femaCache),
@@ -30,7 +31,7 @@ export function MarketComparison() {
               egridCache,
             ),
             lbnlQueueCache,
-          ),
+          )),
         )
         .sort((a, b) => b.score - a.score),
     [droughtCache, egridCache, eiaCache, femaCache, lbnlQueueCache, selectedIds],
@@ -97,12 +98,14 @@ export function MarketComparison() {
           <article className="border border-black/[0.08] bg-white p-6">
             <div className="space-y-8">
               <div>
-                <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#6b716d]">Strongest market</p>
+                <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#6b716d]">Strongest readiness signal</p>
                 <p className="mt-3 text-3xl font-semibold text-ink">{strongest?.city}</p>
-                <p className="mt-1 text-[#5f6863]">{strongest?.score} readiness score</p>
+                <p className="mt-1 text-[#5f6863]">
+                  {strongest?.score} readiness score · {strongest?.scoreBand}
+                </p>
               </div>
               <div className="border-t border-black/[0.08] pt-6">
-                <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#6b716d]">Highest diligence need</p>
+                <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#6b716d]">Diligence priority</p>
                 <p className="mt-3 text-3xl font-semibold text-ink">{riskiest?.city}</p>
                 <p className="mt-1 leading-7 text-[#5f6863]">{riskiest?.biggestRisk}</p>
               </div>
@@ -112,6 +115,10 @@ export function MarketComparison() {
             <div className="border-b border-black/[0.08] p-6">
               <h3 className="text-2xl font-semibold text-ink">Investment committee view</h3>
               <p className="mt-2 text-sm text-[#6b716d]">{demoDataNotice}</p>
+              <p className="mt-2 text-xs leading-5 text-[#6b716d]">
+                Grid Readiness is a weighted readiness score. Higher values indicate stronger site readiness. Demo/sample data is used until live
+                source caches are generated.
+              </p>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full min-w-[760px] text-left text-sm">
@@ -119,10 +126,10 @@ export function MarketComparison() {
                   <tr>
                     <th className="px-5 py-4">Rank</th>
                     <th className="px-5 py-4">Market</th>
-                    <th className="px-5 py-4">Score</th>
+                    <th className="px-5 py-4">Readiness</th>
                     <th className="px-5 py-4">Best fit</th>
-                    <th className="px-5 py-4">Main constraint</th>
-                    <th className="px-5 py-4">Decision note</th>
+                    <th className="px-5 py-4">Primary constraint</th>
+                    <th className="px-5 py-4">Recommendation</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -140,6 +147,7 @@ export function MarketComparison() {
                             <div className="h-full rounded-full bg-graphite" style={{ width: `${location.score}%` }} />
                           </div>
                         </div>
+                        <p className="mt-1 text-xs text-[#6b716d]">{location.scoreBand}</p>
                       </td>
                       <td className="px-5 py-4 text-[#4e5752]">{location.bestUseCase}</td>
                       <td className="px-5 py-4 text-[#4e5752]">{location.biggestRisk}</td>

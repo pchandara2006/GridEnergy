@@ -1,9 +1,9 @@
 import { demoDataNotice } from '../data/gridreadyData.js';
 
 const previewRows = [
-  { city: 'Dallas', score: 81, constraint: 'Reliability planning', step: 'Validate backup and tariff exposure' },
-  { city: 'Phoenix', score: 64, constraint: 'Cooling and water', step: 'Stress-test thermal load assumptions' },
-  { city: 'Albuquerque', score: 78, constraint: 'Queue timing', step: 'Review transmission upgrade schedule' },
+  { city: 'Dallas', score: 76, constraint: 'Reliability planning', step: 'Validate backup and tariff exposure' },
+  { city: 'Phoenix', score: 60, constraint: 'Cooling constraint', step: 'Stress-test thermal load assumptions' },
+  { city: 'Albuquerque', score: 73, constraint: 'Capacity timing exposure', step: 'Review transmission upgrade schedule' },
 ];
 
 export function Hero() {

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { locations, projectTypes } from '../data/gridreadyData.js';
 import { RiskBar, ScoreRing, SectionHeader } from './ui.jsx';
-import { calculateProjectFit, getProjectFitRating, getWeakestCategory } from '../lib/scoring.js';
+import { calculateProjectFit, enrichLocationScoring, getProjectFitRating, getWeakestCategory } from '../lib/scoring.js';
 import { applyDroughtWaterCoolingToLocation, loadDroughtRiskCache } from '../services/external/droughtMonitorAdapter.js';
 import { applyEgridCarbonComplianceToLocation, loadEgridCarbonCache } from '../services/external/egridAdapter.js';
 import { applyEiaPowerCostToLocation, loadEiaRetailPriceCache } from '../services/external/eiaAdapter.js';
@@ -18,6 +18,14 @@ const categoryLabels = {
   financeRoi: 'Finance/ROI',
 };
 
+function SourceLine({ source, confidence }) {
+  return (
+    <p className="mt-1 text-xs leading-5 text-[#6b716d]">
+      {source} · {confidence?.label ?? 'Demo fallback'}
+    </p>
+  );
+}
+
 export function ScenarioSimulator() {
   const [projectId, setProjectId] = useState(projectTypes[0].id);
   const [locationId, setLocationId] = useState('dallas');
@@ -30,7 +38,7 @@ export function ScenarioSimulator() {
   const project = useMemo(() => projectTypes.find((item) => item.id === projectId) ?? projectTypes[0], [projectId]);
   const location = useMemo(() => {
     const selectedLocation = locations.find((item) => item.id === locationId) ?? locations[0];
-    return applyLbnlQueueRiskToLocation(
+    return enrichLocationScoring(applyLbnlQueueRiskToLocation(
       applyEgridCarbonComplianceToLocation(
         applyDroughtWaterCoolingToLocation(
           applyFemaClimateRiskToLocation(applyEiaPowerCostToLocation(selectedLocation, eiaCache), femaCache),
@@ -39,7 +47,7 @@ export function ScenarioSimulator() {
         egridCache,
       ),
       lbnlQueueCache,
-    );
+    ));
   }, [droughtCache, egridCache, eiaCache, femaCache, lbnlQueueCache, locationId]);
   const fitScore = calculateProjectFit(location, project);
   const weakestCategory = getWeakestCategory(location.categories);
@@ -116,18 +124,16 @@ export function ScenarioSimulator() {
               <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#6b716d]">Selected case</p>
               <p className="mt-3 text-lg font-semibold text-ink">{project.name}</p>
               <p className="mt-1 text-[#5f6863]">{location.city} market simulation</p>
-              <p className="mt-3 text-xs leading-5 text-[#6b716d]">Power cost score uses demo data unless EIA cache is generated.</p>
-              <p className="mt-1 text-xs leading-5 text-[#6b716d]">{location.powerCostSource}</p>
-              <p className="mt-3 text-xs leading-5 text-[#6b716d]">Grid access score uses demo data unless LBNL queue cache is generated.</p>
-              <p className="mt-1 text-xs leading-5 text-[#6b716d]">{location.gridAccessSource}</p>
-              <p className="mt-3 text-xs leading-5 text-[#6b716d]">Time-to-power score uses demo data unless LBNL queue cache is generated.</p>
-              <p className="mt-1 text-xs leading-5 text-[#6b716d]">{location.timeToPowerSource}</p>
-              <p className="mt-3 text-xs leading-5 text-[#6b716d]">Climate risk uses demo data unless FEMA cache is generated.</p>
-              <p className="mt-1 text-xs leading-5 text-[#6b716d]">{location.climateRiskSource}</p>
-              <p className="mt-3 text-xs leading-5 text-[#6b716d]">Water/cooling risk uses demo data unless Drought Monitor cache is generated.</p>
-              <p className="mt-1 text-xs leading-5 text-[#6b716d]">{location.waterCoolingSource}</p>
-              <p className="mt-3 text-xs leading-5 text-[#6b716d]">Carbon/compliance risk uses demo data unless EPA eGRID cache is generated.</p>
-              <p className="mt-1 text-xs leading-5 text-[#6b716d]">{location.carbonComplianceSource}</p>
+              <p className="mt-3 text-xs leading-5 text-[#6b716d]">
+                Grid Readiness is weighted toward grid access and capacity timing. Higher values indicate stronger site readiness.
+              </p>
+              <SourceLine source={location.powerCostSource} confidence={location.powerCostConfidence} />
+              <SourceLine source={location.gridAccessSource} confidence={location.gridAccessConfidence} />
+              <SourceLine source={location.timeToPowerSource} confidence={location.timeToPowerConfidence} />
+              <SourceLine source={location.climateRiskSource} confidence={location.climateRiskConfidence} />
+              <SourceLine source={location.waterCoolingSource} confidence={location.waterCoolingConfidence} />
+              <SourceLine source={location.carbonComplianceSource} confidence={location.carbonComplianceConfidence} />
+              <SourceLine source={location.financeRoiSource} confidence={location.financeRoiConfidence} />
             </div>
           </aside>
           <article className="border border-black/[0.08] bg-white p-6 sm:p-8">
@@ -141,6 +147,7 @@ export function ScenarioSimulator() {
                 <div>
                   <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#6b716d]">Project fit rating</p>
                   <h4 className="mt-3 text-3xl font-semibold text-ink">{getProjectFitRating(fitScore)}</h4>
+                  <p className="mt-3 text-sm leading-6 text-[#6b716d]">{location.gridReadinessExplanation}</p>
                 </div>
               </div>
               <div className="space-y-5">
@@ -152,16 +159,16 @@ export function ScenarioSimulator() {
             </div>
             <div className="mt-8 grid gap-4 md:grid-cols-3">
               <div className="border-t border-black/[0.08] pt-5">
-                <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#6b716d]">Main constraint</p>
+                <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#6b716d]">Primary constraint</p>
                 <p className="mt-3 font-semibold text-ink">{location.biggestRisk}</p>
-                <p className="mt-2 text-xs text-[#6b716d]">Weakest demo category: {categoryLabels[weakestCategory[0]]}</p>
+                <p className="mt-2 text-xs text-[#6b716d]">Diligence priority: {categoryLabels[weakestCategory[0]]}</p>
               </div>
               <div className="border-t border-black/[0.08] pt-5">
-                <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#6b716d]">Financial exposure</p>
+                <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#6b716d]">Cost sensitivity</p>
                 <p className="mt-3 font-semibold text-ink">{project.warning}</p>
               </div>
               <div className="border-t border-black/[0.08] pt-5">
-                <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#6b716d]">Suggested next diligence step</p>
+                <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#6b716d]">Next diligence step</p>
                 <p className="mt-3 font-semibold text-ink">{project.nextStep}</p>
               </div>
             </div>

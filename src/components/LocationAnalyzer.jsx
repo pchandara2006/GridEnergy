@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { locations } from '../data/gridreadyData.js';
-import { getWeakestCategory } from '../lib/scoring.js';
+import { enrichLocationScoring, getWeakestCategory } from '../lib/scoring.js';
 import { applyDroughtWaterCoolingToLocation, loadDroughtRiskCache } from '../services/external/droughtMonitorAdapter.js';
 import { applyEgridCarbonComplianceToLocation, loadEgridCarbonCache } from '../services/external/egridAdapter.js';
 import { applyEiaPowerCostToLocation, loadEiaRetailPriceCache } from '../services/external/eiaAdapter.js';
@@ -20,9 +20,21 @@ const categoryLabels = {
 
 const diligenceStep = {
   Recommended: 'Advance to utility capacity confirmation and incentive review.',
-  'Needs Review': 'Run focused diligence on the main constraint before land control.',
-  'High Risk': 'Require executive review before committing additional diligence budget.',
+  'Proceed with review': 'Proceed with review after focused diligence on the primary constraint.',
+  'Requires deeper diligence': 'Resolve the diligence priority before land control or major equipment commitments.',
+  'High risk': 'Require executive review before committing additional diligence budget.',
 };
+
+function SourceNote({ source, confidence, detail }) {
+  return (
+    <div className="mt-2 text-xs leading-5 text-[#6b716d]">
+      <p>
+        {source} · {confidence?.label ?? 'Demo fallback'}
+      </p>
+      {detail ? <p>{detail}</p> : null}
+    </div>
+  );
+}
 
 export function LocationAnalyzer() {
   const [selectedId, setSelectedId] = useState(locations[2].id);
@@ -33,7 +45,7 @@ export function LocationAnalyzer() {
   const [lbnlQueueCache, setLbnlQueueCache] = useState({ records: [], sourceType: 'none' });
   const selected = useMemo(() => {
     const location = locations.find((item) => item.id === selectedId) ?? locations[0];
-    return applyLbnlQueueRiskToLocation(
+    return enrichLocationScoring(applyLbnlQueueRiskToLocation(
       applyEgridCarbonComplianceToLocation(
         applyDroughtWaterCoolingToLocation(
           applyFemaClimateRiskToLocation(applyEiaPowerCostToLocation(location, eiaCache), femaCache),
@@ -42,7 +54,7 @@ export function LocationAnalyzer() {
         egridCache,
       ),
       lbnlQueueCache,
-    );
+    ));
   }, [droughtCache, egridCache, eiaCache, femaCache, lbnlQueueCache, selectedId]);
   const categoryEntries = Object.entries(selected.categories);
   const weakestCategory = getWeakestCategory(selected.categories);
@@ -104,14 +116,14 @@ export function LocationAnalyzer() {
                 </div>
                 <ScoreRing score={selected.score} label="Readiness" />
               </div>
-              <p className="mt-8 text-lg leading-8 text-[#4e5752]">{selected.explanation}</p>
+              <p className="mt-8 text-lg leading-8 text-[#4e5752]">{selected.gridReadinessExplanation}</p>
               <div className="mt-8 grid gap-4 sm:grid-cols-2">
                 <div className="border-t border-black/[0.08] pt-5">
-                  <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#6b716d]">Biggest constraint</p>
+                  <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#6b716d]">Primary constraint</p>
                   <p className="mt-3 font-semibold text-ink">{selected.biggestRisk}</p>
                 </div>
                 <div className="border-t border-black/[0.08] pt-5">
-                  <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#6b716d]">Best opportunity</p>
+                  <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#6b716d]">Readiness signal</p>
                   <p className="mt-3 font-semibold text-ink">{selected.bestOpportunity}</p>
                 </div>
               </div>
@@ -121,17 +133,14 @@ export function LocationAnalyzer() {
                 <div>
                   <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#6b716d]">Score breakdown</p>
                   <h3 className="mt-2 text-2xl font-semibold text-ink">Readiness by category</h3>
-                  <p className="mt-2 text-xs leading-5 text-[#6b716d]">Power cost score uses demo data unless EIA cache is generated.</p>
+                  <p className="mt-2 text-xs leading-5 text-[#6b716d]">
+                    Grid Readiness is a weighted readiness score. Higher values indicate stronger site readiness. Demo/sample data is used until
+                    live source caches are generated.
+                  </p>
                 </div>
                 <div className="text-sm text-[#6b716d]">
                   <p>Best fit: {selected.bestUseCase}</p>
-                  <p>{selected.powerCostSource}</p>
-                  {selected.powerCostPriceRecord ? (
-                    <p>
-                      {selected.powerCostPriceRecord.stateId} {selected.powerCostPriceRecord.sector},{' '}
-                      {selected.powerCostPriceRecord.latestPriceCentsPerKwh} cents/kWh
-                    </p>
-                  ) : null}
+                  <p>{selected.scoreBand}</p>
                 </div>
               </div>
               <div className="grid gap-8 xl:grid-cols-[1fr_0.8fr]">
@@ -139,56 +148,62 @@ export function LocationAnalyzer() {
                   {categoryEntries.map(([key, value]) => (
                     <div key={key}>
                       <RiskBar label={categoryLabels[key]} value={value} />
+                      {key === 'powerCost' ? (
+                        <SourceNote
+                          source={selected.powerCostSource}
+                          confidence={selected.powerCostConfidence}
+                          detail={
+                            selected.powerCostPriceRecord
+                              ? `${selected.powerCostPriceRecord.stateId} ${selected.powerCostPriceRecord.sector}, ${selected.powerCostPriceRecord.latestPriceCentsPerKwh} cents/kWh`
+                              : null
+                          }
+                        />
+                      ) : null}
                       {key === 'gridAccess' ? (
-                        <div className="mt-2 text-xs leading-5 text-[#6b716d]">
-                          <p>Grid access score uses demo data unless LBNL queue cache is generated.</p>
-                          <p>{selected.gridAccessSource}</p>
-                          {selected.queueRiskRecord ? (
-                            <p>
-                              {selected.queueRiskRecord.stateId} {selected.queueRiskRecord.queueCongestionLevel} queue congestion
-                            </p>
-                          ) : null}
-                        </div>
+                        <SourceNote
+                          source={selected.gridAccessSource}
+                          confidence={selected.gridAccessConfidence}
+                          detail={
+                            selected.queueRiskRecord
+                              ? `${selected.queueRiskRecord.stateId} ${selected.queueRiskRecord.queueCongestionLevel} queue congestion`
+                              : null
+                          }
+                        />
                       ) : null}
                       {key === 'timeToPower' ? (
-                        <div className="mt-2 text-xs leading-5 text-[#6b716d]">
-                          <p>Time-to-power score uses demo data unless LBNL queue cache is generated.</p>
-                          <p>{selected.timeToPowerSource}</p>
-                          {selected.queueRiskRecord ? <p>{selected.queueRiskRecord.medianQueueDurationYears} year median queue duration</p> : null}
-                        </div>
+                        <SourceNote
+                          source={selected.timeToPowerSource}
+                          confidence={selected.timeToPowerConfidence}
+                          detail={selected.queueRiskRecord ? `${selected.queueRiskRecord.medianQueueDurationYears} year median queue duration` : null}
+                        />
                       ) : null}
                       {key === 'climate' ? (
-                        <div className="mt-2 text-xs leading-5 text-[#6b716d]">
-                          <p>Climate risk uses demo data unless FEMA cache is generated.</p>
-                          <p>{selected.climateRiskSource}</p>
-                          {selected.climateRiskRecord ? (
-                            <p>
-                              {selected.climateRiskRecord.stateId} risk index {selected.climateRiskRecord.riskIndexScore}
-                            </p>
-                          ) : null}
-                        </div>
+                        <SourceNote
+                          source={selected.climateRiskSource}
+                          confidence={selected.climateRiskConfidence}
+                          detail={selected.climateRiskRecord ? `${selected.climateRiskRecord.stateId} risk index ${selected.climateRiskRecord.riskIndexScore}` : null}
+                        />
                       ) : null}
                       {key === 'waterCooling' ? (
-                        <div className="mt-2 text-xs leading-5 text-[#6b716d]">
-                          <p>Water/cooling risk uses demo data unless Drought Monitor cache is generated.</p>
-                          <p>{selected.waterCoolingSource}</p>
-                          {selected.waterCoolingRecord ? (
-                            <p>
-                              {selected.waterCoolingRecord.stateId} {selected.waterCoolingRecord.droughtCategoryLabel}
-                            </p>
-                          ) : null}
-                        </div>
+                        <SourceNote
+                          source={selected.waterCoolingSource}
+                          confidence={selected.waterCoolingConfidence}
+                          detail={selected.waterCoolingRecord ? `${selected.waterCoolingRecord.stateId} ${selected.waterCoolingRecord.droughtCategoryLabel}` : null}
+                        />
                       ) : null}
                       {key === 'carbonCompliance' ? (
-                        <div className="mt-2 text-xs leading-5 text-[#6b716d]">
-                          <p>Carbon/compliance risk uses demo data unless EPA eGRID cache is generated.</p>
-                          <p>{selected.carbonComplianceSource}</p>
-                          {selected.carbonComplianceRecord ? (
-                            <p>
-                              {selected.carbonComplianceRecord.stateId} {selected.carbonComplianceRecord.co2RateLbPerMwh} lb CO2/MWh
-                            </p>
-                          ) : null}
-                        </div>
+                        <SourceNote
+                          source={selected.carbonComplianceSource}
+                          confidence={selected.carbonComplianceConfidence}
+                          detail={
+                            selected.carbonComplianceRecord
+                              ? `${selected.carbonComplianceRecord.stateId} ${selected.carbonComplianceRecord.co2RateLbPerMwh} lb CO2/MWh`
+                              : null
+                          }
+                        />
+                      ) : null}
+                      {key === 'financeRoi' ? (
+                        <SourceNote source={selected.financeRoiSource} confidence={selected.financeRoiConfidence} detail="Local MVP financial sensitivity estimate" />
                       ) : null}
                     </div>
                   ))}
@@ -200,7 +215,7 @@ export function LocationAnalyzer() {
                     <p className="mt-1 text-[#5f6863]">{weakestCategory[1]} / 100</p>
                   </div>
                   <div className="border-t border-black/[0.08] pt-5">
-                    <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#6b716d]">Next diligence step</p>
+                    <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#6b716d]">Diligence priority</p>
                     <p className="mt-3 leading-7 text-[#4e5752]">{diligenceStep[selected.recommendation]}</p>
                   </div>
                 </div>

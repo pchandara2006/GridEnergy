@@ -6,7 +6,7 @@ Each city record in `src/data/gridreadyData.js` includes:
 - `city`: market display name.
 - `region`: state or regional label.
 - `score`: overall Grid Readiness Score from 0 to 100.
-- `recommendation`: one of `Recommended`, `Needs Review`, or `High Risk`.
+- `recommendation`: one of `Recommended`, `Proceed with review`, `Requires deeper diligence`, or `High risk`.
 - `bestUseCase`: market-fit label such as `AI Data Center`, `Battery Storage`, `Manufacturing`, `EV Charging Hub`, or `Solar Development`.
 - `biggestRisk`: concise diligence risk.
 - `bestOpportunity`: concise upside signal.
@@ -30,6 +30,21 @@ Current category keys:
 - `financeRoi`
 
 Scores are normalized from 0 to 100, where higher is better for readiness and lower risk. UI labels explain risk-oriented categories as readiness-adjusted scores rather than official risk measurements.
+
+Official Grid Readiness weighting:
+- `gridAccess`: 20%
+- `timeToPower`: 20%
+- `powerCost`: 15%
+- `waterCooling`: 15%
+- `climate`: 10%
+- `carbonCompliance`: 10%
+- `financeRoi`: 10%
+
+Score bands:
+- 80-100: Strong readiness
+- 65-79: Viable with review
+- 50-64: Constrained
+- 0-49: High risk
 
 Power Cost Score can be replaced at runtime by EIA cache/sample data. When a normalized EIA retail price record is available, `calculatePowerCostScoreFromPrice()` maps the latest cents/kWh value to a 0-100 score. If no EIA cache/sample record is available, the app keeps the local demo Power Cost Score.
 
@@ -56,6 +71,13 @@ The simulator calculates project fit by applying project-specific weights to the
 The current dataset is intentionally mocked for MVP validation. It is not official, live, or source-backed. The demo scoring model is designed to show product behavior and investor-facing UX, not to make real site-selection claims.
 
 Future real scoring should include source provenance, timestamped data versions, confidence intervals, and evidence links for each signal.
+
+## Source Confidence
+
+Runtime source confidence labels:
+- `Verified cache`: generated cache data is available.
+- `External sample`: checked-in external-style sample data is being used.
+- `Demo fallback`: local demo values are being used.
 
 ## EIA Retail Price Cache
 
