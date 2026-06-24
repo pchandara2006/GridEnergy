@@ -1,6 +1,10 @@
 # Changelog
 
 ## 2026-06-24
+- Prepared the project for public demo, GitHub presentation, and static deployment.
+- Rewrote `README.md` for a professional GitHub overview.
+- Added `docs/DEPLOYMENT.md`, `docs/DEMO_SCRIPT.md`, `docs/PITCH_BRIEF.md`, and `docs/PROJECT_STATUS.md`.
+- Clarified `.env.example` so `EIA_API_KEY` is documented as optional and not required for the deployed demo.
 - Added scoring methodology and trust layer for consistent score direction, weighted Grid Readiness, score bands, recommendations, source confidence labels, and fallback explanations.
 - Added `docs/SCORING_METHODOLOGY.md`.
 - Recalculated demo Grid Readiness scores with the official weighting and normalized source notes across analyzer, comparison, and scenario flows.

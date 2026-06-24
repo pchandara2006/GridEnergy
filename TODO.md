@@ -24,11 +24,13 @@
 - Add authentication-ready app shell when backend scope begins.
 - Add more chart views for electricity cost volatility, queue timing, and carbon exposure.
 - Add accessibility pass with keyboard testing across interactive sections.
+- Add automated deployment smoke tests when a CI workflow is introduced.
 
 ## Bugs / Follow-Up QA
 - Validate the responsive layout manually across common tablet and mobile viewport sizes.
 - Review mobile table behavior for the investment committee comparison view after real device testing.
 - Confirm any future chart labels remain readable on narrow mobile screens if charting is reintroduced.
+- Run a post-deploy browser smoke test after the first public Vercel deployment.
 
 ## Future Backend / API Ideas
 - API endpoint for market search and saved site shortlists.

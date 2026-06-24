@@ -58,6 +58,7 @@ Core tagline: "Power readiness intelligence for the next generation of infrastru
 - EPA eGRID cache/sample foundation for Carbon/Compliance Risk.
 - LBNL Interconnection Queue cache/sample foundation for Grid Access and Time-to-Power Scores.
 - Scoring methodology and trust layer for consistent score direction, recommendation bands, source labels, and fallback explanations.
+- Public-demo documentation, deployment guide, demo script, pitch brief, and project status summary.
 
 ## Current Visual Language
 The frontend was redesigned from a neon/dark dashboard to a clean premium infrastructure SaaS style inspired by Apple/Robinhood/Snowflake-style clarity and editorial Awwwards-level spacing. The interface now uses off-white surfaces, graphite text, restrained borders, tables, and memo-style hierarchy.
@@ -69,3 +70,9 @@ The frontend was redesigned from a neon/dark dashboard to a clean premium infras
 4. Run lint checks: `npm run lint`
 
 All market scores and document outputs are demo values for MVP validation unless local EIA, FEMA, drought-risk, eGRID, or LBNL queue caches are generated. Sample cache data is also sample data, not official live data. Higher scores always mean stronger readiness or lower risk.
+
+## Deployment Notes
+- Static Vite deployment is supported.
+- Public demo requires no runtime API keys.
+- Optional `EIA_API_KEY` is only for local cache generation with `npm run fetch:eia`.
+- Deployment instructions live in `docs/DEPLOYMENT.md`.
