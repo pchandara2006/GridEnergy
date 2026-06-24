@@ -14,6 +14,7 @@
 - Use U.S. Drought Monitor data as the third external-data foundation because drought severity is a clear public baseline for water/cooling readiness.
 - Treat USGS Water Data as a planned enrichment source for streamflow, groundwater, and monitoring-site evidence once site-level geography matching is available.
 - Use EPA eGRID as the fourth external-data foundation because emissions rates and resource mix are practical public baselines for Carbon/Compliance Risk.
+- Use LBNL Interconnection Queue data as the fifth external-data foundation because grid access and delivery timing are often gating risks for power-heavy projects.
 - Focus the primary workflow on location analysis, market comparison, project fit simulation, and document signal extraction.
 - Keep business language direct and decision-oriented for infrastructure teams and investors.
 - Include "best opportunity" and "biggest risk" outputs because users need directional diligence guidance, not just scores.
@@ -31,6 +32,8 @@
 - Keep USGS Water Data as a normalized adapter placeholder until a backend cache job and scoring role are defined.
 - Use EPA eGRID cache/sample JSON in the browser rather than live frontend data fetching.
 - Start with state-level eGRID-style sample data, then move to eGRID subregion-level matching when real site geographies and service territories are introduced.
+- Use LBNL queue cache/sample JSON in the browser rather than live frontend data fetching.
+- Start with state-level LBNL queue-style sample data, then move to ISO/RTO, utility, queue-region, and project-level matching when real site geographies are introduced.
 - Remove unused charting and icon dependencies after the final visual cleanup removed active charts and icons.
 - Keep the app frontend-only until data provenance, API shape, and scoring requirements are clearer.
 

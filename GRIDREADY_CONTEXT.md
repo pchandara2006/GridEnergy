@@ -23,6 +23,7 @@ Core tagline: "Power readiness intelligence for the next generation of infrastru
 - U.S. Drought Monitor cache adapter in `src/services/external/droughtMonitorAdapter.js`
 - USGS Water Data placeholder adapter in `src/services/external/usgsWaterAdapter.js`
 - EPA eGRID cache adapter in `src/services/external/egridAdapter.js`
+- LBNL Interconnection Queue cache adapter in `src/services/external/lbnlQueueAdapter.js`
 
 ## Architecture
 - Frontend-first single-page app.
@@ -33,6 +34,7 @@ Core tagline: "Power readiness intelligence for the next generation of infrastru
 - Climate Risk Score can use normalized FEMA National Risk Index cache data from `public/data/fema-risk.json`, with sample/demo fallback.
 - Water/Cooling Risk can use normalized U.S. Drought Monitor cache data from `public/data/drought-risk.json`, with sample/demo fallback.
 - Carbon/Compliance Risk can use normalized EPA eGRID-style cache data from `public/data/egrid-carbon.json`, with sample/demo fallback.
+- Grid Access and Time-to-Power Scores can use normalized LBNL Interconnection Queue-style cache data from `public/data/lbnl-queue-risk.json`, with sample/demo fallback.
 - Backend/API integration can later replace local arrays without rewriting the UI sections.
 
 ## Completed Features
@@ -52,6 +54,7 @@ Core tagline: "Power readiness intelligence for the next generation of infrastru
 - U.S. Drought Monitor cache/sample foundation for Water/Cooling Risk.
 - USGS Water Data placeholder shape for future streamflow, groundwater, and monitoring-site signals.
 - EPA eGRID cache/sample foundation for Carbon/Compliance Risk.
+- LBNL Interconnection Queue cache/sample foundation for Grid Access and Time-to-Power Scores.
 
 ## Current Visual Language
 The frontend was redesigned from a neon/dark dashboard to a clean premium infrastructure SaaS style inspired by Apple/Robinhood/Snowflake-style clarity and editorial Awwwards-level spacing. The interface now uses off-white surfaces, graphite text, restrained borders, tables, and memo-style hierarchy.
@@ -62,4 +65,4 @@ The frontend was redesigned from a neon/dark dashboard to a clean premium infras
 3. Build production bundle: `npm run build`
 4. Run lint checks: `npm run lint`
 
-All market scores and document outputs are demo values for MVP validation unless local EIA, FEMA, drought-risk, or eGRID caches are generated. Sample cache data is also sample data, not official live data.
+All market scores and document outputs are demo values for MVP validation unless local EIA, FEMA, drought-risk, eGRID, or LBNL queue caches are generated. Sample cache data is also sample data, not official live data.

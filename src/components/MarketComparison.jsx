@@ -4,6 +4,7 @@ import { applyDroughtWaterCoolingToLocation, loadDroughtRiskCache } from '../ser
 import { applyEgridCarbonComplianceToLocation, loadEgridCarbonCache } from '../services/external/egridAdapter.js';
 import { applyEiaPowerCostToLocation, loadEiaRetailPriceCache } from '../services/external/eiaAdapter.js';
 import { applyFemaClimateRiskToLocation, loadFemaRiskCache } from '../services/external/femaRiskAdapter.js';
+import { applyLbnlQueueRiskToLocation, loadLbnlQueueRiskCache } from '../services/external/lbnlQueueAdapter.js';
 import { RecommendationBadge, SectionHeader } from './ui.jsx';
 
 const defaultSelected = ['dallas', 'albuquerque', 'atlanta', 'columbus'];
@@ -14,21 +15,25 @@ export function MarketComparison() {
   const [femaCache, setFemaCache] = useState({ records: [], sourceType: 'none' });
   const [droughtCache, setDroughtCache] = useState({ records: [], sourceType: 'none' });
   const [egridCache, setEgridCache] = useState({ records: [], sourceType: 'none' });
+  const [lbnlQueueCache, setLbnlQueueCache] = useState({ records: [], sourceType: 'none' });
   const selectedLocations = useMemo(
     () =>
       locations
         .filter((location) => selectedIds.includes(location.id))
         .map((location) =>
-          applyEgridCarbonComplianceToLocation(
-            applyDroughtWaterCoolingToLocation(
-              applyFemaClimateRiskToLocation(applyEiaPowerCostToLocation(location, eiaCache), femaCache),
-              droughtCache,
+          applyLbnlQueueRiskToLocation(
+            applyEgridCarbonComplianceToLocation(
+              applyDroughtWaterCoolingToLocation(
+                applyFemaClimateRiskToLocation(applyEiaPowerCostToLocation(location, eiaCache), femaCache),
+                droughtCache,
+              ),
+              egridCache,
             ),
-            egridCache,
+            lbnlQueueCache,
           ),
         )
         .sort((a, b) => b.score - a.score),
-    [droughtCache, egridCache, eiaCache, femaCache, selectedIds],
+    [droughtCache, egridCache, eiaCache, femaCache, lbnlQueueCache, selectedIds],
   );
   const strongest = [...selectedLocations].sort((a, b) => b.score - a.score)[0];
   const riskiest = [...selectedLocations].sort((a, b) => a.score - b.score)[0];
@@ -55,6 +60,9 @@ export function MarketComparison() {
     });
     loadEgridCarbonCache().then((cache) => {
       if (isMounted) setEgridCache(cache);
+    });
+    loadLbnlQueueRiskCache().then((cache) => {
+      if (isMounted) setLbnlQueueCache(cache);
     });
     return () => {
       isMounted = false;

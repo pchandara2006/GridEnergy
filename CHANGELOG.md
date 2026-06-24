@@ -1,6 +1,10 @@
 # Changelog
 
 ## 2026-06-24
+- Added LBNL Interconnection Queue cache/sample integration foundation for Grid Access and Time-to-Power Scores.
+- Added `src/services/external/lbnlQueueAdapter.js`, `public/data/lbnl-queue-risk.sample.json`, and `docs/LBNL_QUEUE_INTEGRATION.md`.
+- Added queue-based scoring helpers and connected LBNL queue sample/cache data to existing analyzer, comparison, and scenario flows with demo fallback.
+- Added subtle Grid Access and Time-to-Power source notes without changing the current visual design or adding sections.
 - Added EPA eGRID cache/sample integration foundation for Carbon/Compliance Risk.
 - Added `src/services/external/egridAdapter.js`, `public/data/egrid-carbon.sample.json`, and `docs/EGRID_INTEGRATION.md`.
 - Added carbon/compliance scoring helpers and connected EPA eGRID sample/cache data to existing analyzer, comparison, and scenario flows with demo fallback.

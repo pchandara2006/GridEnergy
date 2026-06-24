@@ -1,6 +1,6 @@
 # Data Sources
 
-GridReady AI currently uses local demo data plus external data foundations for electricity prices, climate risk, water/cooling risk, and carbon/compliance risk.
+GridReady AI currently uses local demo data plus external data foundations for electricity prices, climate risk, water/cooling risk, carbon/compliance risk, and grid queue risk.
 
 ## Current Sources
 
@@ -12,6 +12,7 @@ GridReady AI currently uses local demo data plus external data foundations for e
 | U.S. Drought Monitor | Cache/sample foundation | Water/Cooling Risk | `public/data/drought-risk.json` or `public/data/drought-risk.sample.json` |
 | USGS Water Data | Planned cache foundation | Future streamflow, groundwater, and monitoring-site context | Future `public/data/usgs-water.json` |
 | EPA eGRID | Cache/sample foundation | Carbon/Compliance Risk | `public/data/egrid-carbon.json` or `public/data/egrid-carbon.sample.json` |
+| LBNL Interconnection Queue | Cache/sample foundation | Grid Access and Time-to-Power Scores | `public/data/lbnl-queue-risk.json` or `public/data/lbnl-queue-risk.sample.json` |
 
 ## Data Policy
 
@@ -23,7 +24,7 @@ GridReady AI currently uses local demo data plus external data foundations for e
 ## Planned Sources
 
 - Utility integrated resource plans and capacity maps
-- ISO/RTO interconnection queues
+- LBNL interconnection queue datasets and ISO/RTO queue details
 - EIA electricity demand and generation data
 - NOAA climate and heat-risk data
 - U.S. Drought Monitor history and USGS water monitoring data

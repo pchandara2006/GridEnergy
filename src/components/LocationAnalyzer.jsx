@@ -5,6 +5,7 @@ import { applyDroughtWaterCoolingToLocation, loadDroughtRiskCache } from '../ser
 import { applyEgridCarbonComplianceToLocation, loadEgridCarbonCache } from '../services/external/egridAdapter.js';
 import { applyEiaPowerCostToLocation, loadEiaRetailPriceCache } from '../services/external/eiaAdapter.js';
 import { applyFemaClimateRiskToLocation, loadFemaRiskCache } from '../services/external/femaRiskAdapter.js';
+import { applyLbnlQueueRiskToLocation, loadLbnlQueueRiskCache } from '../services/external/lbnlQueueAdapter.js';
 import { RecommendationBadge, RiskBar, ScoreRing, SectionHeader } from './ui.jsx';
 
 const categoryLabels = {
@@ -29,16 +30,20 @@ export function LocationAnalyzer() {
   const [femaCache, setFemaCache] = useState({ records: [], sourceType: 'none' });
   const [droughtCache, setDroughtCache] = useState({ records: [], sourceType: 'none' });
   const [egridCache, setEgridCache] = useState({ records: [], sourceType: 'none' });
+  const [lbnlQueueCache, setLbnlQueueCache] = useState({ records: [], sourceType: 'none' });
   const selected = useMemo(() => {
     const location = locations.find((item) => item.id === selectedId) ?? locations[0];
-    return applyEgridCarbonComplianceToLocation(
-      applyDroughtWaterCoolingToLocation(
-        applyFemaClimateRiskToLocation(applyEiaPowerCostToLocation(location, eiaCache), femaCache),
-        droughtCache,
+    return applyLbnlQueueRiskToLocation(
+      applyEgridCarbonComplianceToLocation(
+        applyDroughtWaterCoolingToLocation(
+          applyFemaClimateRiskToLocation(applyEiaPowerCostToLocation(location, eiaCache), femaCache),
+          droughtCache,
+        ),
+        egridCache,
       ),
-      egridCache,
+      lbnlQueueCache,
     );
-  }, [droughtCache, egridCache, eiaCache, femaCache, selectedId]);
+  }, [droughtCache, egridCache, eiaCache, femaCache, lbnlQueueCache, selectedId]);
   const categoryEntries = Object.entries(selected.categories);
   const weakestCategory = getWeakestCategory(selected.categories);
 
@@ -55,6 +60,9 @@ export function LocationAnalyzer() {
     });
     loadEgridCarbonCache().then((cache) => {
       if (isMounted) setEgridCache(cache);
+    });
+    loadLbnlQueueRiskCache().then((cache) => {
+      if (isMounted) setLbnlQueueCache(cache);
     });
     return () => {
       isMounted = false;
@@ -131,6 +139,24 @@ export function LocationAnalyzer() {
                   {categoryEntries.map(([key, value]) => (
                     <div key={key}>
                       <RiskBar label={categoryLabels[key]} value={value} />
+                      {key === 'gridAccess' ? (
+                        <div className="mt-2 text-xs leading-5 text-[#6b716d]">
+                          <p>Grid access score uses demo data unless LBNL queue cache is generated.</p>
+                          <p>{selected.gridAccessSource}</p>
+                          {selected.queueRiskRecord ? (
+                            <p>
+                              {selected.queueRiskRecord.stateId} {selected.queueRiskRecord.queueCongestionLevel} queue congestion
+                            </p>
+                          ) : null}
+                        </div>
+                      ) : null}
+                      {key === 'timeToPower' ? (
+                        <div className="mt-2 text-xs leading-5 text-[#6b716d]">
+                          <p>Time-to-power score uses demo data unless LBNL queue cache is generated.</p>
+                          <p>{selected.timeToPowerSource}</p>
+                          {selected.queueRiskRecord ? <p>{selected.queueRiskRecord.medianQueueDurationYears} year median queue duration</p> : null}
+                        </div>
+                      ) : null}
                       {key === 'climate' ? (
                         <div className="mt-2 text-xs leading-5 text-[#6b716d]">
                           <p>Climate risk uses demo data unless FEMA cache is generated.</p>

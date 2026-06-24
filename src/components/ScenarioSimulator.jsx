@@ -6,6 +6,7 @@ import { applyDroughtWaterCoolingToLocation, loadDroughtRiskCache } from '../ser
 import { applyEgridCarbonComplianceToLocation, loadEgridCarbonCache } from '../services/external/egridAdapter.js';
 import { applyEiaPowerCostToLocation, loadEiaRetailPriceCache } from '../services/external/eiaAdapter.js';
 import { applyFemaClimateRiskToLocation, loadFemaRiskCache } from '../services/external/femaRiskAdapter.js';
+import { applyLbnlQueueRiskToLocation, loadLbnlQueueRiskCache } from '../services/external/lbnlQueueAdapter.js';
 
 const categoryLabels = {
   powerCost: 'Power cost',
@@ -24,18 +25,22 @@ export function ScenarioSimulator() {
   const [femaCache, setFemaCache] = useState({ records: [], sourceType: 'none' });
   const [droughtCache, setDroughtCache] = useState({ records: [], sourceType: 'none' });
   const [egridCache, setEgridCache] = useState({ records: [], sourceType: 'none' });
+  const [lbnlQueueCache, setLbnlQueueCache] = useState({ records: [], sourceType: 'none' });
 
   const project = useMemo(() => projectTypes.find((item) => item.id === projectId) ?? projectTypes[0], [projectId]);
   const location = useMemo(() => {
     const selectedLocation = locations.find((item) => item.id === locationId) ?? locations[0];
-    return applyEgridCarbonComplianceToLocation(
-      applyDroughtWaterCoolingToLocation(
-        applyFemaClimateRiskToLocation(applyEiaPowerCostToLocation(selectedLocation, eiaCache), femaCache),
-        droughtCache,
+    return applyLbnlQueueRiskToLocation(
+      applyEgridCarbonComplianceToLocation(
+        applyDroughtWaterCoolingToLocation(
+          applyFemaClimateRiskToLocation(applyEiaPowerCostToLocation(selectedLocation, eiaCache), femaCache),
+          droughtCache,
+        ),
+        egridCache,
       ),
-      egridCache,
+      lbnlQueueCache,
     );
-  }, [droughtCache, egridCache, eiaCache, femaCache, locationId]);
+  }, [droughtCache, egridCache, eiaCache, femaCache, lbnlQueueCache, locationId]);
   const fitScore = calculateProjectFit(location, project);
   const weakestCategory = getWeakestCategory(location.categories);
 
@@ -52,6 +57,9 @@ export function ScenarioSimulator() {
     });
     loadEgridCarbonCache().then((cache) => {
       if (isMounted) setEgridCache(cache);
+    });
+    loadLbnlQueueRiskCache().then((cache) => {
+      if (isMounted) setLbnlQueueCache(cache);
     });
     return () => {
       isMounted = false;
@@ -110,6 +118,10 @@ export function ScenarioSimulator() {
               <p className="mt-1 text-[#5f6863]">{location.city} market simulation</p>
               <p className="mt-3 text-xs leading-5 text-[#6b716d]">Power cost score uses demo data unless EIA cache is generated.</p>
               <p className="mt-1 text-xs leading-5 text-[#6b716d]">{location.powerCostSource}</p>
+              <p className="mt-3 text-xs leading-5 text-[#6b716d]">Grid access score uses demo data unless LBNL queue cache is generated.</p>
+              <p className="mt-1 text-xs leading-5 text-[#6b716d]">{location.gridAccessSource}</p>
+              <p className="mt-3 text-xs leading-5 text-[#6b716d]">Time-to-power score uses demo data unless LBNL queue cache is generated.</p>
+              <p className="mt-1 text-xs leading-5 text-[#6b716d]">{location.timeToPowerSource}</p>
               <p className="mt-3 text-xs leading-5 text-[#6b716d]">Climate risk uses demo data unless FEMA cache is generated.</p>
               <p className="mt-1 text-xs leading-5 text-[#6b716d]">{location.climateRiskSource}</p>
               <p className="mt-3 text-xs leading-5 text-[#6b716d]">Water/cooling risk uses demo data unless Drought Monitor cache is generated.</p>

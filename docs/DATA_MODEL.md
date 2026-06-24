@@ -17,7 +17,7 @@ Each city record in `src/data/gridreadyData.js` includes:
 
 The file also exports `demoDataNotice`, a shared UI/documentation reminder that all current data is for MVP validation and is not official or live.
 
-Each demo location now includes `stateId` so external state-level data, including EIA retail electricity prices, FEMA risk records, Drought Monitor records, and EPA eGRID-style records, can map cleanly into the app.
+Each demo location now includes `stateId` so external state-level data, including EIA retail electricity prices, FEMA risk records, Drought Monitor records, EPA eGRID-style records, and LBNL queue-style records, can map cleanly into the app.
 
 ## Score Categories
 Current category keys:
@@ -38,6 +38,8 @@ Climate Risk Score can be replaced at runtime by FEMA cache/sample data. When a 
 Water/Cooling Risk can be replaced at runtime by U.S. Drought Monitor cache/sample data. When a normalized drought record is available, `calculateWaterCoolingRiskScore()` maps drought severity to a 0-100 readiness score. If no drought cache/sample record is available, the app keeps the local demo Water/Cooling Risk value.
 
 Carbon/Compliance Risk can be replaced at runtime by EPA eGRID cache/sample data. When a normalized eGRID-style record is available, `calculateCarbonComplianceScore()` blends CO2 rate, renewable share, and fossil share into a 0-100 readiness score. If no eGRID cache/sample record is available, the app keeps the local demo Carbon/Compliance Risk value.
+
+Grid Access and Time-to-Power Scores can be replaced at runtime by LBNL Interconnection Queue cache/sample data. When a normalized queue record is available, `calculateGridAccessScore()` maps active queue capacity, withdrawal share, completion share, and agreement share to Grid Access readiness, while `calculateTimeToPowerScore()` maps queue duration, agreement share, and withdrawal share to delivery-timing readiness. If no LBNL queue cache/sample record is available, the app keeps the local demo Grid Access and Time-to-Power values.
 
 ## Project Scenario Data
 Each project type includes:
@@ -125,6 +127,27 @@ Record fields:
 - `renewableSharePercent`
 - `fossilSharePercent`
 - `nuclearSharePercent`
+- `reportingYear`
+- `source`
+- `isSample`
+
+## LBNL Interconnection Queue Cache
+
+Normalized records live in `public/data/lbnl-queue-risk.json` when generated. The sample fallback lives in `public/data/lbnl-queue-risk.sample.json`.
+
+Record fields:
+- `stateId`
+- `stateName`
+- `queueRegion`
+- `activeQueueMw`
+- `storageQueueMw`
+- `solarQueueMw`
+- `gasQueueMw`
+- `withdrawnSharePercent`
+- `completedSharePercent`
+- `medianQueueDurationYears`
+- `interconnectionAgreementSharePercent`
+- `queueCongestionLevel`
 - `reportingYear`
 - `source`
 - `isSample`

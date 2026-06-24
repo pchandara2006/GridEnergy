@@ -110,3 +110,64 @@ export function explainCarbonComplianceScore(record) {
 
   return `Carbon/Compliance Risk Score blends EPA eGRID-style CO2 rate, renewable share, and fossil share into a 0-100 readiness score.`;
 }
+
+export function calculateGridAccessScore(record) {
+  const activeQueueMw = Number.parseFloat(record?.activeQueueMw);
+  const withdrawnSharePercent = Number.parseFloat(record?.withdrawnSharePercent);
+  const completedSharePercent = Number.parseFloat(record?.completedSharePercent);
+  const interconnectionAgreementSharePercent = Number.parseFloat(record?.interconnectionAgreementSharePercent);
+
+  if (
+    !Number.isFinite(activeQueueMw) ||
+    !Number.isFinite(withdrawnSharePercent) ||
+    !Number.isFinite(completedSharePercent) ||
+    !Number.isFinite(interconnectionAgreementSharePercent)
+  ) {
+    return null;
+  }
+
+  const queuePressurePenalty = Math.min((activeQueueMw / 60000) * 35, 35);
+  const withdrawnPenalty = withdrawnSharePercent * 0.35;
+  const completedSignal = completedSharePercent * 0.25;
+  const agreementSignal = interconnectionAgreementSharePercent * 0.15;
+
+  return clampScore(100 - queuePressurePenalty - withdrawnPenalty + completedSignal + agreementSignal);
+}
+
+export function calculateTimeToPowerScore(record) {
+  const medianQueueDurationYears = Number.parseFloat(record?.medianQueueDurationYears);
+  const interconnectionAgreementSharePercent = Number.parseFloat(record?.interconnectionAgreementSharePercent);
+  const withdrawnSharePercent = Number.parseFloat(record?.withdrawnSharePercent);
+
+  if (
+    !Number.isFinite(medianQueueDurationYears) ||
+    !Number.isFinite(interconnectionAgreementSharePercent) ||
+    !Number.isFinite(withdrawnSharePercent)
+  ) {
+    return null;
+  }
+
+  const durationPenalty = medianQueueDurationYears * 14;
+  const agreementSignal = interconnectionAgreementSharePercent * 0.25;
+  const withdrawnPenalty = withdrawnSharePercent * 0.15;
+
+  return clampScore(100 - durationPenalty + agreementSignal - withdrawnPenalty);
+}
+
+export function explainGridAccessRisk(record) {
+  const score = calculateGridAccessScore(record);
+  if (score === null) {
+    return 'Grid Access Score uses the local demo estimate because no valid LBNL queue record is available.';
+  }
+
+  return 'Grid Access Score blends LBNL queue-style active queue capacity, withdrawal share, completed share, and interconnection agreement share into a 0-100 readiness score.';
+}
+
+export function explainTimeToPowerRisk(record) {
+  const score = calculateTimeToPowerScore(record);
+  if (score === null) {
+    return 'Time-to-Power Score uses the local demo estimate because no valid LBNL queue record is available.';
+  }
+
+  return 'Time-to-Power Score maps LBNL queue-style median queue duration, interconnection agreement share, and withdrawal share into a 0-100 readiness score.';
+}

@@ -30,6 +30,7 @@ GridReady AI packages those signals into a practical readiness workflow for earl
 - FEMA National Risk Index cache foundation for Climate Risk Score, with demo fallback
 - U.S. Drought Monitor cache foundation for Water/Cooling Risk, with demo fallback
 - EPA eGRID cache foundation for Carbon/Compliance Risk, with demo fallback
+- LBNL Interconnection Queue cache foundation for Grid Access and Time-to-Power Scores, with demo fallback
 
 ## Tech Stack
 - React 18
@@ -113,9 +114,18 @@ public/data/egrid-carbon.sample.json
 
 If a generated eGRID cache is later added at `public/data/egrid-carbon.json`, the app will use it first. If not, the app falls back to the sample file, then to local demo Carbon/Compliance Risk values.
 
+## LBNL Interconnection Queue Data
+The frontend reads normalized LBNL Interconnection Queue-style cache data from public JSON. The repository currently includes sample state-level data:
+
+```text
+public/data/lbnl-queue-risk.sample.json
+```
+
+If a generated queue cache is later added at `public/data/lbnl-queue-risk.json`, the app will use it first. If not, the app falls back to the sample file, then to local demo Grid Access and Time-to-Power values.
+
 ## Future Data Integrations
 - Utility integrated resource plans and capacity maps
-- ISO/RTO interconnection queues
+- LBNL interconnection queue datasets and ISO/RTO queue details
 - EIA electricity price, demand, and generation datasets
 - NOAA climate and heat-risk datasets
 - U.S. Drought Monitor and USGS water datasets

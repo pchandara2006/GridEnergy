@@ -7,10 +7,12 @@
 - Add tests for `src/services/external/droughtMonitorAdapter.js`.
 - Add tests for `src/services/external/usgsWaterAdapter.js` once the adapter grows beyond placeholder normalization.
 - Add tests for `src/services/external/egridAdapter.js`.
+- Add tests for `src/services/external/lbnlQueueAdapter.js`.
 - Replace EIA sample cache with generated cache during real data validation.
 - Replace FEMA state-level sample cache with county or tract-level generated cache during real data validation.
 - Replace Drought Monitor state-level sample cache with county, ZIP, or watershed-level generated cache during real data validation.
 - Replace eGRID state-level sample cache with subregion-level generated cache during real data validation.
+- Replace LBNL queue state-level sample cache with region, utility, and project-level generated cache during real data validation.
 - Decide how USGS streamflow, groundwater, and monitoring-site signals should influence Water/Cooling Risk.
 - Add source-provenance fields to demo data before connecting real datasets.
 - Add visual QA screenshots for desktop, tablet, and mobile after the clean premium redesign.
@@ -33,6 +35,7 @@
 - Backend job for U.S. Drought Monitor cache refreshes and geography matching.
 - Backend job for USGS Water Data cache refreshes once water monitoring signals are prioritized.
 - Backend job for EPA eGRID cache refreshes and subregion matching.
+- Backend job for LBNL queue cache refreshes and queue-region matching.
 - Scenario scoring service with versioned scoring models.
 - Document ingestion pipeline for utility reports, interconnection filings, and zoning packets.
 - User accounts, team workspaces, and shared diligence projects.
@@ -40,7 +43,7 @@
 
 ## Future Real-Data Integrations
 - Utility integrated resource plans and capacity maps.
-- ISO/RTO interconnection queues.
+- LBNL interconnection queue datasets and ISO/RTO queue details.
 - EIA electricity price and demand datasets.
 - NOAA climate and heat-risk datasets.
 - U.S. Drought Monitor and USGS water datasets.
