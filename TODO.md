@@ -1,6 +1,7 @@
 # GridReady AI TODO
 
 ## Next Development Tasks
+- Keep README and public repository materials aligned with product-first infrastructure intelligence positioning as capabilities mature.
 - Add a lightweight test runner and unit tests for `src/lib/scoring.js`.
 - Add tests for `calculateGridReadinessScore()`, score bands, recommendations, and source confidence labels.
 - Add tests for `src/services/external/eiaAdapter.js`.

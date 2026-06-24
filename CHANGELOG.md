@@ -1,6 +1,9 @@
 # Changelog
 
 ## 2026-06-24
+- Rewrote `README.md` with product-first GridReady AI positioning for an infrastructure intelligence platform.
+- Moved prototype/sample-data disclosures into lower current-status and limitations sections so the repository leads with the product narrative while remaining honest about implementation maturity.
+- Updated project context, status, and TODO notes to match the public GitHub presentation direction.
 - Prepared the project for public demo, GitHub presentation, and static deployment.
 - Rewrote `README.md` for a professional GitHub overview.
 - Added `docs/DEPLOYMENT.md`, `docs/DEMO_SCRIPT.md`, `docs/PITCH_BRIEF.md`, and `docs/PROJECT_STATUS.md`.

@@ -1,9 +1,11 @@
 # Project Status
 
+This repository contains the public prototype and data architecture foundation for GridReady AI, an infrastructure intelligence platform for power-heavy site decisions.
+
 ## Complete
 
-- React + Vite frontend MVP
-- Premium static UI for public demo
+- React + Vite public prototype
+- Premium static UI for product validation and technical demonstration
 - Location Analyzer
 - Market Comparison
 - Scenario Simulator
@@ -15,6 +17,7 @@
 - USGS Water Data placeholder adapter
 - Sample JSON files in `public/data`
 - Deployment-ready static build
+- Product-first GitHub README and public repository documentation
 
 ## Demo / Sample
 
@@ -30,6 +33,7 @@
 - Backend API
 - Authentication
 - Saved site shortlists
+- Team workspaces
 - Live utility territory or substation matching
 - County, tract, queue-region, or site-level geography matching
 - Real document ingestion
@@ -51,3 +55,4 @@
 - Add project-specific scoring profiles by load size and project type
 - Improve geography matching from state-level to utility/region/site-level
 - Define production evidence requirements for each score
+- Refine repository presentation around product traction, buyer workflow, and deployment proof points as the platform matures

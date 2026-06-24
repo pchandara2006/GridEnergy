@@ -1,7 +1,7 @@
 # GridReady AI Context
 
 ## Product Summary
-GridReady AI is an enterprise intelligence MVP for infrastructure site selection. It helps data centers, manufacturers, utilities, clean-energy developers, industrial real estate teams, and infrastructure investors understand where power is available, where grid delays are likely, and where electricity costs or other operating risks could damage project ROI.
+GridReady AI is an infrastructure intelligence platform for power-heavy site decisions. It helps data center developers, manufacturers, utilities, clean-energy developers, EV charging networks, industrial real estate teams, and infrastructure investors compare power availability, grid timing, electricity cost, water/cooling constraints, climate exposure, carbon/compliance risk, and project economics before committing capital to a site.
 
 Core tagline: "Power readiness intelligence for the next generation of infrastructure."
 
@@ -26,7 +26,7 @@ Core tagline: "Power readiness intelligence for the next generation of infrastru
 - LBNL Interconnection Queue cache adapter in `src/services/external/lbnlQueueAdapter.js`
 
 ## Architecture
-- Frontend-first single-page app.
+- Public prototype single-page application for product validation and technical demonstration.
 - Modular sections live in `src/components`.
 - Demo domain data is centralized in `src/data/gridreadyData.js`.
 - Scenario scoring logic is isolated in `src/lib/scoring.js`.
@@ -59,6 +59,7 @@ Core tagline: "Power readiness intelligence for the next generation of infrastru
 - LBNL Interconnection Queue cache/sample foundation for Grid Access and Time-to-Power Scores.
 - Scoring methodology and trust layer for consistent score direction, recommendation bands, source labels, and fallback explanations.
 - Public-demo documentation, deployment guide, demo script, pitch brief, and project status summary.
+- Product-first GitHub README positioning for infrastructure intelligence, with current implementation status and limitations moved below the core product narrative.
 
 ## Current Visual Language
 The frontend was redesigned from a neon/dark dashboard to a clean premium infrastructure SaaS style inspired by Apple/Robinhood/Snowflake-style clarity and editorial Awwwards-level spacing. The interface now uses off-white surfaces, graphite text, restrained borders, tables, and memo-style hierarchy.
@@ -69,7 +70,7 @@ The frontend was redesigned from a neon/dark dashboard to a clean premium infras
 3. Build production bundle: `npm run build`
 4. Run lint checks: `npm run lint`
 
-All market scores and document outputs are demo values for MVP validation unless local EIA, FEMA, drought-risk, eGRID, or LBNL queue caches are generated. Sample cache data is also sample data, not official live data. Higher scores always mean stronger readiness or lower risk.
+All market scores and document outputs use public-prototype data foundations unless local EIA, FEMA, drought-risk, eGRID, or LBNL queue caches are generated. Sample cache data is also sample data, not official live data. Higher scores always mean stronger readiness or lower risk.
 
 ## Deployment Notes
 - Static Vite deployment is supported.

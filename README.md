@@ -2,52 +2,51 @@
 
 Power readiness intelligence for infrastructure site selection.
 
-GridReady AI is a frontend-first MVP that helps infrastructure teams compare power availability, grid timing, electricity cost, water/cooling constraints, climate exposure, carbon/compliance risk, and project economics before committing capital to a site.
+GridReady AI is an infrastructure intelligence platform for power-heavy site decisions. It helps data center developers, manufacturers, utilities, clean-energy developers, EV charging networks, industrial real estate teams, and infrastructure investors compare power availability, grid timing, electricity cost, water/cooling constraints, climate exposure, carbon/compliance risk, and project economics before committing capital to a site.
 
-All scores, documents, and market outputs in this repository are for MVP validation. They are not official, live, or production-grade site-selection data.
+The product is designed for early diligence: where teams need a fast, explainable view of site readiness before moving into utility studies, land acquisition, interconnection strategy, permitting, or investment committee review.
 
-## Problem
+## Why It Matters
 
-Power-heavy projects can secure land faster than they can secure reliable electrical capacity. AI data centers, advanced manufacturing facilities, EV charging networks, battery storage, solar projects, and infrastructure investors need to evaluate grid access, time-to-power, operating cost, cooling exposure, climate risk, carbon requirements, and ROI sensitivity across fragmented sources.
+Power-heavy infrastructure can often secure land faster than it can secure reliable electrical capacity. AI data centers, advanced manufacturing, EV charging networks, battery storage, solar development, and industrial real estate all need earlier visibility into grid readiness, time-to-power, cooling exposure, climate risk, carbon intensity, and project economics.
 
-GridReady AI turns those signals into a comparable readiness workflow for early diligence and market screening.
+Those signals are usually fragmented across utilities, public datasets, queue reports, climate models, water-risk indicators, emissions data, and project-finance assumptions. GridReady AI organizes those inputs into a structured readiness workflow for market screening, site comparison, and capital planning.
 
-## Target Users
+## What GridReady AI Does
 
-- AI data center development and energy strategy teams
-- Advanced manufacturing and industrial site-selection teams
-- Utilities and grid planning teams
-- Battery storage and solar developers
-- EV charging network developers
-- Infrastructure investors and industrial real estate teams
+- Scores site readiness across grid, power cost, water, climate, carbon, and finance factors
+- Compares markets side by side
+- Simulates project fit for data centers, manufacturing, storage, solar, and EV charging
+- Generates decision-oriented readiness signals
+- Structures public data foundations for power, climate, water, carbon, and interconnection risk
 
-## Current MVP Features
+## Platform Modules
 
-- Site readiness homepage preview with clear demo-data labeling
-- Location Analyzer for eight demo markets
-- Market Comparison table for shortlisting three to five markets
-- Scenario Simulator for project-fit analysis across five infrastructure archetypes
-- Document Intelligence mock workflow for planning and diligence signals
-- Weighted Grid Readiness methodology with score bands and source confidence labels
-- Cache/sample architecture for external data foundations
+- **Location Analyzer**: evaluates a selected market across readiness, risk, source confidence, and recommendation signals
+- **Market Comparison**: compares multiple markets side by side for shortlisting and investment review
+- **Scenario Simulator**: tests project fit across infrastructure archetypes such as AI data centers, manufacturing, storage, solar, and EV charging
+- **Document Intelligence**: structures diligence signals from planning and infrastructure documents for future ingestion workflows
+- **Scoring Methodology**: applies a weighted Grid Readiness formula with consistent score direction and recommendation bands
+- **Data Source Layer**: normalizes external data foundations into cache-ready public datasets and source-confidence labels
 
-## Data Foundations
+## Data Intelligence Layer
 
-| Foundation | Score area | Current status |
+GridReady AI is structured around public and semi-public infrastructure data foundations. Current implementation supports cache/sample data architecture for these sources, with production pipelines planned.
+
+| Data foundation | Readiness area | Role in GridReady AI |
 | --- | --- | --- |
-| EIA retail electricity prices | Power Cost | Sample/cache foundation with optional fetch script |
-| FEMA National Risk Index | Climate Risk | Sample/cache foundation |
-| U.S. Drought Monitor | Water/Cooling Risk | Sample/cache foundation |
-| USGS Water Data | Water/Cooling Risk | Placeholder adapter for future monitoring signals |
-| EPA eGRID | Carbon/Compliance Risk | Sample/cache foundation |
-| LBNL Interconnection Queue | Grid Access and Time-to-Power | Sample/cache foundation |
-| Local MVP model | Finance/ROI | Demo fallback estimate |
+| EIA retail electricity price foundation | Power Cost | Supports electricity-cost scoring by state and sector |
+| FEMA National Risk Index foundation | Climate Risk | Supports climate and hazard exposure scoring |
+| U.S. Drought Monitor / USGS water foundation | Water/Cooling Risk | Supports water availability, drought, and future monitoring signals |
+| EPA eGRID carbon foundation | Carbon/Compliance Risk | Supports emissions intensity and resource-mix scoring |
+| LBNL Interconnection Queue foundation | Grid Access and Time-to-Power | Supports queue congestion, completion, withdrawal, and duration signals |
+| Local finance/ROI model | Finance/ROI | Supports early project economics and sensitivity screening |
 
-The frontend reads generated cache files from `public/data/*.json` when available, then falls back to checked-in sample files, then to local demo values.
+The frontend reads normalized cache files from `public/data/*.json` when generated, checked-in sample files when available, and local fallback values when no external-style data is present.
 
 ## Scoring Methodology
 
-All scores use one direction: higher means stronger infrastructure readiness and lower risk.
+Higher scores indicate stronger readiness and lower risk.
 
 Grid Readiness uses the official weighted formula:
 
@@ -70,28 +69,42 @@ Score bands:
 
 Full methodology: `docs/SCORING_METHODOLOGY.md`.
 
-## Source Confidence
+## Source Confidence Model
 
-- `Verified cache`: generated cache data is present and being read by the frontend
-- `External sample`: checked-in external-style sample data is being used
-- `Demo fallback`: local demo values are being used
+GridReady AI separates score values from source status so users can tell whether a score is backed by generated cache data, sample external-style data, or local fallback assumptions.
 
-These labels describe data status, not statistical certainty.
+- `Verified cache`: generated cache data is present and being read by the application
+- `External sample`: checked-in sample data using the normalized external-source shape is being used
+- `Demo fallback`: local fallback values are being used
+
+These labels describe current data status. They are not statistical confidence intervals.
+
+## Current Implementation Status
+
+This repository contains the public prototype and data architecture foundation for GridReady AI.
+
+- Current version is a public MVP/prototype
+- Uses sample/cache JSON foundations for external data architecture
+- Not yet production-grade
+- No backend, authentication, saved projects, or team workspace yet
+- No live scheduled production data pipelines yet
+- Intended for product validation, technical demonstration, and investor/developer review
 
 ## Tech Stack
 
 - React 18
 - Vite
 - Tailwind CSS
-- Local JSON/sample data in `public/data`
-- Frontend-only MVP architecture
+- Local JSON cache/sample architecture
+- Modular scoring and source-confidence helpers
+- External-source adapter layer in `src/services/external`
 
 ## Project Structure
 
 ```text
 src/
   components/        React UI sections
-  data/              Demo market, project, use case, and document data
+  data/              Market, project, use case, and document data
   lib/               Scoring and source-confidence helpers
   services/external/ External-data adapters that read normalized cache data
 docs/                Product, data, scoring, deployment, and workflow notes
@@ -112,7 +125,7 @@ Open the local Vite URL shown in the terminal, usually:
 http://127.0.0.1:5173/
 ```
 
-## Quality Checks
+Quality checks:
 
 ```bash
 npm run lint
@@ -121,19 +134,19 @@ npm run build
 
 ## Deployment
 
-GridReady AI is ready for static deployment on Vercel.
+GridReady AI can be deployed as a static Vite application on Vercel.
 
 - Framework preset: Vite
 - Build command: `npm run build`
 - Output directory: `dist`
-- Required environment variables: none for the public demo
+- Required environment variables: none for the public prototype
 - Optional environment variable for local EIA cache generation: `EIA_API_KEY`
 
 Deployment details: `docs/DEPLOYMENT.md`.
 
 ## Environment Variables
 
-The app does not require API keys at runtime. `.env.example` documents the optional EIA fetch key:
+The application does not require API keys at runtime. `.env.example` documents the optional EIA fetch key:
 
 ```bash
 EIA_API_KEY=your_eia_api_key_here
@@ -141,20 +154,25 @@ EIA_API_KEY=your_eia_api_key_here
 
 The browser never receives this key. The optional fetch script writes normalized JSON to `public/data/eia-retail-prices.json`.
 
-## Current Limitations
+## Limitations
 
-- Demo markets and document signals are MVP validation data.
-- External source files in `public/data/*.sample.json` are sample records, not live authoritative datasets.
-- Several foundations are state-level and should move to utility, subregion, county, queue-region, or site-level matching.
-- Finance/ROI is still a local demo estimate.
-- No backend, authentication, saved projects, or production data pipeline exists yet.
+- External source records in `public/data/*.sample.json` are sample/cache foundations, not live authoritative datasets.
+- Several foundations are currently state-level and should move to utility, subregion, county, queue-region, or site-level matching.
+- Finance/ROI scoring is an early local model and should be validated against project-specific assumptions.
+- Document Intelligence is a structured product workflow, not live document ingestion yet.
+- Production use will require backend services, data refresh jobs, evidence links, governance, audit trails, and customer-specific validation.
 
 ## Roadmap
 
-- Add unit tests for scoring helpers and external adapters
-- Add generated cache pipelines for FEMA, drought, eGRID, and LBNL queue data
-- Add source provenance, retrieval timestamps, dataset versions, and evidence links
-- Move from state-level samples to utility/region/site-level matching
-- Add backend scoring API, saved site shortlists, and team workspaces
-- Add exportable investment memo/PDF output
-- Add real document ingestion for utility reports, interconnection filings, and zoning packets
+- Real source cache pipelines for EIA, FEMA, Drought Monitor, USGS, EPA eGRID, and LBNL queue data
+- Backend scoring API with versioned methodologies
+- Saved site shortlists and project workspaces
+- Decision memo export for investment committee and development review
+- Document ingestion for utility reports, interconnection filings, zoning packets, and diligence materials
+- Source provenance with retrieval timestamps, dataset versions, and evidence links
+- Region, utility, queue-area, and site-level matching
+- Team workspace for shared diligence projects
+
+## Repository Status
+
+This repository contains the public prototype and data architecture foundation for GridReady AI. It is intended to communicate the product direction, scoring logic, data model, and frontend workflow for an infrastructure intelligence platform.
