@@ -29,6 +29,7 @@ GridReady AI packages those signals into a practical readiness workflow for earl
 - EIA retail price cache foundation for Power Cost Score, with demo fallback
 - FEMA National Risk Index cache foundation for Climate Risk Score, with demo fallback
 - U.S. Drought Monitor cache foundation for Water/Cooling Risk, with demo fallback
+- EPA eGRID cache foundation for Carbon/Compliance Risk, with demo fallback
 
 ## Tech Stack
 - React 18
@@ -103,12 +104,22 @@ If a generated drought cache is later added at `public/data/drought-risk.json`, 
 
 USGS Water Data support is currently a documented adapter placeholder for future streamflow, groundwater, and monitoring-site signals. The app does not call live USGS APIs yet.
 
+## EPA eGRID Carbon/Compliance Data
+The frontend reads normalized EPA eGRID-style cache data from public JSON. The repository currently includes sample state-level data:
+
+```text
+public/data/egrid-carbon.sample.json
+```
+
+If a generated eGRID cache is later added at `public/data/egrid-carbon.json`, the app will use it first. If not, the app falls back to the sample file, then to local demo Carbon/Compliance Risk values.
+
 ## Future Data Integrations
 - Utility integrated resource plans and capacity maps
 - ISO/RTO interconnection queues
 - EIA electricity price, demand, and generation datasets
 - NOAA climate and heat-risk datasets
 - U.S. Drought Monitor and USGS water datasets
+- EPA eGRID emissions rates and resource-mix datasets
 - Local permitting, zoning, and public hearing records
 - Incentive, carbon compliance, and energy policy databases
 

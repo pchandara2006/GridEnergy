@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { locations } from '../data/gridreadyData.js';
 import { getWeakestCategory } from '../lib/scoring.js';
 import { applyDroughtWaterCoolingToLocation, loadDroughtRiskCache } from '../services/external/droughtMonitorAdapter.js';
+import { applyEgridCarbonComplianceToLocation, loadEgridCarbonCache } from '../services/external/egridAdapter.js';
 import { applyEiaPowerCostToLocation, loadEiaRetailPriceCache } from '../services/external/eiaAdapter.js';
 import { applyFemaClimateRiskToLocation, loadFemaRiskCache } from '../services/external/femaRiskAdapter.js';
 import { RecommendationBadge, RiskBar, ScoreRing, SectionHeader } from './ui.jsx';
@@ -27,13 +28,17 @@ export function LocationAnalyzer() {
   const [eiaCache, setEiaCache] = useState({ records: [], sourceType: 'none' });
   const [femaCache, setFemaCache] = useState({ records: [], sourceType: 'none' });
   const [droughtCache, setDroughtCache] = useState({ records: [], sourceType: 'none' });
+  const [egridCache, setEgridCache] = useState({ records: [], sourceType: 'none' });
   const selected = useMemo(() => {
     const location = locations.find((item) => item.id === selectedId) ?? locations[0];
-    return applyDroughtWaterCoolingToLocation(
-      applyFemaClimateRiskToLocation(applyEiaPowerCostToLocation(location, eiaCache), femaCache),
-      droughtCache,
+    return applyEgridCarbonComplianceToLocation(
+      applyDroughtWaterCoolingToLocation(
+        applyFemaClimateRiskToLocation(applyEiaPowerCostToLocation(location, eiaCache), femaCache),
+        droughtCache,
+      ),
+      egridCache,
     );
-  }, [droughtCache, eiaCache, femaCache, selectedId]);
+  }, [droughtCache, egridCache, eiaCache, femaCache, selectedId]);
   const categoryEntries = Object.entries(selected.categories);
   const weakestCategory = getWeakestCategory(selected.categories);
 
@@ -47,6 +52,9 @@ export function LocationAnalyzer() {
     });
     loadDroughtRiskCache().then((cache) => {
       if (isMounted) setDroughtCache(cache);
+    });
+    loadEgridCarbonCache().then((cache) => {
+      if (isMounted) setEgridCache(cache);
     });
     return () => {
       isMounted = false;
@@ -141,6 +149,17 @@ export function LocationAnalyzer() {
                           {selected.waterCoolingRecord ? (
                             <p>
                               {selected.waterCoolingRecord.stateId} {selected.waterCoolingRecord.droughtCategoryLabel}
+                            </p>
+                          ) : null}
+                        </div>
+                      ) : null}
+                      {key === 'carbonCompliance' ? (
+                        <div className="mt-2 text-xs leading-5 text-[#6b716d]">
+                          <p>Carbon/compliance risk uses demo data unless EPA eGRID cache is generated.</p>
+                          <p>{selected.carbonComplianceSource}</p>
+                          {selected.carbonComplianceRecord ? (
+                            <p>
+                              {selected.carbonComplianceRecord.stateId} {selected.carbonComplianceRecord.co2RateLbPerMwh} lb CO2/MWh
                             </p>
                           ) : null}
                         </div>

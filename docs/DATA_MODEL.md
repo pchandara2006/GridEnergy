@@ -17,7 +17,7 @@ Each city record in `src/data/gridreadyData.js` includes:
 
 The file also exports `demoDataNotice`, a shared UI/documentation reminder that all current data is for MVP validation and is not official or live.
 
-Each demo location now includes `stateId` so external state-level data, including EIA retail electricity prices, FEMA risk records, and Drought Monitor records, can map cleanly into the app.
+Each demo location now includes `stateId` so external state-level data, including EIA retail electricity prices, FEMA risk records, Drought Monitor records, and EPA eGRID-style records, can map cleanly into the app.
 
 ## Score Categories
 Current category keys:
@@ -36,6 +36,8 @@ Power Cost Score can be replaced at runtime by EIA cache/sample data. When a nor
 Climate Risk Score can be replaced at runtime by FEMA cache/sample data. When a normalized FEMA National Risk Index record is available, `calculateClimateRiskScore()` maps the risk index to a 0-100 readiness score. If no FEMA cache/sample record is available, the app keeps the local demo Climate Risk Score.
 
 Water/Cooling Risk can be replaced at runtime by U.S. Drought Monitor cache/sample data. When a normalized drought record is available, `calculateWaterCoolingRiskScore()` maps drought severity to a 0-100 readiness score. If no drought cache/sample record is available, the app keeps the local demo Water/Cooling Risk value.
+
+Carbon/Compliance Risk can be replaced at runtime by EPA eGRID cache/sample data. When a normalized eGRID-style record is available, `calculateCarbonComplianceScore()` blends CO2 rate, renewable share, and fossil share into a 0-100 readiness score. If no eGRID cache/sample record is available, the app keeps the local demo Carbon/Compliance Risk value.
 
 ## Project Scenario Data
 Each project type includes:
@@ -108,5 +110,21 @@ Future record fields:
 - `groundwaterTrend`
 - `waterStressNote`
 - `monitoringSiteCount`
+- `source`
+- `isSample`
+
+## EPA eGRID Carbon Cache
+
+Normalized records live in `public/data/egrid-carbon.json` when generated. The sample fallback lives in `public/data/egrid-carbon.sample.json`.
+
+Record fields:
+- `stateId`
+- `stateName`
+- `egridSubregion`
+- `co2RateLbPerMwh`
+- `renewableSharePercent`
+- `fossilSharePercent`
+- `nuclearSharePercent`
+- `reportingYear`
 - `source`
 - `isSample`

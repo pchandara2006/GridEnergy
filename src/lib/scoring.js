@@ -77,3 +77,36 @@ export function explainWaterCoolingRiskScore(droughtCategory, droughtSeveritySco
 
   return `Water/Cooling Risk Score maps U.S. Drought Monitor category ${droughtCategory} to a 0-100 readiness score, where lower drought severity scores higher.`;
 }
+
+export function calculateCarbonComplianceScore(input, renewableSharePercent, fossilSharePercent) {
+  const values =
+    typeof input === 'object' && input !== null
+      ? input
+      : {
+          co2RateLbPerMwh: input,
+          renewableSharePercent,
+          fossilSharePercent,
+        };
+
+  const co2Rate = Number.parseFloat(values.co2RateLbPerMwh);
+  const renewableShare = Number.parseFloat(values.renewableSharePercent);
+  const fossilShare = Number.parseFloat(values.fossilSharePercent);
+
+  if (!Number.isFinite(co2Rate) || !Number.isFinite(renewableShare) || !Number.isFinite(fossilShare)) return null;
+
+  const co2RateScore = 100 - (co2Rate / 1500) * 100;
+  const renewableScore = renewableShare;
+  const fossilScore = 100 - fossilShare;
+  const weightedScore = co2RateScore * 0.55 + renewableScore * 0.3 + fossilScore * 0.15;
+
+  return clampScore(weightedScore);
+}
+
+export function explainCarbonComplianceScore(record) {
+  const score = calculateCarbonComplianceScore(record);
+  if (score === null) {
+    return 'Carbon/Compliance Risk Score uses the local demo estimate because no valid EPA eGRID record is available.';
+  }
+
+  return `Carbon/Compliance Risk Score blends EPA eGRID-style CO2 rate, renewable share, and fossil share into a 0-100 readiness score.`;
+}

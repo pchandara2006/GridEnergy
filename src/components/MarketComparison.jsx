@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { demoDataNotice, locations } from '../data/gridreadyData.js';
 import { applyDroughtWaterCoolingToLocation, loadDroughtRiskCache } from '../services/external/droughtMonitorAdapter.js';
+import { applyEgridCarbonComplianceToLocation, loadEgridCarbonCache } from '../services/external/egridAdapter.js';
 import { applyEiaPowerCostToLocation, loadEiaRetailPriceCache } from '../services/external/eiaAdapter.js';
 import { applyFemaClimateRiskToLocation, loadFemaRiskCache } from '../services/external/femaRiskAdapter.js';
 import { RecommendationBadge, SectionHeader } from './ui.jsx';
@@ -12,18 +13,22 @@ export function MarketComparison() {
   const [eiaCache, setEiaCache] = useState({ records: [], sourceType: 'none' });
   const [femaCache, setFemaCache] = useState({ records: [], sourceType: 'none' });
   const [droughtCache, setDroughtCache] = useState({ records: [], sourceType: 'none' });
+  const [egridCache, setEgridCache] = useState({ records: [], sourceType: 'none' });
   const selectedLocations = useMemo(
     () =>
       locations
         .filter((location) => selectedIds.includes(location.id))
         .map((location) =>
-          applyDroughtWaterCoolingToLocation(
-            applyFemaClimateRiskToLocation(applyEiaPowerCostToLocation(location, eiaCache), femaCache),
-            droughtCache,
+          applyEgridCarbonComplianceToLocation(
+            applyDroughtWaterCoolingToLocation(
+              applyFemaClimateRiskToLocation(applyEiaPowerCostToLocation(location, eiaCache), femaCache),
+              droughtCache,
+            ),
+            egridCache,
           ),
         )
         .sort((a, b) => b.score - a.score),
-    [droughtCache, eiaCache, femaCache, selectedIds],
+    [droughtCache, egridCache, eiaCache, femaCache, selectedIds],
   );
   const strongest = [...selectedLocations].sort((a, b) => b.score - a.score)[0];
   const riskiest = [...selectedLocations].sort((a, b) => a.score - b.score)[0];
@@ -47,6 +52,9 @@ export function MarketComparison() {
     });
     loadDroughtRiskCache().then((cache) => {
       if (isMounted) setDroughtCache(cache);
+    });
+    loadEgridCarbonCache().then((cache) => {
+      if (isMounted) setEgridCache(cache);
     });
     return () => {
       isMounted = false;

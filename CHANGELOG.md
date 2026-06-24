@@ -1,6 +1,10 @@
 # Changelog
 
 ## 2026-06-24
+- Added EPA eGRID cache/sample integration foundation for Carbon/Compliance Risk.
+- Added `src/services/external/egridAdapter.js`, `public/data/egrid-carbon.sample.json`, and `docs/EGRID_INTEGRATION.md`.
+- Added carbon/compliance scoring helpers and connected EPA eGRID sample/cache data to existing analyzer, comparison, and scenario flows with demo fallback.
+- Added subtle Carbon/Compliance Risk source notes without changing the current visual design or adding sections.
 - Added U.S. Drought Monitor cache/sample integration foundation for Water/Cooling Risk.
 - Added `src/services/external/droughtMonitorAdapter.js`, `src/services/external/usgsWaterAdapter.js`, `public/data/drought-risk.sample.json`, and `docs/WATER_COOLING_INTEGRATION.md`.
 - Added water/cooling scoring helpers and connected Drought Monitor sample/cache data to existing analyzer, comparison, and scenario flows with demo fallback.

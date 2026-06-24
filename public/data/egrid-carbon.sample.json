@@ -1,0 +1,104 @@
+{
+  "generatedAt": "2026-06-24T00:00:00.000Z",
+  "source": "EPA eGRID",
+  "isSample": true,
+  "note": "Sample normalized EPA eGRID-style cache for MVP validation. Not live or official eGRID data.",
+  "records": [
+    {
+      "stateId": "NM",
+      "stateName": "New Mexico",
+      "egridSubregion": "AZNM",
+      "co2RateLbPerMwh": 760,
+      "renewableSharePercent": 42,
+      "fossilSharePercent": 54,
+      "nuclearSharePercent": 0,
+      "reportingYear": 2023,
+      "source": "EPA eGRID",
+      "isSample": true
+    },
+    {
+      "stateId": "AZ",
+      "stateName": "Arizona",
+      "egridSubregion": "AZNM",
+      "co2RateLbPerMwh": 690,
+      "renewableSharePercent": 18,
+      "fossilSharePercent": 58,
+      "nuclearSharePercent": 24,
+      "reportingYear": 2023,
+      "source": "EPA eGRID",
+      "isSample": true
+    },
+    {
+      "stateId": "TX",
+      "stateName": "Texas",
+      "egridSubregion": "ERCT",
+      "co2RateLbPerMwh": 840,
+      "renewableSharePercent": 31,
+      "fossilSharePercent": 68,
+      "nuclearSharePercent": 1,
+      "reportingYear": 2023,
+      "source": "EPA eGRID",
+      "isSample": true
+    },
+    {
+      "stateId": "CO",
+      "stateName": "Colorado",
+      "egridSubregion": "RMPA",
+      "co2RateLbPerMwh": 930,
+      "renewableSharePercent": 39,
+      "fossilSharePercent": 61,
+      "nuclearSharePercent": 0,
+      "reportingYear": 2023,
+      "source": "EPA eGRID",
+      "isSample": true
+    },
+    {
+      "stateId": "GA",
+      "stateName": "Georgia",
+      "egridSubregion": "SRSO",
+      "co2RateLbPerMwh": 650,
+      "renewableSharePercent": 14,
+      "fossilSharePercent": 48,
+      "nuclearSharePercent": 36,
+      "reportingYear": 2023,
+      "source": "EPA eGRID",
+      "isSample": true
+    },
+    {
+      "stateId": "OH",
+      "stateName": "Ohio",
+      "egridSubregion": "RFCW",
+      "co2RateLbPerMwh": 1180,
+      "renewableSharePercent": 5,
+      "fossilSharePercent": 86,
+      "nuclearSharePercent": 9,
+      "reportingYear": 2023,
+      "source": "EPA eGRID",
+      "isSample": true
+    },
+    {
+      "stateId": "VA",
+      "stateName": "Virginia",
+      "egridSubregion": "SRVC",
+      "co2RateLbPerMwh": 620,
+      "renewableSharePercent": 13,
+      "fossilSharePercent": 55,
+      "nuclearSharePercent": 31,
+      "reportingYear": 2023,
+      "source": "EPA eGRID",
+      "isSample": true
+    },
+    {
+      "stateId": "NV",
+      "stateName": "Nevada",
+      "egridSubregion": "NWPP",
+      "co2RateLbPerMwh": 610,
+      "renewableSharePercent": 36,
+      "fossilSharePercent": 64,
+      "nuclearSharePercent": 0,
+      "reportingYear": 2023,
+      "source": "EPA eGRID",
+      "isSample": true
+    }
+  ]
+}
